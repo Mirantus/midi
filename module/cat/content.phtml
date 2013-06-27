@@ -1,0 +1,22 @@
+<h3><?=$cat['title']?></h3>
+<ul class="ns">
+	<? if ($items): ?>
+		<? foreach ($items as $item_params): ?>
+			<li id="item<?=$item_params['id'];?>">
+				<a href="/<?=$site->module;?>/item/?id=<?=$item_params['id'];?>"><?=$item_params['title'];?></a>
+				<? if ($site->getUserAccess() >= $config['access']['edit']): ?>
+                    &nbsp; <a href="/<?=$site->module;?>/edit/?id=<?=$item_params['id'];?>" class="comment">редактировать</a>
+				<? endif; ?>
+				<? if ($site->getUserAccess() >= $config['access']['del']): ?>
+					&nbsp; <a href="/<?=$site->module;?>/del/?id=<?=$item_params['id'];?>" class="comment" data-request="ajax" data-confirm="item-del">удалить</a>
+				<? endif; ?>
+			</li>
+		<? endforeach; ?>
+	<? else: ?>
+		<li>Данных нет</li>
+	<? endif; ?>
+</ul>
+<?=$pager;?>
+<? if ($site->getUserAccess() >= $config['access']['add']): ?>
+	<p><a href="/<?=$site->module;?>/add">Добавить</a></p>
+<? endif; ?>

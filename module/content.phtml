@@ -1,0 +1,12 @@
+<ul class="ns">
+	<?php
+		if ($items) {
+			foreach ($items as $item_id => $item_params) {
+				echo '<li id="item' . $item_id . '">
+						<a href="item/?id=' . $item_id . '">' . $item_params['title'] . '</a> ';
+				echo '</li>';
+			}
+		} else echo '<li>Данных нет</li>';
+	?>
+</ul>
+<?=$pager;?>
