@@ -1,1 +1,0 @@
-<?php	function mailer($email, $title, $message)	{		$title = iconv("UTF-8", "koi8-r", $title);		$message = iconv("UTF-8", "koi8-r", $message);				return mail($email, $title, $message, 'From: mailer@' . $_SERVER['SERVER_NAME'] . "\r\n" . 'X-Mailer: PHP/' . phpversion());	}?>

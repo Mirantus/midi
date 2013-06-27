@@ -1,1 +1,90 @@
-<?php	require_once('inc/init.inc');	require_once(SITE_PATH . '/php/sql.php');		function create_dir($name)	{		if ( !file_exists(SITE_PATH . '/data/' . $name) ) mkdir(SITE_PATH . '/data/' . $name);		return true;	}		create_dir('');		//module		sql_execute("CREATE TABLE IF NOT EXISTS `module` (  `id` int(10) unsigned NOT NULL auto_increment,  `title` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `text` text collate utf8_unicode_ci NOT NULL,  `price` int(10) unsigned NOT NULL default '0',  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `name` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `phone` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `icq` int(10) unsigned NOT NULL default '0',  `url` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `email` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `city` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `zip` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `address` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `company` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `occupation` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `user` int(10) unsigned NOT NULL default '1',  `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '127.0.0.1',  `date` date NOT NULL default '0000-00-00',  `access` tinyint(1) NOT NULL default '1',  `rate` int(11) NOT NULL default '350',  PRIMARY KEY  (`id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");	create_dir('module');	create_dir('module/images');		//module2	sql_execute("CREATE TABLE IF NOT EXISTS `module2_cats` (  `id` int(10) unsigned NOT NULL auto_increment,  `title` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `text` text collate utf8_unicode_ci NOT NULL,  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `date` date NOT NULL default '0000-00-00',  `access` tinyint(1) NOT NULL default '1',  `rate` int(11) NOT NULL default '350',  PRIMARY KEY  (`id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");		sql_execute("CREATE TABLE IF NOT EXISTS `module2` (  `id` int(10) unsigned NOT NULL auto_increment,  `title` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `text` text collate utf8_unicode_ci NOT NULL,  `price` int(10) unsigned NOT NULL default '0',  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `name` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `phone` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `icq` int(10) unsigned NOT NULL default '0',  `url` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `email` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `city` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `zip` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `address` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `company` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `occupation` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `user` int(10) unsigned NOT NULL default '1',  `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '127.0.0.1',  `date` date NOT NULL default '0000-00-00',  `access` tinyint(1) NOT NULL default '1',  `rate` int(11) NOT NULL default '350',  `cat` int(10) unsigned NOT NULL default '0',  PRIMARY KEY  (`id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");	create_dir('module2');	create_dir('module2/images');		//users		sql_execute("CREATE TABLE IF NOT EXISTS `users` (  `id` int(10) unsigned NOT NULL auto_increment,  `title` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `password` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `text` text collate utf8_unicode_ci NOT NULL,  `image` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `name` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `gender` tinyint(1) unsigned NOT NULL default '1',  `birthday` date NOT NULL default '0000-00-00',  `phone` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `icq` int(10) unsigned NOT NULL default '0',  `url` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `email` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `city` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `zip` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `address` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `company` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `occupation` varchar(255) collate utf8_unicode_ci NOT NULL default '',  `ip` varchar(15) collate utf8_unicode_ci NOT NULL default '127.0.0.1',  `date` date NOT NULL default '0000-00-00',  `access` tinyint(1) NOT NULL default '1',  PRIMARY KEY  (`id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");	sql_execute("INSERT INTO `users` VALUES (1,											'admin',											'7cbb3252ba6b7e9c422fac5334d22054',											'Admin account',											'',											'Admin',											1,											'0000-00-00',											'',											'0',											'',											'" . OWNER_EMAIL . "',											'',											'',											'',											'',											'',											'" . $_SERVER['REMOTE_ADDR'] . "',											'" . date('Y-m-d') . "',											2);					");	create_dir('users');	create_dir('users/images');?>
+<?php
+$config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config.ini', true);
+if (isset($config['debug_db'])) {
+    $db = mysql_connect($config['debug_db']['host'], $config['debug_db']['user'], $config['debug_db']['password']);
+    mysql_query('CREATE DATABASE IF NOT EXISTS ' . $config['debug_db']['dbname'], $db);
+    mysql_close($db);
+}
+
+require('core/init.php');
+
+//for every module
+foreach ($site->config['modules'] as $module => $module_access) {
+    $module_config = parse_ini_file($site->path . '/' . $module . '/config.ini', true);
+
+    foreach(array('comments', 'items', 'cats')  as $entity) {
+        if (!isset($module_config[$entity])) continue;
+        $sql_entity = 'CREATE TABLE IF NOT EXISTS `' . $module . '_' . $entity . '` (';
+        $entity_fields = array();
+
+        foreach ($module_config[$entity] as $field => $value) {
+            switch ($field) {
+                case 'id':
+                    $entity_fields[] = '`' . $field . '` int(10) unsigned NOT NULL auto_increment';
+                    break;
+                case 'item':
+                    $entity_fields[] = '`' . $field . '` int(10) unsigned NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'cat':
+                    $entity_fields[] = '`' . $field . '` int(10) unsigned NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'text':
+                    $entity_fields[] = '`' . $field . '` text collate utf8_unicode_ci NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'price':
+                    $entity_fields[] = '`' . $field . '` int(10) unsigned NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'image':
+                    $entity_fields[] = '`' . $field . '` varchar(255) collate utf8_unicode_ci NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'file':
+                    $entity_fields[] = '`' . $field . '` varchar(255) collate utf8_unicode_ci NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'icq':
+                    $entity_fields[] = '`' . $field . '` int(10) unsigned NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'url':
+                    $entity_fields[] = '`' . $field . '` varchar(255) collate utf8_unicode_ci NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'email':
+                    $entity_fields[] = '`' . $field . '` varchar(255) collate utf8_unicode_ci NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'user':
+                    $entity_fields[] = '`' . $field . '` int(10) unsigned NOT NULL';
+                    break;
+                case 'ip':
+                    $entity_fields[] = '`' . $field . '` varchar(15) collate utf8_unicode_ci NOT NULL default \'0\'';
+                    break;
+                case 'date':
+                    $entity_fields[] = '`' . $field . '` date NOT NULL default \'0000-00-00\'';
+                    break;
+                case 'access':
+                    $entity_fields[] = '`' . $field . '` tinyint(1) unsigned NOT NULL default \'' . $value . '\'';
+                    break;
+                case 'rate':
+                    $entity_fields[] = '`' . $field . '` int(10) unsigned NOT NULL default \'' . $value . '\'';
+                    break;
+                default:
+                    $entity_fields[] = '`' . $field . '` varchar(255) collate utf8_unicode_ci NOT NULL default \'' . $value . '\'';
+            }
+        }
+
+        $sql_entity .= implode($entity_fields, ',') . ',PRIMARY KEY  (`id`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+
+        $site->db->exec($sql_entity);
+    }
+
+
+    if ( !file_exists($site->path . '/' . $module) ) mkdir($site->path . '/' . $module);
+    if ( !file_exists($site->path . '/' . $module . '/items') ) mkdir($site->path . '/' . $module . '/items');
+    if (isset($module_config['items'])) {
+        if ( !file_exists($site->path . '/' . $module . '/items/i') ) mkdir($site->path . '/' . $module . '/items/i');
+        if ( !file_exists($site->path . '/' . $module . '/items/i/thumbs') ) mkdir($site->path . '/' . $module . '/items/i/thumbs');
+    } else {
+        if ( !file_exists($site->path . '/' . $module . '/items/content') ) mkdir($site->path . '/' . $module . '/items/content');
+    }
+
+    if ( file_exists($site->path . '/' . $module . '/' . 'setup.php') ) include($site->path . '/' . $module . '/' . 'setup.php');
+}
+
+echo 'done';

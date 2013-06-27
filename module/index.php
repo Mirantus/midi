@@ -1,16 +1,18 @@
 <?php
-	define ('PAGE', 'module');
-	require_once('../inc/init.inc'); 
-	require_once('init.inc');
-	require_once('../inc/pager.inc');
-	
-	$items = sql_get_rows('SELECT * FROM ' . MODULE . ' ORDER BY id;');
-	if ($items)
-	{
-		$pager_info = pager($items, 3);
+require('../core/init.php');
+require('./init.php');
+
+if (isset($config['items'])) {
+	$type = isset($config['cats']) ? 'cats' : 'items';
+	require('inc/' . $type . '.php');
+	$site->pagePath = $site->modulePath . '/' . $type;
+} else {
+	$items = parse_ini_file($site->moduleItemsPath . '/items.ini', true);
+	if ($items) {
+		$pager_info = $site->getPager($items, 10);
 		$items = $pager_info['items'];
 		$pager = $pager_info['pager'];
 	}
-	
-	include(TEMPLATE_PATH . '/main.tpl');            
-?>
+}
+
+include($site->layoutPath . '/default.phtml');
