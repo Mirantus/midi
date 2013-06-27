@@ -1,0 +1,1 @@
+<ul id="menu">	<?php		$menu_pages = array(							'' => 'Главная',							'module' => 'Модуль',							'module2' => 'Модуль2'							);		foreach ($menu_pages as $menu_page => $menu_title)		{			if ($menu_page == PAGE) echo '<li class="active">' . $menu_title . '</li>';			else echo '<li><a href="/' . $menu_page . '">' . $menu_title . '</a></li>';		}	?></ul>

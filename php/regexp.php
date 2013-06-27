@@ -1,0 +1,1 @@
+<?php	function match_all($regexp, $source, $mod = 'sU')	{				$num = preg_match_all('/' . $regexp . '/' . $mod, $source, $matches);			return ($num) ? $matches[1] : FALSE;	}?>

@@ -1,0 +1,68 @@
+<public:component lightWeight="true">
+<public:attach event="onpropertychange" onevent="propertyChanged()" />
+<script>
+ 
+var supported = /MSIE ((5\.5)|[6789])/.test(navigator.userAgent) &&
+				navigator.platform == "Win32";
+// supported = false;				
+
+var realSrc;
+var blankSrc = "images/blank.gif";
+
+if(supported)
+	{
+	fixImage()
+	}
+else
+	{
+//	alert(element.src.substring(element.src.length - 3,element.src.length));
+	if (element.src.substring(element.src.length - 3,element.src.length) == "png")
+		element.src = element.src.substring(0, element.src.length - 4) + '.gif'
+	}
+
+function propertyChanged() {
+	if (!supported) return;
+	
+	var pName = event.propertyName;
+	if (pName != "src") return;
+	// if not set to blank
+	if (!new RegExp(blankSrc).test(src))
+		fixImage();
+};
+
+function fixImage() {
+	// get src
+	var src = element.src;
+
+	// check for real change
+	if (src == realSrc && /\.png$/i.test(src)) {
+		element.src = blankSrc;
+		return;
+	}
+
+	if ( ! new RegExp(blankSrc).test(src)) {
+		// backup old src
+		realSrc = src;
+	}
+	
+	// test for png
+	if (/\.png$/i.test(realSrc)) {
+		// set blank image
+		element.src = blankSrc;
+
+		var method="scale";
+		if (element.currentStyle.width=="auto" && element.currentStyle.height=="auto"){
+		    method="image";
+		}
+		// set filter
+		element.runtimeStyle.filter = "progid:DXImageTransform.Microsoft." +
+					"AlphaImageLoader(src='" + src + "',sizingMethod='"+method+"')";
+	}
+	else {
+		// remove filter
+		element.runtimeStyle.filter = "";
+	}
+}
+
+</script>
+</public:component>

@@ -1,0 +1,6 @@
+.mainform { /*width: 400px;*/ }
+.mainform input, .mainform textarea { width: 400px; }
+input.autowidth { width: auto; }
+.submit { display: block; margin-top: 10px; }
+#editImageBlock img{ display: block; }
+.pager li { display: inline; }

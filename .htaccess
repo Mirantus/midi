@@ -1,0 +1,12 @@
+#RewriteEngine on
+#RewriteCond %{REQUEST_FILENAME} !(works.html)
+#RewriteRule .* works.html
+
+AddDefaultCharset utf-8
+ErrorDocument 404 /index.php
+php_flag display_errors On
+
+<FilesMatch "\.(inc|tpl)$">
+Order allow,deny
+Deny from all
+</FilesMatch>

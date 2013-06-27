@@ -1,0 +1,1 @@
+<ul id="bmenu">	<li class="active">Главная</li>  	<li><a href="/module/">Модуль</a></li></ul>

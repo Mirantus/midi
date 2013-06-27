@@ -1,0 +1,1 @@
+<a href="#"><img src="counter.jpg" alt="" border="0" width="81" height="15"/></a>

@@ -1,0 +1,1 @@
+body.onload = (function() {  });
