@@ -1,0 +1,20 @@
+[general]
+title = ""
+owner = 
+admin = 
+timezone = "Asia/Novosibirsk"
+
+[db]
+host = "localhost"
+dbname = ""
+user = ""
+password = ""
+
+[debug_db]
+host = "localhost"
+dbname = ""
+user = "root"
+password = ""
+
+[modules]
+module = 1
