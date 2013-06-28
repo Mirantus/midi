@@ -1,0 +1,25 @@
+html, body, .ns {margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline}
+article, aside, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block}
+body {line-height: 1; font: 12px Arial, sans-serif; background-color: #fff; color: #000000}
+ul.ns {list-style: none}
+table.ns {border-collapse: collapse; border-spacing: 0}
+dd {margin-left: 40px}
+dl {margin: 1.12em 0}
+fieldset {margin: 1.12em 0}
+h1 {font-size: 2em; margin: .67em 0; font-weight: bolder}
+h2 {font-size: 1.5em; margin: .75em 0; font-weight: bolder}
+h3 {font-size: 1.17em; margin: .83em 0; font-weight: bolder}
+h4 {margin: 1.12em 0; font-weight: bolder}
+h5 {font-size: .83em; margin: 1.5em 0; font-weight: bolder}
+h6 {font-size: .75em; margin: 1.67em 0; font-weight: bolder}
+ol {margin: 1.12em 0 1.12em 40px; list-style-type: decimal}
+ ol ul, ol ol {margin-top: 0; margin-bottom: 0}
+p {margin: 1.12em 0}
+th {font-weight: bolder}
+ul {margin: 1.12em 0 1.12em 40px}
+ ul ol, ul ul {margin-top: 0; margin-bottom: 0}
+form {margin:0; padding: 0}
+img {border: 0}
+a:link {color: #00e}
+a:visited {color: #551A8B}
+a:hover {color: #00e}

@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /admin
-Disallow: /ok
-Disallow: /404.html

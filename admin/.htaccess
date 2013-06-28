@@ -1,4 +1,0 @@
-AuthName "Admin page"
-AuthType Basic
-AuthUserFile /home/site/site.ru/docs/admin/.htpasswd
-require valid-user
