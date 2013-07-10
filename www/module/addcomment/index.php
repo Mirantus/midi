@@ -46,6 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$ajaxResponse = array();
 		if (!$form->isValid()) {
 			$ajaxResponse['errors'] = $form->getErrors();
+		} else {
+			$ajaxResponse['result'] = 'Спасибо, ваш комментарий принят.';
 		}
 		$site->ajaxResponse($ajaxResponse);
 	}

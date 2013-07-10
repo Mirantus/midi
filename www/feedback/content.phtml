@@ -1,5 +1,5 @@
 <h1>Обратная связь</h1>
-<form name="<?=$site->module;?>" method="post" action="<?=$site->pageUrl;?>" enctype="multipart/form-data" class="form">
+<form name="<?=$site->module;?>" method="post" action="<?=$site->pageUrl;?>" enctype="multipart/form-data" class="form"  data-request="ajax">
 	<input type="hidden" name="key" value="">
 
 	<label for="title" class="label"><span class="alert">*</span> <?=$form->title->title;?>:</label>
