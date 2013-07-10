@@ -55,7 +55,6 @@ ul.inline {display: block; list-style: none; margin-left: 0; padding-left: 0}
 	position: fixed;
 	top: 0;
 	left: 0;
-	display: none;
 	background: #bbb;
 	color: #fff;
 	font-weight: bold;

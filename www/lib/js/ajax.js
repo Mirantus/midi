@@ -26,9 +26,9 @@ function sendAjaxForm($form) {
 
 $(function() {
 	$(document).ajaxStart(function() {
-		$('#loading').show();
+		$('<div/>', {id: 'loading', text: 'Пожалуйста подождите...'}).appendTo('body');
 	});
 	$(document).ajaxComplete(function(event,request,settings) {
-		$('#loading').hide();
+		$('#loading').remove();
 	});
 });
