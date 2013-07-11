@@ -53,11 +53,48 @@ document.setCookie = function (name, value, days) {
 };
 
 /**
+ * Add link to bookmarks
+ * Use: <a href="http://example.com" onclick="return AddFavorite(this);"></a>
+ * @param {Object} el Tag "a" dom node
+ * @return {Boolean} Follow url or not
+ */
+window.AddFavorite = function (el) {
+	var title = document.title,
+		url = window.location.href;
+
+	try {
+		// Internet Explorer
+		window.external.AddFavorite(url, title);
+	} catch (e) {
+		try {
+			// Mozilla
+			window.sidebar.addPanel(title, url, '');
+		}
+		catch (e) {
+			// Opera
+			if (typeof(opera) == 'object') {
+				el.rel = 'sidebar';
+				el.title = title;
+				el.url = url;
+				el.href = url;
+
+				return true;
+			} else {
+				// Unknown
+				alert('Нажмите Ctrl-D чтобы добавить страницу в закладки');
+			}
+		}
+	}
+
+	return false;
+};
+
+/**
  * Sticky Footer jquery plugin
  * Resize element to fill full window height
  */
 (function($) {
-	var resizeEl = function (el) {	
+	var resizeEl = function (el) {
 		var diff = $(window).height() - $('body').height();
 		
 		el.height('');
