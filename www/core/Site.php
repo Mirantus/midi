@@ -19,6 +19,12 @@ class Site {
 	public $db;
 
 	/**
+	 * Site version
+	 * @var string
+	 */
+	public $version;
+
+	/**
 	 * Site root url
 	 * @var string
 	 */
@@ -123,6 +129,7 @@ class Site {
 		$this->partialPath = $this->path . '/partials';
 
 		$this->config = parse_ini_file($this->path . '/config.ini', true);
+		$this->version = $this->config['general']['version'];
 		$this->title = $this->config['general']['title'];
 		$this->owner = $this->config['general']['owner'];
 

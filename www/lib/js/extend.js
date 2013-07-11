@@ -81,7 +81,7 @@ window.AddFavorite = function (el) {
 				return true;
 			} else {
 				// Unknown
-				alert('Нажмите Ctrl-D чтобы добавить страницу в закладки');
+				alert('Нажмите Ctrl+D чтобы добавить страницу в закладки');
 			}
 		}
 	}
