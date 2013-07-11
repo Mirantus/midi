@@ -4,6 +4,7 @@ title = ""
 owner = 
 admin = 
 timezone = "Asia/Novosibirsk"
+debug = 0
 
 [db]
 host = "localhost"

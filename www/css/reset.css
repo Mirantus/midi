@@ -20,6 +20,6 @@ ul {margin: 1.12em 0 1.12em 40px}
  ul ol, ul ul {margin-top: 0; margin-bottom: 0}
 form {margin:0; padding: 0}
 img {border: 0}
-a:link {color: #00e}
+a {color: #00e}
 a:visited {color: #551A8B}
 a:hover {color: #00e}

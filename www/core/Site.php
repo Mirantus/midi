@@ -119,6 +119,12 @@ class Site {
 	 */
 	public $owner;
 
+	/**
+	 * Site debug mode
+	 * @var string
+	 */
+	public $debug;
+
 	private function __construct()	{
 		spl_autoload_register(create_function('$class', 'require str_replace("_", "/", $class) . ".php";'));
 
@@ -132,6 +138,8 @@ class Site {
 		$this->version = $this->config['general']['version'];
 		$this->title = $this->config['general']['title'];
 		$this->owner = $this->config['general']['owner'];
+		$this->debug = isset($this->config['general']['debug']) ? (bool)$this->config['general']['debug'] : false;
+		if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') $this->debug = true;
 
 		if (isset($this->config['db'])) {
 			$db = (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') ? $this->config['debug_db'] : $this->config['db'];
