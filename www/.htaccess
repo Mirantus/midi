@@ -27,9 +27,6 @@ AddType text/x-component .htc
 	#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.php\ HTTP/
 	#RewriteRule ^index\.php$ http://www.domain.ru/ [R=301,L]
 </IfModule>
-<IfModule mod_setenvif.c>
-	SetEnv TZ Asia/Novosibirsk
-</IfModule>
 <ifModule mod_php.c>
 	php_value	upload_max_filesize	8M
 	php_value	post_max_size 2M
