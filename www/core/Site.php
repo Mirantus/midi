@@ -323,7 +323,7 @@ class Site {
         //$title = iconv("UTF-8", "koi8-r//IGNORE", $title);
         //$message = iconv("UTF-8", "koi8-r//IGNORE", $message);
 
-        return mail($email, $title, $message, 'From: mailer@' . $_SERVER['SERVER_NAME'] . "\r\n" . 'Content-type: text/html; charset=utf-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion());
+        return mail($email, $title, $message, 'From: mailer@' . $_SERVER['SERVER_NAME'] . "\r\n" . 'Content-type: text/plain; charset=utf-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion());
     }
 
 	/**
