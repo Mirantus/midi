@@ -18,14 +18,22 @@ AddType text/x-component .htc
 	RewriteEngine on
 	RewriteBase /
 
+	#Add slash to urls
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule .*[^/]$ $0/ [L,R=301]
+
+	#Remove www
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^(.*) http://%1/$1 [L,R=301]
+
+	#Remove index.php
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*)/index\.php [NC]
+    RewriteRule ^ %1 [R=301,L]
+
+	#Under construction mode
 	#RewriteCond %{REQUEST_FILENAME} !(works.html)
 	#RewriteRule .* works.html
-
-	#RewriteCond %{HTTP_HOST} ^domain
-	#RewriteRule (.*) http://www.domain.ru/$1 [R=301,L]
-
-	#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.php\ HTTP/
-	#RewriteRule ^index\.php$ http://www.domain.ru/ [R=301,L]
 </IfModule>
 <ifModule mod_php.c>
 	php_value	upload_max_filesize	8M
@@ -51,6 +59,6 @@ AddType text/x-component .htc
 	Deny from all
 </FilesMatch>
 
-ErrorDocument 404 /404.html
+ErrorDocument 404 /404/
 
 #php_flag display_errors On
