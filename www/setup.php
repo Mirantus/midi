@@ -87,18 +87,4 @@ foreach ($site->config['modules'] as $module => $module_access) {
     if ( file_exists($site->path . '/' . $module . '/' . 'setup.php') ) include($site->path . '/' . $module . '/' . 'setup.php');
 }
 
-require('lib/php/Less.php');
-$less = new lessc;
-$less->setFormatter('compressed');
-$cssFiles = array(
-	'css/reset.css',
-	'css/classes.css',
-	'css/site.less',
-);
-$css = '';
-foreach ($cssFiles as $file) {
-	$css .= $less->compileFile($file);
-}
-file_put_contents('css/min.css', $css);
-
 echo 'done';
