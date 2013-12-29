@@ -67,7 +67,7 @@ Number.prototype.numberFormat = String.prototype.numberFormat;
  */
 document.getCookie = function (name) {
     var matches = document.cookie.match(name + '=(.*?)(;|$)');
-    return matches ? matches[1] : null
+    return matches ? matches[1] : null;
 };
 
 /**
@@ -77,7 +77,7 @@ document.getCookie = function (name) {
  * @param {Number} days
  */
 document.setCookie = function (name, value, days) {
-    var expires = new Date;
+    var expires = new Date();
     expires.setDate(expires.getDate() + days);
     document.cookie = name + '=' + value + '; expires=' + expires.toUTCString();
 };
