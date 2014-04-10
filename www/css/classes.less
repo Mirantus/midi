@@ -1,57 +1,184 @@
-.inline {display: inline}
-.block {display: block}
-.inline-block {display: inline-block}
-.hidden {display: none}
-.floatleft {float: left}
-.floatright {float: right}
-.clear {clear: both}
-.clearfix:before, .clearfix:after {content:""; display:table}
-.clearfix:after {clear:both}
-.clearfix {zoom:1}
+.inline {
+  display: inline;
+}
 
-.small {font-size: smaller}
-.large {font-size: larger}
-.bold {font-weight: bold}
-.normal {font-weight: normal}
-.left {text-align: left}
-.center {text-align: center}
-.right {text-align: right}
+.block {
+  display: block;
+}
 
-.underline {text-decoration: underline}
-.undecorate {text-decoration: none}
-.nowrap {white-space: nowrap}
+.inline-block {
+  display: inline-block;
+}
 
-.w100 {width: 100%}
+.hidden {
+  display: none;
+}
 
-.black {color: #000}
-.gray {color: #808080}
-.red {color: #f00}
-.white {color: #fff}
+.floatleft {
+  float: left;
+}
 
-.border {border: 1px solid black}
+.floatright {
+  float: right;
+}
 
-.decimal li {list-style-type: decimal; margin-left: 20px}
-ul.inline {display: block; list-style: none; margin-left: 0; padding-left: 0}
-	ul.inline li {display: inline-block; margin-right: 10px}
+.clear {
+  clear: both;
+}
 
-.form {}
-.form .label {display: block; margin-top: 10px}
-.form .input, .form .textarea {width: 400px}
-.form .submit {display: block; margin-top: 10px}
+.clearfix {
+  zoom: 1;
 
-.alert {color: #f00; font-size: smaller}
-.comment {color: #ccc; font-size: smaller}
-.pager {margin: 20px 0; padding: 0}
-	.pager li {display: inline}
-.image {display: block; float: left; margin: 0 10px 10px 0}
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+.small {
+  font-size: smaller;
+}
+
+.large {
+  font-size: larger;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.undecorate {
+  text-decoration: none;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.black {
+  color: #000;
+}
+
+.gray {
+  color: #808080;
+}
+
+.red {
+  color: #f00;
+}
+
+.white {
+  color: #fff;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+.decimal li {
+  list-style-type: decimal;
+  margin-left: 20px;
+}
+
+ul.inline {
+  display: block;
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+
+  li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+}
+
+.form {
+  .label {
+    display: block;
+    margin-top: 10px;
+  }
+
+  .input,
+  .textarea {
+    width: 400px;
+  }
+
+  .submit {
+    display: block;
+    margin-top: 10px;
+  }
+}
+
+.alert {
+  color: #f00;
+  font-size: smaller;
+}
+
+.comment {
+  color: #ccc;
+  font-size: smaller;
+}
+
+.pager {
+  margin: 20px 0;
+  padding: 0;
+
+  li {
+    display: inline;
+  }
+}
+
+.image {
+  display: block;
+  float: left;
+  margin: 0 10px 10px 0;
+}
+
+ul.ns {
+  list-style: none;
+}
+
+table.ns {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
 
 #loading {
-	position: fixed;
-	top: 0;
-	left: 0;
-	background: #bbb;
-	color: #fff;
-	font-weight: bold;
-	padding: 5px 10px;
-    white-space: nowrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #bbb;
+  color: #fff;
+  font-weight: bold;
+  padding: 5px 10px;
+  white-space: nowrap;
 }

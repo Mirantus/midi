@@ -2,40 +2,102 @@
 @import "classes.less";
 @import "mixins.less";
 
-@text-color: #000000;
+@text-color: #000;
 @text-size: 12px;
 @text-font: Arial, sans-serif;
 @site-background: #fff;
-@link-color: #000000;
-@link-visited-color: #000000;
-@link-hover-color: #000000;
+@link-color: #00e;
+@link-visited-color: #551A8B;
+@link-hover-color: #00e;
 
-a {color: @link-color; transition: color 2s;}
-a:hover {color: @link-hover-color; transition: color 0.5s;}
 body {
-  #wrapper {margin:auto; width: 780px}
-  header {height: 30px; padding: 20px; background-color: #fff; text-align: center}
-  #logo h2 {margin: 0; font-weight: normal}
+  font: @text-size @text-font;
+  background-color: @site-background;
+  color: @text-color;
+
+  a {
+    color: @link-color;
+    /*transition: color 2s;*/
+
+    &:hover {
+      color: @link-hover-color;
+      transition: color 0.5s;
+    }
+  }
+
+  #wrapper {
+    margin:auto;
+    width: 780px;
+  }
+
+  header {
+    height: 30px;
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+  }
+
+  #logo h2 {
+    margin: 0;
+    font-weight: normal;
+  }
+
   #top-panel {
-    margin: 10px 0; padding: 5px 20px; background-color: #eee; border: 1px dotted #ccc;
+    margin: 10px 0;
+    padding: 5px 20px;
+    background-color: #eee;
+    border: 1px dotted #ccc;
     .border-radius(10px);
     .box-shadow(0px, 2px, 3px, #666);
   }
-  #searchArea {float:left}
-  #loginArea {float:right}
-  aside {float: left; width: 120px; padding: 20px}
-  nav .active {font-weight: bold}
+
+  #searchArea {
+    float:left;
+  }
+
+  #loginArea {
+    float:right;
+  }
+
+  aside {
+    float: left;
+    width: 120px;
+    padding: 20px;
+  }
+
+  nav .active {
+    font-weight: bold;
+  }
+
   section {
-    padding: 20px; margin-left: 180px; background-color: #f8f8f8; border: 1px dotted #ccc;
+    padding: 20px;
+    margin-left: 180px;
+    background-color: #f8f8f8;
+    border: 1px dotted #ccc;
     .border-radius(10px);
     .linear-gradient(#f8f8f8, #ffffff);
-    h1:first-child {margin-top: 0}
+
+    h1:first-child {
+      margin-top: 0;
+    }
   }
+
   #bottom-panel {
-    margin: 10px 0; padding: 5px 20px; background-color: #eee; border: 1px dotted #ccc; text-align: center;
+    margin: 10px 0;
+    padding: 5px 20px;
+    background-color: #eee;
+    border: 1px dotted #ccc;
+    text-align: center;
     .border-radius(10px);
     .box-shadow(0px, 2px, 3px, #666);
   }
-  footer {text-align: center; padding: 5px}
-  #counter {}
+
+  footer {
+    text-align: center;
+    padding: 5px;
+  }
+
+  #counter {
+
+  }
 }
