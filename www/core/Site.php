@@ -139,10 +139,9 @@ class Site {
 		$this->title = $this->config['general']['title'];
 		$this->owner = $this->config['general']['owner'];
 		$this->debug = isset($this->config['general']['debug']) ? (bool)$this->config['general']['debug'] : false;
-		if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') $this->debug = true;
 
 		if (isset($this->config['db'])) {
-			$db = (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') ? $this->config['debug_db'] : $this->config['db'];
+			$db = ($this->debug) ? $this->config['debug_db'] : $this->config['db'];
 			
 			$this->db = new PDO(
 				"mysql:host=" . $db['host'] . ';dbname=' . $db['dbname'],
@@ -158,7 +157,6 @@ class Site {
 		$this->setPage();
 
 		if (!isset($_SESSION)) session_start();
-		if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') $_SESSION['current_user'] = array ('id' => -1, 'title' => 'Разработчик', 'access' => '5');
 		if (!isset($_SESSION['current_user'])) $_SESSION['current_user'] = array ('id' => 0, 'title' => 'Гость', 'access' => '1');
 	}
 
@@ -178,7 +176,7 @@ class Site {
 	 */
 	public function registerPaths($paths) {
 		foreach ($paths as $i => $path) $paths[$i] = $this->path . '/' . $path;
-		set_include_path(implode(PATH_SEPARATOR, $paths));
+		set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $paths));
 	}
 
 	/**
