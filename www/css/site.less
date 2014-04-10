@@ -1,5 +1,6 @@
 @import "reset.less";
 @import "classes.less";
+@import "mixins.less";
 
 @text-color: #000000;
 @text-size: 12px;
@@ -8,29 +9,6 @@
 @link-color: #000000;
 @link-visited-color: #000000;
 @link-hover-color: #000000;
-
-.border-radius (@radius: 5px) {
-  border-radius: @radius;
-  -webkit-border-radius: @radius;
-  -moz-border-radius: @radius;
-}
-
-.linear-gradient (@startColor: #fff, @endColor: #fff) {
-  background: -webkit-gradient(linear, 0 0, 0 bottom, from(@startColor), to(@endColor));
-  background: -webkit-linear-gradient(@startColor, @endColor);
-  background: -moz-linear-gradient(@startColor, @endColor);
-  background: -ms-linear-gradient(@startColor, @endColor);
-  background: -o-linear-gradient(@startColor, @endColor);
-  background: linear-gradient(@startColor, @endColor);
-  -pie-background: linear-gradient(@startColor, @endColor);
-  behavior: url('/js/PIE.htc');
-}
-
-.box-shadow (@x: 0, @y: 0, @blur: 1px, @color: #000) {
-  box-shadow: @arguments;
-  -moz-box-shadow: @arguments;
-  -webkit-box-shadow: @arguments;
-}
 
 a {color: @link-color; transition: color 2s;}
 a:hover {color: @link-hover-color; transition: color 0.5s;}
