@@ -8,8 +8,7 @@ $(function() {
 		}
 
 		if ($form.attr('data-request') == 'ajax') {
-			alert('asdf');
-			//sendAjaxForm($form);
+			sendAjaxForm($form);
 			return false;
 		}
 

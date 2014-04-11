@@ -43,6 +43,7 @@ $(function() {
             separator09 : { visible : true },
             html : { visible : true },
             removeFormat : { visible : true }
-        }
+        },
+		initialContent: ''
     });
 });
