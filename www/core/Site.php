@@ -231,10 +231,7 @@ class Site {
 
 		$pager = '<ul class="pager">';
 		for ($i = 1; $i <= $countPages; $i++ ) {
-			if ($i == $currentPage)
-				$pager .= '<li class="active">' . $i . '</li> ';
-			else
-				$pager .= '<li><a href="' . $this->addUrlParam($this->pageUrl, 'page', $i) . '">' . $i . '</a></li> ';
+			$pager .= $this->createLink($this->addUrlParam($this->pageUrl, 'page', $i), $i, $i == $currentPage, true);
 		}
 		$pager .= '</ul>';
 
@@ -356,6 +353,30 @@ class Site {
 		$modulePart = ($module == '') ? '' : '/' . $module;
 		$pagePart = ($page == 'index' || $page == '') ? '' : '/' . $page;
 		return $this->url . $modulePart . $pagePart;
+	}
+
+	/**
+	 * Create HTML link
+	 * @param string $url
+	 * @param string $text
+	 * @param bool $isActive Create link or text (if active)
+	 * @param bool $isListItem Wrap with <li> or not
+	 * @return string
+	 */
+	public function createLink($url, $text, $isActive = false, $isListItem = false) {
+		$link = '';
+
+		if ($isListItem) {
+			$link = $isActive ? '<li class="active">' : '<li>';
+		}
+
+		$link .= $isActive ? $text : '<a href="' . $url . '">' . $text . '</a>';
+
+		if ($isListItem) {
+			$link .= '</li>';
+		}
+
+		return $link;
 	}
 
 	/**
