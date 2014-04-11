@@ -70,6 +70,19 @@ document.getCookie = function (name) {
     return matches ? matches[1] : null;
 };
 
+document.getCookies = function() {
+	var pairs = document.cookie.split(";"),
+		cookies = {},
+		pair;
+
+	for (var i = 0; i < pairs.length; i++) {
+		pair = pairs[i].split('=');
+		cookies[pair[0]] = decodeURIComponent(pair[1]);
+	}
+
+	return cookies;
+}
+
 /**
  * Set cookie
  * @param {String} name
