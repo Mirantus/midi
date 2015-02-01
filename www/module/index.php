@@ -1,5 +1,5 @@
 <?php
-require('../core/init.php');
+require('../../core/init.php');
 require('./init.php');
 
 if (isset($config['items'])) {

@@ -1,5 +1,5 @@
 <?php
-require('../../core/init.php');
+require('../../../core/init.php');
 require('../init.php');
 $site->setPage(basename(dirname(__FILE__)));
 

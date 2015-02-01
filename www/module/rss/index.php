@@ -1,5 +1,5 @@
 <?php
-require('../../core/init.php');
+require('../../../core/init.php');
 require('../init.php');
 
 if (isset($config['items'])) {
@@ -25,7 +25,7 @@ if ($items) {
         $rss .= '<title><![CDATA[';
         if (isset($item_params['title'])) $rss .= htmlspecialchars($item_params['title'], ENT_QUOTES);
         $rss .= ']]></title>';
-        $rss .= '<link>' . $site->moduleUrl . '/item/?id=' . $item_params['id'] . '</link>';
+        $rss .= '<link>' . $site->moduleUrl . '/item/' . $item_params['id'] . '</link>';
         $rss .= '<description><![CDATA[';
         $rss .= $item_params['text'];
         $rss .= ']]></description>';

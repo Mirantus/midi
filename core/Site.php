@@ -37,6 +37,12 @@ class Site {
 	public $path;
 
 	/**
+	 * Path to webroot
+	 * @var string
+	 */
+	public $webrootPath;
+
+	/**
 	 * @var string
 	 */
 	public $layoutPath;
@@ -130,10 +136,10 @@ class Site {
 
 		$this->url = 'http://' . $_SERVER['HTTP_HOST'];
 		$this->pageUrl = $this->url . $_SERVER['REQUEST_URI'];
-		$this->path = $_SERVER['DOCUMENT_ROOT'];
+		$this->webrootPath = $_SERVER['DOCUMENT_ROOT'];
+		$this->path = dirname($this->webrootPath);
 		$this->layoutPath = $this->path . '/layouts';
 		$this->partialPath = $this->path . '/partials';
-
 		$this->config = parse_ini_file($this->path . '/config.ini', true);
 		$this->version = $this->config['general']['version'];
 		$this->title = $this->config['general']['title'];
@@ -190,7 +196,7 @@ class Site {
 		if ($this->module != '') {
 			$this->moduleUrl .= '/' . $this->module;
 		}
-		$this->modulePath = $this->path . '/' . $this->module;
+		$this->modulePath = $this->webrootPath . '/' . $this->module;
 		$this->moduleDataPath = $this->modulePath . '/data';
 		$this->moduleItemsPath = $this->moduleDataPath . '/items';
 		$this->moduleImagePath = $this->moduleItemsPath . '/i';
