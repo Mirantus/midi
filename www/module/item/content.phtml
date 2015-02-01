@@ -27,7 +27,7 @@ if (!empty($form->occupation->value)) echo $form->occupation->title . ': ' . $fo
 
 <? if (isset($config['comments'])): ?>
 <h4>Комментарии</h4>
-<p><a href="/<?=$site->module;?>/addcomment/?item=<?=$id;?>">Добавить комментарий</a></p>
+<p><a href="/<?=$site->module;?>/addcomment/<?=$id;?>">Добавить комментарий</a></p>
 <? if ($comments): ?>
 	<? foreach ($comments as $comment_params): ?>
 		<p id="comment<?=$comment_params['id'];?>">

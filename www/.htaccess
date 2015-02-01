@@ -31,6 +31,12 @@ AddType text/x-component .htc
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*)/index\.php [NC]
     RewriteRule ^ %1 [R=301,L]
 
+    RewriteRule ^module/item/([0-9]+)/*$ module/item/?id=$1
+    RewriteRule ^module/edit/([0-9]+)/*$ module/edit/?id=$1
+    RewriteRule ^module/del/([0-9]+)/*$ module/del/?id=$1
+    RewriteRule ^module/cat/([0-9]+)/*$ module/cat/?id=$1
+    RewriteRule ^module/addcomment/([0-9]+)/*$ module/addcomment/?item=$1
+
 	#Under construction mode
 	#RewriteCond %{REQUEST_FILENAME} !(works.html)
 	#RewriteRule .* works.html
