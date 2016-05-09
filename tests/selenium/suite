@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="index.html">index</a></td></tr>
+<tr><td><a href="404.html">404</a></td></tr>
+<tr><td><a href="contacts.html">contacts</a></td></tr>
+<tr><td><a href="gallery.html">gallery</a></td></tr>
+<tr><td><a href="ok.html">ok</a></td></tr>
+<tr><td><a href="feedback.html">feedback</a></td></tr>
+<tr><td><a href="subscribe.html">subscribe</a></td></tr>
+<tr><td><a href="module/add.html">module/add</a></td></tr>
+<tr><td><a href="module/index.html">module/index</a></td></tr>
+<tr><td><a href="module/cat.html">module/cat</a></td></tr>
+<tr><td><a href="module/edit.html">module/edit</a></td></tr>
+<tr><td><a href="module/item.html">module/item</a></td></tr>
+<tr><td><a href="module/addcomment.html">module/addcomment</a></td></tr>
+<tr><td><a href="module/rss.html">module/rss</a></td></tr>
+<tr><td><a href="module/del.html">module/del</a></td></tr>
+</tbody></table>
+</body>
+</html>
