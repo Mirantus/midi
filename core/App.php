@@ -398,27 +398,27 @@
 		//	public function getUserAccess() {
 		//		return $_SESSION['current_user']['access'];
 		//	}
-		//
-		//	/**
-		//	 * Is file posted?
-		//	 * @param string $name File field name
-		//	 * @return bool
-		//	 */
-		//	public function isFileUploaded($name) {
-		//		return isset($_FILES[$name]) && $_FILES[$name]['name'] != '' && $_FILES[$name]['size'] > 0;
-		//	}
-		//
-		//	/**
-		//	 * Return error of uploading file
-		//	 * @param string $name
-		//	 * @return string|bool
-		//	 */
-		//	public function getFileUploadError($name) {
-		//		if ($_FILES[$name]['error'] > 0) return 'Ошибка загрузки файла';
-		//		if ($_FILES[$name]['size'] > 1048576) return 'Максимальный размер файла 1Мб';
-		//		return false;
-		//	}
-		//
+
+			/**
+			 * Is file posted?
+			 * @param string $name File field name
+			 * @return bool
+			 */
+			public function isFileUploaded($name) {
+				return isset($_FILES[$name]) && $_FILES[$name]['name'] != '' && $_FILES[$name]['size'] > 0;
+			}
+
+			/**
+			 * Return error of uploading file
+			 * @param string $name
+			 * @return string|bool
+			 */
+			public function getFileUploadError($name) {
+				if ($_FILES[$name]['error'] > 0) return 'Ошибка загрузки файла';
+				if ($_FILES[$name]['size'] > 1048576) return 'Максимальный размер файла 1Мб';
+				return false;
+			}
+		
 		//	/**
 		//	 * Check if it is ajax request
 		//	 * @return bool

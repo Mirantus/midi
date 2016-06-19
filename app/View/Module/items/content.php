@@ -24,7 +24,7 @@
             </li>
         <? } ?>
     <? } else { ?>
-        <li>Данных нет</li>'
+        <li>Данных нет</li>
     <? } ?>
 </ul>
 <?php include($this->app->partialPath . '/pagination.php');?>

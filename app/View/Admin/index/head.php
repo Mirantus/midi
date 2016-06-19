@@ -3,4 +3,4 @@
      * @var app\Controller\AdminController $this
      */
 ?>
-<title><?=$this->title?> - <?=$this->app->title?></title>
+<title><?=$title?> - <?=$this->app->title?></title>

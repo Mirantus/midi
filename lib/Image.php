@@ -6,6 +6,8 @@
  * @package Lib
  * @copyright (c) 2012. Mikhail Miropolskiy. All Rights Reserved.
  */
+namespace lib;
+
 class Image {
 
 	/**

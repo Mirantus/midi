@@ -53,13 +53,6 @@ class Field {
 	}
 
 	/**
-	 * @return string Safe field value for display
-	 */
-	public function getDisplayValue() {
-		return htmlspecialchars($this->value, ENT_QUOTES);
-	}
-
-	/**
 	 * Fill field from request params
 	 */
 	public function fill() {

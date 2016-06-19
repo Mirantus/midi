@@ -32,6 +32,11 @@ abstract class Controller {
 	/**
 	 * @var string
 	 */
+	protected $resourcePath;
+
+	/**
+	 * @var string
+	 */
 	protected $viewPath;
 
 	/**
@@ -46,11 +51,19 @@ abstract class Controller {
 	public function render($view_params = []) {
 	    // TODO: create class View
         $title = $this->app->page->title;
+		
 		$view_vars = isset($view_params['vars']) ? $view_params['vars'] : [];
 		extract($view_vars);
+		
+        // TODO: use this in module/item
         $this->viewPath = isset($view_params['view']) ? $view_params['view'] : $this->name . '/' . $this->app->page->action;
 		$this->viewPath = dirname(__FILE__) . '/../app/View/' . $this->viewPath;
+		
+		$this->resourcePath = isset($view_params['resource']) ? $view_params['resource'] : $this->name;
+		$this->resourcePath = $this->app->webrootPath . '/data/' . $this->resourcePath;
+		
         $this->layout = isset($view_params['layout']) ? $view_params['layout'] : $this->layout;
+		
 		require dirname(__FILE__) . '/../app/View/Layout/' . $this->layout . '.php';
 	}
 
