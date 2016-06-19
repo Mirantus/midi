@@ -7,11 +7,14 @@
  * @subpackage Form
  * @copyright (c) 2012. Mikhail Miropolskiy. All Rights Reserved.
  */
+
+namespace core\Form;
+
 class Form {
 
 	/**
 	 * Array of form fields
-	 * @var array
+	 * @var Field[]
 	 */
 	public $fields = array();
 

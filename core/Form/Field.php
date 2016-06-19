@@ -7,6 +7,11 @@
  * @subpackage Form
  * @copyright (c) 2012. Mikhail Miropolskiy. All Rights Reserved.
  */
+
+namespace core\Form;
+
+use core\App;
+
 class Field {
 
 	/**
@@ -58,7 +63,7 @@ class Field {
 	 * Fill field from request params
 	 */
 	public function fill() {
-		$value = Site::getInstance()->getParam($this->name, false);
+		$value = App::getInstance()->getParam($this->name, false);
 		if (!is_null($value)) $this->value = $value;
 	}
 

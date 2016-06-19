@@ -40,6 +40,10 @@ AddType text/x-component .htc
 	#Under construction mode
 	#RewriteCond %{REQUEST_FILENAME} !(works.html)
 	#RewriteRule .* works.html
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
 <ifModule mod_php.c>
 	php_value	upload_max_filesize	8M
