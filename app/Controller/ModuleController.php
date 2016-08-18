@@ -19,18 +19,18 @@
             $form = new Form();
             if ($this->level == 'cats') {
                 $cats = ModuleCat::getAll();
-                $form->add('cat', array('title' => 'Рубрика'));
+                $form->add('cat', ['title' => 'Рубрика']);
             }
-            $form->add('title', array('title' => 'Заголовок'));
-            $form->add('text', array('title' => 'Текст'));
-            $form->add('price', array('title' => 'Цена'));
-            $form->add('image', array('title' => 'Изображение'));
-            $form->add('file', array('title' => 'Файл'));
-            $form->add('name', array('title' => 'Имя'));
-            $form->add('phone', array('title' => 'Телефон'));
-            $form->add('url', array('title' => 'Сайт'));
-            $form->add('email', array('title' => 'E-mail'));
-            $form->add('address', array('title' => 'Адрес'));
+            $form->add('title', ['title' => 'Заголовок']);
+            $form->add('text', ['title' => 'Текст']);
+            $form->add('price', ['title' => 'Цена']);
+            $form->add('image', ['title' => 'Изображение']);
+            $form->add('file', ['title' => 'Файл']);
+            $form->add('name', ['title' => 'Имя']);
+            $form->add('phone', ['title' => 'Телефон']);
+            $form->add('url', ['title' => 'Сайт']);
+            $form->add('email', ['title' => 'E-mail']);
+            $form->add('address', ['title' => 'Адрес']);
 
             $form->fill();
 
@@ -54,7 +54,7 @@
                 if (!empty($form->price->value) && !$form->price->isInt()) {
                     $form->price->error = $form->errors['int'];
                 }
-                if (isset($config['cats']) && !$form->cat->isInt()) {
+                if ($this->level == 'cats' && !$form->cat->isInt()) {
                     $form->cat->error = $form->errors['cat'];
                 }
                 if (empty($form->title->value)) {
@@ -123,6 +123,122 @@
                     'cats' => $cats,
                     'form' => $form,
                     'title' => 'Добавление модуля'
+                ]
+            ]);
+        }
+
+        public function edit() {
+            $id = $this->app->getParamInt('id');
+            if (!$id) $this->app->back();
+
+            $item = ModuleItem::getById($id);
+            if (empty($item)) $this->app->back();
+
+            $data_path = $this->app->webrootPath . '/data/' . $this->name . '/items/';
+            $cats = [];
+
+            $form = new Form();
+            if ($this->level == 'cats') {
+                $cats = ModuleCat::getAll();
+                $form->add('cat', ['title' => 'Рубрика', 'value' => $item['cat']]);
+            }
+            $form->add('title', ['title' => 'Заголовок', 'value' => $item['title']]);
+            $form->add('text', ['title' => 'Текст', 'value' => $item['text']]);
+            $form->add('price', ['title' => 'Цена', 'value' => $item['price']]);
+            $form->add('image', ['title' => 'Изображение', 'value' => $item['image']]);
+            $form->add('file', ['title' => 'Файл', 'value' => $item['file']]);
+            $form->add('name', ['title' => 'Имя', 'value' => $item['name']]);
+            $form->add('phone', ['title' => 'Телефон', 'value' => $item['phone']]);
+            $form->add('url', ['title' => 'Сайт', 'value' => $item['url']]);
+            $form->add('email', ['title' => 'E-mail', 'value' => $item['email']]);
+            $form->add('address', ['title' => 'Адрес', 'value' => $item['address']]);
+
+            $form->fill();
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                //initialization
+                $form->url->value = str_replace('http://', '', $form->url->value);
+                if ($form->url->value != '') {
+                    $form->url->value = 'http://' . $form->url->value;
+                }
+                if ($form->phone->value != '') {
+                    $form->phone->value = Utils::preparePhones($form->phone->value);
+                }
+
+                //validation
+                if (!empty($form->email->value) && !$form->email->isEmail()) {
+                    $form->email->error = $form->errors['email'];
+                }
+                if (!empty($form->url->value) && !$form->url->isUrl()) {
+                    $form->url->error = $form->errors['url'];
+                }
+                if (!empty($form->price->value) && !$form->price->isInt()) {
+                    $form->price->error = $form->errors['int'];
+                }
+                if ($this->level == 'cats' && !$form->cat->isInt()) {
+                    $form->cat->error = $form->errors['cat'];
+                }
+                if (empty($form->title->value)) {
+                    $form->title->error = 'Введите пожалуйста заголовок';
+                }
+
+                if ($this->app->isFileUploaded('file')) {
+                    $form->file->value = Utils::prepareFileName($_FILES['file']['name']);
+                    $form->file->error = $this->app->getFileUploadError('file');
+                }
+                if ($this->app->isFileUploaded('image')) {
+                    $form->image->value = Utils::prepareFileName($_FILES['image']['name']);
+                    $form->image->error = $this->app->getFileUploadError('image');
+
+                    if (!$form->file->error && !Image::GetType($_FILES['image']['tmp_name'])) {
+                        $form->image->error = 'Изображение должно быть в формате jpg, png или gif';
+                    }
+                }
+
+                //process
+                if ($form->isValid()) {
+                    $formValues = $form->toArray();
+                    $formValues['file'] = $form->file->value;
+                    $formValues['image'] = $form->image->value;
+
+                    ModuleItem::update($formValues, 'id=' . $id);
+                    // TODO: if false, show errors
+
+                    //image
+                    if ($this->app->isFileUploaded('file')) {
+                        @mkdir($data_path . $id);
+                        move_uploaded_file($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
+                    }
+                    if ($this->app->isFileUploaded('image')) {
+                        $image_path = $data_path . $id . '/';
+                        @mkdir($image_path);
+                        move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
+                        Image::CreatePreview($image_path . $form->image->value, $image_path . 'thumb_' . $form->image->value, 100);
+                        ModuleItem::update(['image' => $form->image->value], 'id=' . $id);
+                    }
+
+//                    if (!$site->isAjaxRequest()) {
+                    // TODO: redirect to list with message
+                    $this->app->redirect($this->app->url . '/ok');
+//                    }
+                }
+
+                // TODO: add ajax support
+//                if ($site->isAjaxRequest()) {
+//                    $ajaxResponse = [];
+//                    if (!$form->isValid()) {
+//                        $ajaxResponse['errors'] = $form->getErrors();
+//                    }
+//                    $site->ajaxResponse($ajaxResponse);
+//                }
+            }
+
+            $this->render([
+                'vars' => [
+                    'id' => $id,
+                    'cats' => $cats,
+                    'form' => $form,
+                    'title' => 'Редактирование модуля'
                 ]
             ]);
         }

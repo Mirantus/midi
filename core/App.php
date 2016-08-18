@@ -290,24 +290,24 @@
 				return (count($values) > 1 || !isset($values[0])) ? $values : $values[0];
 			}
 		
-		//	/**
-		//	 * Get integer param from request
-		//	 * @param string $param Name of param
-		//	 * @return int|null Param value
-		//	 */
-		//	public function getParamInt($param) {
-		//		$values = $this->getParam($param);
-		//		if ($values === null) return null;
-		//
-		//		$values = (is_array($values)) ? $values : array($values);
-		//
-		//		foreach ($values as $key => $value) {
-		//			$value = intval($value);
-		//			$values[$key] = $value;
-		//		}
-		//
-		//		return (count($values) > 1) ? $values : $values[0];
-		//	}
+			/**
+			 * Get integer param from request
+			 * @param string $param Name of param
+			 * @return int|null Param value
+			 */
+			public function getParamInt($param) {
+				$values = $this->getParam($param);
+				if ($values === null) return null;
+
+				$values = (is_array($values)) ? $values : array($values);
+
+				foreach ($values as $key => $value) {
+					$value = intval($value);
+					$values[$key] = $value;
+				}
+
+				return (count($values) > 1) ? $values : $values[0];
+			}
 
 			/**
 			 * Add param to url

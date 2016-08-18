@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if ($form->isValid()) {
 		$formValues = $form->toArray();
 
-		$fields = $values = array();
+		$fields = $values = [];
 		$values['id'] = $id;
 		foreach ($formValues as $field => $value) {
 			if (!isset($config['items'][$field])) continue;
