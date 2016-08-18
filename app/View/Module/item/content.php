@@ -7,7 +7,7 @@
 <h3><?=h($item['title'])?></h3>
 
 <? if (!empty($item['image'])) { ?>
-    <a href="/data/module/items/i/<?=$item['image']?>" rel="lightbox"><img src="/data/module/items/i/thumbs/<?=$item['image']?>" alt="<?=h($item['title'])?>" class="image floatright"></a>
+    <a href="/data/<?=$this->name?>/items/<?=$item['id']?>/<?=$item['image']?>" rel="lightbox"><img src="/data/<?=$this->name?>/items/<?=$item['id']?>/thumb_<?=$item['image']?>" alt="<?=h($item['title'])?>" class="image floatright"></a>
 <? } ?>
 
 <?
@@ -23,7 +23,7 @@
 <?
 ?>
 <? if (!empty($item['file'])) { ?>
-    <p><a href="/data/module/items/<?=$item['file'];?>"><?=$item['file'];?></a></p>
+    <p><a href="/data/<?=$this->name?>/items/<?=$item['id']?>/<?=$item['file']?>">/<?=$item['file'];?></a></p>
 <? } ?>
 <? if (!empty($item['date'])) echo Date::sqlToDate($item['date']); ?>
 

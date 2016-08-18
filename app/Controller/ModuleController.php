@@ -14,7 +14,7 @@
         public function add() {
             $cats = [];
 
-//            $moduleImagePath = $site->webrootPath . '/data/' . $this->module . '/items/';
+            $data_path = $this->app->webrootPath . '/data/' . $this->name . '/items/';
 
             $form = new Form();
             if ($this->level == 'cats') {
@@ -73,20 +73,6 @@
                         $form->image->error = 'Изображение должно быть в формате jpg, png или gif';
                     }
                 }
-                if ($this->app->isFileUploaded('file') && $form->isValid()) {
-                    if (!move_uploaded_file($_FILES['file']['tmp_name'],
-                        $this->app->webrootPath . '/data/' . $this->name . '/items/' . $form->file->value)
-                    ) {
-                        $form->file->error = 'Ошибка загрузки файла';
-                    }
-                }
-                if ($this->app->isFileUploaded('image') && $form->isValid()) {
-                    if (!move_uploaded_file($_FILES['image']['tmp_name'],
-                        $this->app->webrootPath . '/data/' . $this->name . '/items/' . $form->image->value)
-                    ) {
-                        $form->image->error = 'Ошибка загрузки файла';
-                    }
-                }
 
                 //process
                 if ($form->isValid()) {
@@ -98,36 +84,27 @@
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
-                    $fields = $placeholders = $values = [];
-                    foreach ($formValues as $field => $value) {
-                        // TODO: config to model
-//                        if (!isset($config['items'][$field])) {
-//                            continue;
-//                        }
-                        $fields[] = $field;
-                        $placeholders[] = ':' . $field;
-                        $values[$field] = $value;
-                    }
-                    // TODO: save model
-//                    $st = $site->db->prepare(
-//                        'INSERT INTO ' . $site->module . '_items (' . implode(',',
-//                            $fields) . ') VALUES (' . implode(',', $placeholders) . ')'
-//                    );
-//                    $st->execute($values);
+                    $id = ModuleItem::insert($formValues);
+                    // TODO: if $id == false, show errors
 
                     //image
-                    // TODO: save image
-//                    $id = $site->db->lastInsertId();
-//                    if ($site->isFileUploaded('image')) {
-//                        $image = $id . '.' . Image::GetType($moduleImagePath . '/' . $form->image->value);
-//                        rename($moduleImagePath . '/' . $form->image->value, $moduleImagePath . '/' . $image);
-//                        Image::CreatePreview($moduleImagePath . '/' . $image, $moduleImagePath . '/thumbs/' . $image,
-//                            100);
-//                        $site->db->exec('UPDATE ' . $site->module . '_items SET image="' . $image . '" WHERE id=' . $id);
-//                    }
+                    if ($id) {
+                        // TODO: create File class
+                        if ($this->app->isFileUploaded('file')) {
+                            @mkdir($data_path . $id);
+                            move_uploaded_file($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
+                        }
+                        if ($this->app->isFileUploaded('image')) {
+                            $image_path = $data_path . $id . '/';
+                            @mkdir($image_path);
+                            move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
+                            Image::CreatePreview($image_path . $form->image->value, $image_path . 'thumb_' . $form->image->value, 100);
+                            ModuleItem::update(['image' => $form->image->value], 'id=' . $id);
+                        }
+                    }
 
 //                    if (!$site->isAjaxRequest()) {
-//                        $site->redirect($site->url . '/ok');
+                        $this->app->redirect($this->app->url . '/ok');
 //                    }
                 }
 

@@ -350,11 +350,11 @@
 				exit;
 			}
 		
-		//	public function back() {
-		//		$url = empty($_SERVER['HTTP_REFERER']) ? $this->url : $_SERVER['HTTP_REFERER'];
-		//		$this->redirect($url);
-		//	}
-		//
+			public function back() {
+				$url = empty($_SERVER['HTTP_REFERER']) ? $this->url : $_SERVER['HTTP_REFERER'];
+				$this->redirect($url);
+			}
+
 		//	/**
 		//	 * Send ajax response
 		//	 * @param mixed $data
