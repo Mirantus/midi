@@ -229,33 +229,6 @@
 
 			call_user_func_array([$controller, $this->page->action] , $this->page->params);
 		}
-
-		//	/**
-		//	 * Set current moduleprotected
-		//	 * @param string $module
-		//	 */
-		//	public function setModule($module = '') {
-		//		$this->module = $module;
-		//
-		//		$this->moduleUrl = 'http://' . $_SERVER['HTTP_HOST'];
-		//		if ($this->module != '') {
-		//			$this->moduleUrl .= '/' . $this->module;
-		//		}
-		//		$this->modulePath = $this->path . '/site/' . $this->module;
-		//		$this->moduleDataPath = $this->modulePath . '/data';
-		//		$this->moduleItemsPath = $this->moduleDataPath . '/items';
-		//		$this->moduleImagePath = $this->moduleItemsPath . '/i';
-		//		$this->pagePath = $this->modulePath . '/' . $this->page;
-		//	}
-		//
-		//	/**
-		//	 * Set current page
-		//	 * @param string $page
-		//	 */
-		//	public function setPage($page = '') {
-		//		$this->page = $page;
-		//		$this->pagePath = $this->modulePath . '/' . $this->page;
-		//	}
 		
 			/**
 			 * Get param from request
@@ -355,14 +328,14 @@
 				$this->redirect($url);
 			}
 
-		//	/**
-		//	 * Send ajax response
-		//	 * @param mixed $data
-		//	 */
-		//	public function ajaxResponse($data) {
-		//		header('Content-type: application/json');
-		//		exit(json_encode($data));
-		//	}
+			/**
+			 * Send ajax response
+			 * @param mixed $data
+			 */
+			public function ajaxResponse($data) {
+				header('Content-type: application/json');
+				exit(json_encode($data));
+			}
 
         /**
          * Create url by page alias and query
@@ -419,12 +392,12 @@
 				return false;
 			}
 		
-		//	/**
-		//	 * Check if it is ajax request
-		//	 * @return bool
-		//	 */
-		//	public function isAjaxRequest() {
-		//		return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-		//				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
-		//	}
+			/**
+			 * Check if it is ajax request
+			 * @return bool
+			 */
+			public function isAjaxRequest() {
+				return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+						strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+			}
 	}

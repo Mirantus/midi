@@ -26,6 +26,15 @@
         protected static $primaryKey = 'id';
 
         /**
+         * Delete
+         * @param string $where
+         */
+        public static function delete($where) {
+            $query = 'DELETE FROM ' . static::$table . ' WHERE ' . $where;
+            static::getDB()->prepare($query)->execute();
+        }
+
+        /**
          * Get all records
          * @param array $params
          * @return array

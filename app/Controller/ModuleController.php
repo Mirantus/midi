@@ -127,6 +127,19 @@
             ]);
         }
 
+        public function del() {
+            $id = $this->app->getParamInt('id');
+            if (!$id) $this->app->back();
+
+            ModuleItem::delete('id=' . $id);
+
+            if ($this->app->isAjaxRequest()) {
+                $this->app->ajaxResponse('');
+            } else {
+                $this->app->back();
+            }
+        }
+
         public function edit() {
             $id = $this->app->getParamInt('id');
             if (!$id) $this->app->back();
