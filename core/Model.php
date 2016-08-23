@@ -26,57 +26,57 @@
         protected static $primaryKey = 'id';
 
         /**
-         * Delete
-         * @param string $where
+         * Query
+         * @param array $params
+         * @param array $values
+         * @return boolean
          */
-        public static function delete($where) {
-            $query = 'DELETE FROM ' . static::$table . ' WHERE ' . $where;
-            static::getDB()->prepare($query)->execute();
+        public static function query($params = [], $values = []) {
+            $query = static::buidQuery($params);
+            $st = static::getDB()->prepare($query);
+            $result = $st->execute($values);
+
+            return $result;
         }
 
         /**
-         * Get all records
+         * Find records
          * @param array $params
+         * @param array $values
          * @return array
          */
-        public static function getAll($params = []) {
-            $params['query'] = 'SELECT * FROM ' . static::$table;
-            $result = static::getDB()->query(static::buidQuery($params))->fetchAll(PDO::FETCH_ASSOC);
-            
+        public static function find($params = [], $values = []) {
+            if (empty($params['query'])) {
+                $params['query'] = 'SELECT * FROM ' . static::$table;
+            }
+
+            $query = static::buidQuery($params);
+            $st = static::getDB()->prepare($query);
+            $st->execute($values);
+            $result = $st->fetchAll(PDO::FETCH_ASSOC);
+
             return $result;
         }
 
         /**
-         * Get one record by id
-         * @param $id
+         * Get one record by primary key
+         * @param $pk
          * @return array
          */
-        public static function getById($id) {
-            $params['query'] = 'SELECT * FROM ' . static::$table . ' WHERE id=' . $id;
-            $result = static::getDB()->query(static::buidQuery($params))->fetch(PDO::FETCH_ASSOC);
+        public static function findByPK($pk) {
+            $params = [
+                'where' => static::$primaryKey . ' = :' . static::$primaryKey,
+                'limit' => 1
+            ];
+            $values = [static::$primaryKey => $pk];
+            $result = static::find($params, $values);
+
+            if (!empty($result)) {
+                return $result[0];
+            }
 
             return $result;
         }
-
-        /**
-         * Count all records
-         * @param array $params
-         * @return int
-         */
-        public static function countAll($params = []) {
-            $params['query'] = 'SELECT COUNT(*) FROM ' . static::$table;
-            $result = static::getDB()->query(static::buidQuery($params))->fetchColumn();
-
-            return $result;
-        }
-
-//        /**
-//         * Get fields list
-//         * @return array
-//         */
-//        public static function getFields() {
-//            return static::$fields;
-//        }
 
         /**
          * Insert
@@ -110,12 +110,12 @@
         }
 
         /**
-         * Insert
+         * Update
          * @param array $data
-         * @param string $where
-         * @return int|bool Last insert id or false
+         * @param array $params
+         * @return boolean
          */
-        public static function update($data, $where = '') {
+        public static function update($data, $params = []) {
             $fields = $values = [];
 
             foreach ($data as $field => $value) {
@@ -127,11 +127,84 @@
             }
 
             $query_fields = implode(',', $fields);
-            $query_where = empty($where) ? '' : ' WHERE ' . $where;
-            $query = 'UPDATE ' . static::$table . ' SET ' . $query_fields . $query_where;
 
+            if (empty($params['query'])) {
+                $params['query'] = 'UPDATE ' . static::$table . ' SET ' . $query_fields;
+            }
+
+            $result = static::query($params, $values);
+
+            return $result;
+        }
+
+        /**
+         * Update by primary key
+         * @param integer $pk
+         * @param array $data
+         * @param array $params
+         * @return boolean
+         */
+        public static function updateByPK($pk, $data, $params = []) {
+            if (empty($params['where'])) {
+                $params['where'] = static::$primaryKey . ' = :' . static::$primaryKey;
+            }
+
+            $data[static::$primaryKey] = $pk;
+            $result = static::update($data, $params);
+
+            return $result;
+        }
+
+        /**
+         * Delete
+         * @param array $params
+         * @param array $values
+         * @return boolean
+         */
+        public static function delete($params = [], $values = []) {
+            if (empty($params['query'])) {
+                $params['query'] = 'DELETE FROM ' . static::$table;
+            }
+            $result = static::query($params, $values);
+
+            return $result;
+        }
+
+        /**
+         * Delete by primary key
+         * @param integer $pk
+         * @param array $params
+         * @param array $values
+         * @return boolean
+         */
+        public static function deleteByPK($pk, $params = [], $values = []) {
+            if (empty($params['where'])) {
+                $params['where'] = static::$primaryKey . ' = :' . static::$primaryKey;
+            }
+
+            $values[static::$primaryKey] = $pk;
+            $result = static::delete($params, $values);
+
+            return $result;
+        }
+
+        /**
+         * Count all records
+         * @param array $params
+         * @param array $values
+         * @return int
+         */
+        public static function count($params = [], $values = []) {
+            if (empty($params['query'])) {
+                $params['query'] = 'SELECT COUNT(*) FROM ' . static::$table;
+            }
+
+            $query = static::buidQuery($params);
             $st = static::getDB()->prepare($query);
             $st->execute($values);
+            $result = $st->fetchColumn();
+
+            return $result;
         }
 
         /**
@@ -139,12 +212,21 @@
          * @return string
          */
         protected static function buidQuery($params) {
+            $where = isset($params['where']) ? ' WHERE ' . $params['where'] : '';
             $orderBy = isset($params['orderBy']) ? $params['orderBy'] : static::$primaryKey;
-            $limit = isset($params['limit']) ? 'LIMIT ' . $params['limit'] : '';
-            $query = $params['query'] . ' ORDER BY ' . $orderBy . ' ' . $limit . ';';
+            $limit = isset($params['limit']) ? ' LIMIT ' . $params['limit'] : '';
+            $query = $params['query'] . $where . ' ORDER BY ' . $orderBy . $limit . ';';
 
             return $query;
         }
+
+//        /**
+//         * Get fields list
+//         * @return array
+//         */
+//        public static function getFields() {
+//            return static::$fields;
+//        }
 
         /**
          * @return PDO

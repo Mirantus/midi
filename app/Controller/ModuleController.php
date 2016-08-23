@@ -3,6 +3,7 @@
 
     use core\Controller;
     use app\Model\ModuleCat;
+    use app\Model\ModuleComment;
     use app\Model\ModuleItem;
     use core\Form\Form;
     use lib\Utils;
@@ -10,6 +11,7 @@
 
     class ModuleController extends Controller {
         private $level = 'cats';
+        private $comments = true;
 
         public function add() {
             $cats = [];
@@ -18,7 +20,7 @@
 
             $form = new Form();
             if ($this->level == 'cats') {
-                $cats = ModuleCat::getAll();
+                $cats = ModuleCat::find();
                 $form->add('cat', ['title' => 'Рубрика']);
             }
             $form->add('title', ['title' => 'Заголовок']);
@@ -99,7 +101,7 @@
                             @mkdir($image_path);
                             move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
                             Image::CreatePreview($image_path . $form->image->value, $image_path . 'thumb_' . $form->image->value, 100);
-                            ModuleItem::update(['image' => $form->image->value], 'id=' . $id);
+                            ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                         }
                     }
 
@@ -131,7 +133,7 @@
             $id = $this->app->getParamInt('id');
             if (!$id) $this->app->back();
 
-            ModuleItem::delete('id=' . $id);
+            ModuleItem::deleteByPK($id);
 
             if ($this->app->isAjaxRequest()) {
                 $this->app->ajaxResponse('');
@@ -144,7 +146,7 @@
             $id = $this->app->getParamInt('id');
             if (!$id) $this->app->back();
 
-            $item = ModuleItem::getById($id);
+            $item = ModuleItem::findByPK($id);
             if (empty($item)) $this->app->back();
 
             $data_path = $this->app->webrootPath . '/data/' . $this->name . '/items/';
@@ -152,7 +154,7 @@
 
             $form = new Form();
             if ($this->level == 'cats') {
-                $cats = ModuleCat::getAll();
+                $cats = ModuleCat::find();
                 $form->add('cat', ['title' => 'Рубрика', 'value' => $item['cat']]);
             }
             $form->add('title', ['title' => 'Заголовок', 'value' => $item['title']]);
@@ -214,7 +216,7 @@
                     $formValues['file'] = $form->file->value;
                     $formValues['image'] = $form->image->value;
 
-                    ModuleItem::update($formValues, 'id=' . $id);
+                    ModuleItem::updateByPK($id, $formValues);
                     // TODO: if false, show errors
 
                     //image
@@ -227,7 +229,7 @@
                         @mkdir($image_path);
                         move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
                         Image::CreatePreview($image_path . $form->image->value, $image_path . 'thumb_' . $form->image->value, 100);
-                        ModuleItem::update(['image' => $form->image->value], 'id=' . $id);
+                        ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                     }
 
 //                    if (!$site->isAjaxRequest()) {
@@ -264,14 +266,14 @@
         protected function cats() {
             $this->render([
                 'vars' => [
-                    'cats' => ModuleCat::getAll($this->paginate()),
-                    'count' => ModuleCat::countAll()
+                    'cats' => ModuleCat::find($this->paginate()),
+                    'count' => ModuleCat::count()
                 ]
             ]);
         }
 
         public function cat($cat_id) {
-            $cat = ModuleCat::getById($cat_id);
+            $cat = ModuleCat::findByPK($cat_id);
 
             if (empty($cat)) {
                 $this->app->redirect('/404');
@@ -281,8 +283,9 @@
                 'view' => 'Module/items',
                 'vars' => [
                     'cat' => $cat,
-                    'items' => ModuleItem::getAll($this->paginate()),
-                    'count' => ModuleItem::countAll(),
+                    // TODO: getAll only for current cat!!!
+                    'items' => ModuleItem::find($this->paginate()),
+                    'count' => ModuleItem::count(),
                     'title' => $cat['title']
                 ]
             ]);
@@ -291,17 +294,23 @@
         protected function items() {
             $this->render([
                 'vars' => [
-                    'items' => ModuleItem::getAll($this->paginate()),
-                    'count' => ModuleItem::countAll()
+                    'items' => ModuleItem::find($this->paginate()),
+                    'count' => ModuleItem::count()
                 ]
             ]);
         }
 
         public function item($id) {
+            $vars = [
+                'item' => ModuleItem::findByPK($id)
+            ];
+
+            if ($this->comments) {
+                $vars['comments'] = ModuleComment::find(['where' => 'item = :item'], ['item' => $id]);
+            }
+
             $this->render([
-                'vars' => [
-                    'item' => ModuleItem::getById($id)
-                ]
+                'vars' => $vars
             ]);
         }
     }
