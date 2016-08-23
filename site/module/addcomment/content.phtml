@@ -1,6 +1,5 @@
 <form name="addcomment" method="post" action="<?=$site->pageUrl;?>" enctype="multipart/form-data" data-request="ajax" class="form" data-request="ajax">
 	<input type="hidden" name="key" value="">
-	<input type="hidden" name="item" value="<?=$item;?>">
 
 	<label for="text" class="label"><span class="alert">*</span> <?=$form->text->title;?>:</label>
 	<textarea id="text" name="text" rows="10" cols="17" required class="textarea"><?=$form->text->getDisplayValue();?></textarea>

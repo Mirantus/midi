@@ -13,6 +13,53 @@
         private $level = 'cats';
         private $comments = true;
 
+        public function index() {
+            $this->app->page->action = $this->level;
+            $this->{$this->level}();
+        }
+
+        protected function cats() {
+            $this->render([
+                'vars' => [
+                    'cats' => ModuleCat::find($this->paginate()),
+                    'count' => ModuleCat::count()
+                ]
+            ]);
+        }
+
+        public function cat($cat_id) {
+            $cat = ModuleCat::findByPK($cat_id);
+
+            if (empty($cat)) {
+                $this->app->redirect('/404');
+            }
+
+            $this->render([
+                'view' => 'Module/items',
+                'vars' => [
+                    'cat' => $cat,
+                    // TODO: getAll only for current cat!!!
+                    'items' => ModuleItem::find($this->paginate()),
+                    'count' => ModuleItem::count(),
+                    'title' => $cat['title']
+                ]
+            ]);
+        }
+
+        public function item($id) {
+            $vars = [
+                'item' => ModuleItem::findByPK($id)
+            ];
+
+            if ($this->comments) {
+                $vars['comments'] = ModuleComment::find(['where' => 'item = :item'], ['item' => $id]);
+            }
+
+            $this->render([
+                'vars' => $vars
+            ]);
+        }
+
         public function add() {
             $cats = [];
 
@@ -127,19 +174,6 @@
                     'title' => 'Добавление модуля'
                 ]
             ]);
-        }
-
-        public function del() {
-            $id = $this->app->getParamInt('id');
-            if (!$id) $this->app->back();
-
-            ModuleItem::deleteByPK($id);
-
-            if ($this->app->isAjaxRequest()) {
-                $this->app->ajaxResponse('');
-            } else {
-                $this->app->back();
-            }
         }
 
         public function edit() {
@@ -258,35 +292,68 @@
             ]);
         }
 
-        public function index() {
-            $this->app->page->action = $this->level;
-            $this->{$this->level}();
-        }
+        public function del() {
+            $id = $this->app->getParamInt('id');
+            if (!$id) $this->app->back();
 
-        protected function cats() {
-            $this->render([
-                'vars' => [
-                    'cats' => ModuleCat::find($this->paginate()),
-                    'count' => ModuleCat::count()
-                ]
-            ]);
-        }
+            ModuleItem::deleteByPK($id);
 
-        public function cat($cat_id) {
-            $cat = ModuleCat::findByPK($cat_id);
-
-            if (empty($cat)) {
-                $this->app->redirect('/404');
+            if ($this->app->isAjaxRequest()) {
+                $this->app->ajaxResponse('');
+            } else {
+                $this->app->back();
             }
-            
+        }
+
+        public function addcomment() {
+            $item = $this->app->getParamInt('item');
+            if (!$item) $this->app->back();
+
+            $form = new Form();
+            $form->add('item', ['value' => $item]);
+            $form->add('text', ['title' => 'Текст']);
+            $form->add('name', ['title' => 'Имя', 'value' => $item['name']]);
+            $form->add('email', ['title' => 'E-mail', 'value' => $item['email']]);
+            $form->fill();
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                //validation
+                if (!empty($form->email->value) && !$form->email->isEmail()) $form->email->error = $form->errors['email'];
+                if (empty($form->name->value)) $form->name->error = 'Введите пожалуйста ваше имя';
+                if (empty($form->text->value)) $form->text->error = 'Введите пожалуйста комментарий';
+
+                //process
+                if ($form->isValid()) {
+                    $formValues = $form->toArray();
+                    // TODO: save current user
+//                    $formValues['user'] = $_SESSION['current_user']['id'];
+                    $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
+                    $formValues['date'] = date('Y-m-d');
+
+                    ModuleComment::insert($formValues);
+                    // TODO: if $id == false, show errors
+
+//                    if (!$site->isAjaxRequest()) {
+                    $this->app->redirect($this->app->url . '/ok');
+//                    }
+                }
+
+                // TODO: add ajax support
+//                if ($site->isAjaxRequest()) {
+//                    $ajaxResponse = array();
+//                    if (!$form->isValid()) {
+//                        $ajaxResponse['errors'] = $form->getErrors();
+//                    } else {
+//                        $ajaxResponse['result'] = 'Спасибо, ваш комментарий принят.';
+//                    }
+//                    $site->ajaxResponse($ajaxResponse);
+//                }
+            }
+
             $this->render([
-                'view' => 'Module/items',
                 'vars' => [
-                    'cat' => $cat,
-                    // TODO: getAll only for current cat!!!
-                    'items' => ModuleItem::find($this->paginate()),
-                    'count' => ModuleItem::count(),
-                    'title' => $cat['title']
+                    'form' => $form,
+                    'title' => 'Добавление комментария'
                 ]
             ]);
         }
@@ -297,20 +364,6 @@
                     'items' => ModuleItem::find($this->paginate()),
                     'count' => ModuleItem::count()
                 ]
-            ]);
-        }
-
-        public function item($id) {
-            $vars = [
-                'item' => ModuleItem::findByPK($id)
-            ];
-
-            if ($this->comments) {
-                $vars['comments'] = ModuleComment::find(['where' => 'item = :item'], ['item' => $id]);
-            }
-
-            $this->render([
-                'vars' => $vars
             ]);
         }
     }

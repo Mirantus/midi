@@ -10,7 +10,6 @@
 <h3><?=$title?></h3>
 
 <form name="edit" method="post" action="<?=$this->app->pageUrl?>" enctype="multipart/form-data" class="form" data-request="ajax">
-    <input type="hidden" name="id" value="<?=$id?>">
     <input type="hidden" name="key" value="">
 
     <label for="title" class="label"><span class="alert">*</span> <?=$form->title->title?>:</label>

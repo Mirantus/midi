@@ -2,6 +2,7 @@
     /**
      * @var app\Controller\ModuleController $this
      * @var array $item
+     * @var array $comments
      */
  ?>
 <h3><?=h($item['title'])?></h3>
@@ -27,24 +28,24 @@
 <? } ?>
 <? if (!empty($item['date'])) echo Date::sqlToDate($item['date']); ?>
 
-<?// if (isset($config['comments'])): ?>
-<!--    <h4>Комментарии</h4>-->
-<!--    <p><a href="/--><?//=$site->module;?><!--/addcomment/--><?//=$id;?><!--">Добавить комментарий</a></p>-->
-<!--    --><?// if ($comments): ?>
-<!--        --><?// foreach ($comments as $comment_params): ?>
-<!--            <p id="comment--><?//=$comment_params['id'];?><!--">-->
-<!--                <strong>-->
-<!--                    --><?// if (!empty($comment_params['email'])): ?>
-<!--                        <a href="mailto:--><?//=$comment_params['email'];?><!--">--><?//=$comment_params['name'];?><!--</a>-->
-<!--                    --><?// else: ?>
-<!--                        --><?//=$comment_params['name'];?>
-<!--                    --><?// endif; ?>
-<!--                </strong><br>-->
-<!--                --><?//=$comment_params['text'];?>
-<!--            </p>-->
-<!--        --><?// endforeach; ?>
-<!--    --><?// else: ?>
-<!--        <p>Комментариев нет</p>-->
-<!--    --><?// endif; ?>
-<!---->
-<?// endif; ?>
+<? if (isset($comments)) { ?>
+    <h4>Комментарии</h4>
+    <p><a href="/module/addcomment/<?=$item['id'];?>">Добавить комментарий</a></p>
+    <? if (count($comments) > 0) { ?>
+        <? foreach ($comments as $comment_params) { ?>
+            <p id="comment<?=$comment_params['id'];?>">
+                <strong>
+                    <? if (!empty($comment_params['email'])) { ?>
+                        <a href="mailto:<?=$comment_params['email'];?>"><?=h($comment_params['name']);?></a>
+                    <? } else { ?>
+                        <?=h($comment_params['name']);?>
+                    <? } ?>
+                </strong><br>
+                <?=h($comment_params['text']);?>
+            </p>
+        <? } ?>
+    <? } else { ?>
+        <p>Комментариев нет</p>
+    <? } ?>
+
+<? } ?>

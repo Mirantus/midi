@@ -11,7 +11,7 @@ $config['pages'] = [
 
     'module' => ['route' => '/module/', 'controller' => 'ModuleController', 'title' => 'Модуль'],
     'module_add' => ['route' => '/module/add/', 'controller' => 'ModuleController', 'action' => 'add', 'auth' => true, 'title' => 'Добавление'],
-    'module_addcomment' => ['route' => '/module/addcomment/', 'controller' => 'ModuleController', 'action' => 'addcomment', 'auth' => true, 'title' => 'Добавление комментария'],
+    'module_addcomment' => ['route' => '/module/addcomment/(\d+)/', 'controller' => 'ModuleController', 'action' => 'addcomment', 'params' => ['item'], 'title' => 'Добавление комментария'],
     'module_cat' => ['route' => '/module/cat/(\d+)/', 'controller' => 'ModuleController', 'action' => 'cat', 'params' => ['id'], 'title' => 'Рубрика'],
     'module_del' => ['route' => '/module/del/(\d+)/', 'controller' => 'ModuleController', 'action' => 'del', 'params' => ['id'], 'auth' => true, 'title' => 'Удаление'],
     'module_edit' => ['route' => '/module/edit/(\d+)/', 'controller' => 'ModuleController', 'action' => 'edit', 'params' => ['id'], 'auth' => true, 'title' => 'Редактирование'],
