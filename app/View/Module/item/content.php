@@ -12,7 +12,7 @@
 <? } ?>
 
 <?
-    if (!empty($item['text'])) echo h($item['text']) . '<br>';
+    if (!empty($item['text'])) echo $item['text'] . '<br>';
     if (!empty($item['price'])) echo 'Цена: ' . $item['price'] . 'р.<br>';
     if (!empty($item['name'])) echo 'Имя: ' . $item['name'] . '<br>';
     if (!empty($item['phone'])) echo 'Телефон: ' . $item['phone'] . '<br>';

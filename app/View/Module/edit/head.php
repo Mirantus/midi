@@ -6,3 +6,4 @@
 ?>
 <title><?=$title?> - <?=$this->app->title?></title>
 <meta name="description" content="<?=$title?>">
+<link rel="stylesheet" href="/js/jwysiwyg/jquery.wysiwyg.css" type="text/css">

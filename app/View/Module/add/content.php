@@ -16,7 +16,7 @@
     <div class="alert"><?=$form->title->error;?></div>
 
     <label for="text" class="label"><span class="alert">*</span> <?=$form->text->title;?>:</label>
-    <textarea id="text" name="text" rows="10" cols="17" class="textarea"><?=$form->text->value;?></textarea>
+    <textarea id="text" name="text" rows="10" cols="17" class="textarea js-wysiwyg"><?=$form->text->value;?></textarea>
     <div class="alert"><?=$form->text->error;?></div>
 
     <label for="price" class="label"><?=$form->price->title;?>:</label>
