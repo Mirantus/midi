@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var app\Controller\NotFoundController $this
+     * @var app\Controller\PageController $this
      * @var string $title
      */
 ?>

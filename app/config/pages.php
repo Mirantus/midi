@@ -3,7 +3,7 @@ $config['pages'] = [
     'index' => ['route' => '/', 'title' => 'Главная'],
     '404' => ['route' => '/404/', 'controller' => 'NotFoundController', 'title' => 'Страница не найдена'],
     'admin' => ['route' => '/admin/', 'controller' => 'AdminController', 'auth' => true, 'title' => 'Администрирование'],
-    'contacts' => ['route' => '/contacts/', 'controller' => 'ContactsController', 'title' => 'Контакты'],
+    'contacts' => ['route' => '/contacts/', 'controller' => 'PageController', 'action' => 'contacts', 'title' => 'Контакты'],
     'feedback' => ['route' => '/feedback/', 'controller' => 'FeedbackController', 'title' => 'Обратная связь'],
     'gallery' => ['route' => '/gallery/', 'controller' => 'GalleryController', 'title' => 'Фотогалерея'],
     'login' => ['route' => '/login/', 'controller' => 'UsersController', 'action' => 'login', 'title' => 'Авторизация'],
