@@ -34,12 +34,14 @@
                 $this->app->redirect('/404');
             }
 
+            $items_query_params = $this->paginate();
+            $items_query_params['where'] = 'cat = :cat';
+
             $this->render([
                 'view' => 'Module/items',
                 'vars' => [
                     'cat' => $cat,
-                    // TODO: getAll only for current cat!!!
-                    'items' => ModuleItem::find($this->paginate()),
+                    'items' => ModuleItem::find($items_query_params, ['cat' => $cat_id]),
                     'count' => ModuleItem::count(),
                     'title' => $cat['title']
                 ]

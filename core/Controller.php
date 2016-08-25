@@ -54,8 +54,7 @@ abstract class Controller {
 		
 		$view_vars = isset($view_params['vars']) ? $view_params['vars'] : [];
 		extract($view_vars);
-		
-        // TODO: use this in module/item
+
         $this->viewPath = isset($view_params['view']) ? $view_params['view'] : $this->name . '/' . $this->app->page->action;
 		$this->viewPath = dirname(__FILE__) . '/../app/View/' . $this->viewPath;
 		
