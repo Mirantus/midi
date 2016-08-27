@@ -4,8 +4,6 @@
      * @var array $cats
      * @var string $title
      */
-
-    // TODO: ROUTE replace /module/ in all urls to createUrl
  ?>
 <h3><?=$title?></h3>
 <ul class="ns">

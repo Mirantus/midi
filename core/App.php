@@ -351,15 +351,19 @@
 		/**
 		 * Create url by page alias and query
 		 * @param string $alias
+		 * @param array $params Values for page route params
 		 * @param array $query
 		 * @return string Url
 		 */
-		public function createUrl($alias, $query = []) {
-			// TODO: ROUTES Add support of routes with params
+		public function createUrl($alias, $params=[], $query = []) {
 			if (!isset($this->pages[$alias])) {
 				return $this->url;
 			}
-			$routePart = $this->pages[$alias]['route'];
+
+            $routePart = preg_replace_callback('/\([^\)]*\)/', function() use(&$params) {
+                return array_shift( $params);
+            }, $this->pages[$alias]['route']);
+            
 			$queryPart = empty($query) ? '' : '?' . http_build_query($query);
 			return $this->url . $routePart . $queryPart;
 		}
