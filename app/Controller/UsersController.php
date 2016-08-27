@@ -20,7 +20,8 @@
 
                 //process
                 if ($form->isValid()) {
-                    $_SESSION['auth'] = true;
+                    // TODO NEW USERS change to Users
+                    $_SESSION['auth'] = $this->app->auth;
                     $this->app->redirect($return_url);
                 }
             }

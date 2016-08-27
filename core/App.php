@@ -168,7 +168,7 @@
 			require '../app/config/index.php';
 			/** @var array $config */
 
-			// TODO: replace to Users
+			// TODO: NEW USERS replace to Users
 			$this->auth = $config['auth'];
 
 			$this->title = $config['app']['title'];
@@ -221,13 +221,16 @@
 				session_start();
 			}
 			if (!isset($_SESSION['auth'])) {
-				$_SESSION['auth'] = false;
+				$_SESSION['auth'] = [
+                    'id' => 0,
+                    'login' => ''
+                ];
 			}
 
 			$controllerClass = '\app\Controller\\' . $this->page->controller;
 			$controller = new $controllerClass($this);
 
-			if ($this->page->auth && empty($_SESSION['auth'])) {
+			if ($this->page->auth && !$this->isMember()) {
 				$this->redirect('/login/?return=/admin/');
 			}
 
@@ -352,7 +355,7 @@
 		 * @return string Url
 		 */
 		public function createUrl($alias, $query = []) {
-			// TODO: Add support of routes with params
+			// TODO: ROUTES Add support of routes with params
 			if (!isset($this->pages[$alias])) {
 				return $this->url;
 			}
@@ -412,4 +415,12 @@
 			return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
 			strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 		}
+
+        /**
+         * Check if curent user is not guest
+         * @return bool
+         */
+        public function isMember() {
+            return !empty($_SESSION['auth']['id']);
+        }
 	}

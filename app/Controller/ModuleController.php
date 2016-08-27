@@ -130,8 +130,7 @@
                     $formValues = $form->toArray();
                     $formValues['file'] = $form->file->value;
                     $formValues['image'] = $form->image->value;
-                    // TODO: save current user
-                    //                    $formValues['user'] = $_SESSION['current_user']['id'];
+                    $formValues['user'] = $_SESSION['auth']['id'];
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
@@ -343,8 +342,7 @@
                 //process
                 if ($form->isValid()) {
                     $formValues = $form->toArray();
-                    // TODO: save current user
-                    //                    $formValues['user'] = $_SESSION['current_user']['id'];
+                    $formValues['user'] = $_SESSION['auth']['id'];
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
