@@ -10,15 +10,15 @@ function sendAjaxForm($form) {
 		success: function (data) {
             var offset = $form.offset(),
                 result = data.result || '<p>Спасибо, ваши данные приняты.</p>';
-			if (data.redirect) window.location = data.redirect;
-			if (data.errors) {
+            if (data.redirect) window.location = data.redirect;
+            if (data.errors) {
 				$.each(data.errors, function(field, error) {
 					$form.find('#' + field).next('.alert').html(error);
 				});
-			} else {
+            } else {
 				$form.after(result);
 				$form.hide();
-			}
+            }
             window.scrollTo(offset.left, offset.top);
 		}
 	});
@@ -31,4 +31,11 @@ $(function() {
 	$(document).ajaxComplete(function(event,request,settings) {
 		$('#loading').remove();
 	});
+});
+
+$(function() {
+    $('form[data-request="ajax"]').submit(function() {
+        sendAjaxForm($(this));
+        return false;
+    });
 });

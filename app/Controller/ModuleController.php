@@ -131,7 +131,7 @@
                     $formValues['file'] = $form->file->value;
                     $formValues['image'] = $form->image->value;
                     // TODO: save current user
-//                    $formValues['user'] = $_SESSION['current_user']['id'];
+                    //                    $formValues['user'] = $_SESSION['current_user']['id'];
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
@@ -143,30 +143,32 @@
                         // TODO: create File class
                         if ($this->app->isFileUploaded('file')) {
                             @mkdir($data_path . $id);
-                            move_uploaded_file($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
+                            move_uploaded_file($_FILES['file']['tmp_name'],
+                                $data_path . $id . '/' . $form->file->value);
                         }
                         if ($this->app->isFileUploaded('image')) {
                             $image_path = $data_path . $id . '/';
                             @mkdir($image_path);
                             move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
-                            Image::CreatePreview($image_path . $form->image->value, $image_path . 'thumb_' . $form->image->value, 100);
+                            Image::CreatePreview($image_path . $form->image->value,
+                                $image_path . 'thumb_' . $form->image->value, 100);
                             ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                         }
                     }
 
-//                    if (!$site->isAjaxRequest()) {
+                    if (!$this->app->isAjaxRequest()) {
+                        // TODO: return to list
                         $this->app->redirect($this->app->url . '/ok');
-//                    }
+                    }
                 }
 
-                // TODO: add ajax support
-//                if ($site->isAjaxRequest()) {
-//                    $ajaxResponse = [];
-//                    if (!$form->isValid()) {
-//                        $ajaxResponse['errors'] = $form->getErrors();
-//                    }
-//                    $site->ajaxResponse($ajaxResponse);
-//                }
+                if ($this->app->isAjaxRequest()) {
+                    $ajaxResponse = [];
+                    if (!$form->isValid()) {
+                        $ajaxResponse['errors'] = $form->getErrors();
+                    }
+                    $this->app->ajaxResponse($ajaxResponse);
+                }
             }
 
             $this->render([
@@ -180,10 +182,14 @@
 
         public function edit() {
             $id = $this->app->getParamInt('id');
-            if (!$id) $this->app->back();
+            if (!$id) {
+                $this->app->back();
+            }
 
             $item = ModuleItem::findByPK($id);
-            if (empty($item)) $this->app->back();
+            if (empty($item)) {
+                $this->app->back();
+            }
 
             $data_path = $this->app->webrootPath . '/data/' . $this->name . '/items/';
             $cats = [];
@@ -264,24 +270,24 @@
                         $image_path = $data_path . $id . '/';
                         @mkdir($image_path);
                         move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
-                        Image::CreatePreview($image_path . $form->image->value, $image_path . 'thumb_' . $form->image->value, 100);
+                        Image::CreatePreview($image_path . $form->image->value,
+                            $image_path . 'thumb_' . $form->image->value, 100);
                         ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                     }
 
-//                    if (!$site->isAjaxRequest()) {
-                    // TODO: redirect to list with message
-                    $this->app->redirect($this->app->url . '/ok');
-//                    }
+                    if (!$this->app->isAjaxRequest()) {
+                        // TODO: return to list
+                        $this->app->redirect($this->app->url . '/ok');
+                    }
                 }
 
-                // TODO: add ajax support
-//                if ($site->isAjaxRequest()) {
-//                    $ajaxResponse = [];
-//                    if (!$form->isValid()) {
-//                        $ajaxResponse['errors'] = $form->getErrors();
-//                    }
-//                    $site->ajaxResponse($ajaxResponse);
-//                }
+                if ($this->app->isAjaxRequest()) {
+                    $ajaxResponse = [];
+                    if (!$form->isValid()) {
+                        $ajaxResponse['errors'] = $form->getErrors();
+                    }
+                    $this->app->ajaxResponse($ajaxResponse);
+                }
             }
 
             $this->render([
@@ -296,7 +302,9 @@
 
         public function del() {
             $id = $this->app->getParamInt('id');
-            if (!$id) $this->app->back();
+            if (!$id) {
+                $this->app->back();
+            }
 
             ModuleItem::deleteByPK($id);
 
@@ -309,7 +317,9 @@
 
         public function addcomment() {
             $item = $this->app->getParamInt('item');
-            if (!$item) $this->app->back();
+            if (!$item) {
+                $this->app->back();
+            }
 
             $form = new Form();
             $form->add('item', ['value' => $item]);
@@ -320,36 +330,42 @@
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //validation
-                if (!empty($form->email->value) && !$form->email->isEmail()) $form->email->error = $form->errors['email'];
-                if (empty($form->name->value)) $form->name->error = 'Введите пожалуйста ваше имя';
-                if (empty($form->text->value)) $form->text->error = 'Введите пожалуйста комментарий';
+                if (!empty($form->email->value) && !$form->email->isEmail()) {
+                    $form->email->error = $form->errors['email'];
+                }
+                if (empty($form->name->value)) {
+                    $form->name->error = 'Введите пожалуйста ваше имя';
+                }
+                if (empty($form->text->value)) {
+                    $form->text->error = 'Введите пожалуйста комментарий';
+                }
 
                 //process
                 if ($form->isValid()) {
                     $formValues = $form->toArray();
                     // TODO: save current user
-//                    $formValues['user'] = $_SESSION['current_user']['id'];
+                    //                    $formValues['user'] = $_SESSION['current_user']['id'];
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
                     ModuleComment::insert($formValues);
                     // TODO: if $id == false, show errors
 
-//                    if (!$site->isAjaxRequest()) {
-                    $this->app->redirect($this->app->url . '/ok');
-//                    }
+                    if (!$this->app->isAjaxRequest()) {
+                        // TODO: return to list
+                        $this->app->redirect($this->app->url . '/ok');
+                    }
                 }
 
-                // TODO: add ajax support
-//                if ($site->isAjaxRequest()) {
-//                    $ajaxResponse = array();
-//                    if (!$form->isValid()) {
-//                        $ajaxResponse['errors'] = $form->getErrors();
-//                    } else {
-//                        $ajaxResponse['result'] = 'Спасибо, ваш комментарий принят.';
-//                    }
-//                    $site->ajaxResponse($ajaxResponse);
-//                }
+                if ($this->app->isAjaxRequest()) {
+                    $ajaxResponse = [];
+                    if (!$form->isValid()) {
+                        $ajaxResponse['errors'] = $form->getErrors();
+                    } else {
+                        $ajaxResponse['result'] = 'Спасибо, ваш комментарий принят.';
+                    }
+                    $this->app->ajaxResponse($ajaxResponse);
+                }
             }
 
             $this->render([

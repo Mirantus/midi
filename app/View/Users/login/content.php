@@ -1,13 +1,13 @@
 <?php
 /**
- * @var app\Controller\ContactsController $this
+ * @var app\Controller\UsersController $this
  * @var core\Form\Form $form
  * @var string $title
  */
 ?>
 <h1><?=$title?></h1>
 
-<form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form" data-request="ajax">
+<form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form">
     <input type="hidden" name="key" value="">
 
     <label for="login" class="label"><span class="alert">*</span> <?=$form->login->title?>:</label>
