@@ -135,7 +135,6 @@
                     $formValues['date'] = date('Y-m-d');
 
                     $id = ModuleItem::insert($formValues);
-                    // TODO: if $id == false, show errors
 
                     //image
                     if ($id) {
@@ -153,11 +152,13 @@
                                 $image_path . 'thumb_' . $form->image->value, 100);
                             ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                         }
-                    }
 
-                    if (!$this->app->isAjaxRequest()) {
-                        // TODO: return to list
-                        $this->app->redirect($this->app->url . '/ok');
+                        if (!$this->app->isAjaxRequest()) {
+                            // TODO: return to list
+                            $this->app->redirect($this->app->url . '/ok');
+                        }
+                    } else {
+                        $form->error = 'Ошибка сохранения данных';
                     }
                 }
 
@@ -257,26 +258,27 @@
                     $formValues['file'] = $form->file->value;
                     $formValues['image'] = $form->image->value;
 
-                    ModuleItem::updateByPK($id, $formValues);
-                    // TODO: if false, show errors
+                    if (ModuleItem::updateByPK($id, $formValues)) {
+                        //image
+                        if ($this->app->isFileUploaded('file')) {
+                            @mkdir($data_path . $id);
+                            move_uploaded_file($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
+                        }
+                        if ($this->app->isFileUploaded('image')) {
+                            $image_path = $data_path . $id . '/';
+                            @mkdir($image_path);
+                            move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
+                            Image::CreatePreview($image_path . $form->image->value,
+                                $image_path . 'thumb_' . $form->image->value, 100);
+                            ModuleItem::updateByPK($id, ['image' => $form->image->value]);
+                        }
 
-                    //image
-                    if ($this->app->isFileUploaded('file')) {
-                        @mkdir($data_path . $id);
-                        move_uploaded_file($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
-                    }
-                    if ($this->app->isFileUploaded('image')) {
-                        $image_path = $data_path . $id . '/';
-                        @mkdir($image_path);
-                        move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
-                        Image::CreatePreview($image_path . $form->image->value,
-                            $image_path . 'thumb_' . $form->image->value, 100);
-                        ModuleItem::updateByPK($id, ['image' => $form->image->value]);
-                    }
-
-                    if (!$this->app->isAjaxRequest()) {
-                        // TODO: return to list
-                        $this->app->redirect($this->app->url . '/ok');
+                        if (!$this->app->isAjaxRequest()) {
+                            // TODO: return to list
+                            $this->app->redirect($this->app->url . '/ok');
+                        }
+                    } else {
+                        $form->error = 'Ошибка сохранения данных';
                     }
                 }
 
@@ -346,12 +348,13 @@
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
-                    ModuleComment::insert($formValues);
-                    // TODO: if $id == false, show errors
-
-                    if (!$this->app->isAjaxRequest()) {
-                        // TODO: return to list
-                        $this->app->redirect($this->app->url . '/ok');
+                    if (ModuleComment::insert($formValues)) {
+                        if (!$this->app->isAjaxRequest()) {
+                            // TODO: return to list
+                            $this->app->redirect($this->app->url . '/ok');
+                        }
+                    } else {
+                        $form->error = 'Ошибка сохранения данных';
                     }
                 }
 
