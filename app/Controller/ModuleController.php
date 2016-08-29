@@ -6,8 +6,9 @@
     use app\Model\ModuleComment;
     use app\Model\ModuleItem;
     use core\Form\Form;
-    use lib\Utils;
+    use lib\File;
     use lib\Image;
+    use lib\Utils;
 
     class ModuleController extends Controller {
         private $level = 'cats';
@@ -138,16 +139,12 @@
 
                     //image
                     if ($id) {
-                        // TODO: create File class
                         if ($this->app->isFileUploaded('file')) {
-                            @mkdir($data_path . $id);
-                            move_uploaded_file($_FILES['file']['tmp_name'],
-                                $data_path . $id . '/' . $form->file->value);
+                            File::moveUploadedFile($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
                         }
                         if ($this->app->isFileUploaded('image')) {
                             $image_path = $data_path . $id . '/';
-                            @mkdir($image_path);
-                            move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
+                            File::moveUploadedFile($_FILES['image']['tmp_name'], $image_path . $form->image->value);
                             Image::CreatePreview($image_path . $form->image->value,
                                 $image_path . 'thumb_' . $form->image->value, 100);
                             ModuleItem::updateByPK($id, ['image' => $form->image->value]);
@@ -261,13 +258,11 @@
                     if (ModuleItem::updateByPK($id, $formValues)) {
                         //image
                         if ($this->app->isFileUploaded('file')) {
-                            @mkdir($data_path . $id);
-                            move_uploaded_file($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
+                            File::moveUploadedFile($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
                         }
                         if ($this->app->isFileUploaded('image')) {
                             $image_path = $data_path . $id . '/';
-                            @mkdir($image_path);
-                            move_uploaded_file($_FILES['image']['tmp_name'], $image_path . $form->image->value);
+                            File::moveUploadedFile($_FILES['image']['tmp_name'], $image_path . $form->image->value);
                             Image::CreatePreview($image_path . $form->image->value,
                                 $image_path . 'thumb_' . $form->image->value, 100);
                             ModuleItem::updateByPK($id, ['image' => $form->image->value]);

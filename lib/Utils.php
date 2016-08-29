@@ -20,23 +20,6 @@ class Utils {
 	}
 
 	/**
-	 * @param string $dir Path to dir
-	 * @return array Files of dir
-	 */
-	static function readDir($dir)	{
-		$files = array();
-		$dh = @opendir($dir);
-		if (!$dh) exit('Невозможно прочитать директорию ' . $dir);
-
-		while (false !== ($filename = readdir($dh)))
-			if ($filename != '.' && $filename != '..') $files[] = $filename;
-
-		sort($files);
-
-		return $files;
-	}
-
-	/**
 	 * Wrapper for preg_match_all
 	 * @param string $regexp
 	 * @param string $source Text to parse
