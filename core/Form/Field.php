@@ -10,7 +10,7 @@
 
 namespace core\Form;
 
-use core\App;
+use core\Request;
 
 class Field {
 
@@ -56,7 +56,7 @@ class Field {
 	 * Fill field from request params
 	 */
 	public function fill() {
-		$value = App::getInstance()->getParam($this->name, false);
+		$value = Request::getParam($this->name, false);
 		if (!is_null($value)) $this->value = $value;
 	}
 

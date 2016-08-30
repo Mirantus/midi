@@ -67,7 +67,7 @@ abstract class Controller {
 	}
 
 	protected function paginate() {
-		$currentPage = $this->app->getParam('page');
+		$currentPage = Request::getParam('page');
 		if ($currentPage == '') $currentPage = 1;
 		$first = ($currentPage - 1) * $this->pageLimit;
 

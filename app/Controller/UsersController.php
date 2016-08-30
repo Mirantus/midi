@@ -3,17 +3,18 @@
 
     use core\Controller;
     use core\Form\Form;
+    use core\Request;
 
     class UsersController extends Controller {
         public function login() {
-            $return_url = $this->app->getParam('return', false, '/');
+            $return_url = Request::getParam('return', false, '/');
 
             $form = new Form();
             $form->add('login', array('title' => 'Логин'));
             $form->add('password', array('title' => 'Пароль'));
             $form->fill();
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (Request::isPost()) {
                 //validation
                 if ($form->login->value != $this->app->auth['login']) $form->login->error = 'Введен неправильный логин';
                 if ($form->password->value != $this->app->auth['password']) $form->password->error = 'Введен неправильный пароль';
@@ -35,7 +36,7 @@
         }
 
         public function logout() {
-            $return_url = $this->app->getParam('return', false, '/');
+            $return_url = Request::getParam('return', false, '/');
             $_SESSION['auth'] = false;
             $this->app->redirect($return_url);
         }

@@ -6,6 +6,7 @@
     use app\Model\ModuleComment;
     use app\Model\ModuleItem;
     use core\Form\Form;
+    use core\Request;
     use lib\File;
     use lib\Image;
     use lib\Utils;
@@ -86,7 +87,7 @@
 
             $form->fill();
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (Request::isPost()) {
                 //initialization
                 $form->url->value = str_replace('http://', '', $form->url->value);
                 if ($form->url->value != '') {
@@ -150,7 +151,7 @@
                             ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                         }
 
-                        if (!$this->app->isAjaxRequest()) {
+                        if (!Request::isAjax()) {
                             // TODO: return to list
                             $this->app->redirect($this->app->url . '/ok');
                         }
@@ -159,7 +160,7 @@
                     }
                 }
 
-                if ($this->app->isAjaxRequest()) {
+                if (Request::isAjax()) {
                     $ajaxResponse = [];
                     if (!$form->isValid()) {
                         $ajaxResponse['errors'] = $form->getErrors();
@@ -178,7 +179,7 @@
         }
 
         public function edit() {
-            $id = $this->app->getParamInt('id');
+            $id = Request::getParamInt('id');
             if (!$id) {
                 $this->app->back();
             }
@@ -209,7 +210,7 @@
 
             $form->fill();
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (Request::isPost()) {
                 //initialization
                 $form->url->value = str_replace('http://', '', $form->url->value);
                 if ($form->url->value != '') {
@@ -268,7 +269,7 @@
                             ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                         }
 
-                        if (!$this->app->isAjaxRequest()) {
+                        if (!Request::isAjax()) {
                             // TODO: return to list
                             $this->app->redirect($this->app->url . '/ok');
                         }
@@ -277,7 +278,7 @@
                     }
                 }
 
-                if ($this->app->isAjaxRequest()) {
+                if (Request::isAjax()) {
                     $ajaxResponse = [];
                     if (!$form->isValid()) {
                         $ajaxResponse['errors'] = $form->getErrors();
@@ -297,14 +298,14 @@
         }
 
         public function del() {
-            $id = $this->app->getParamInt('id');
+            $id = Request::getParamInt('id');
             if (!$id) {
                 $this->app->back();
             }
 
             ModuleItem::deleteByPK($id);
 
-            if ($this->app->isAjaxRequest()) {
+            if (Request::isAjax()) {
                 $this->app->ajaxResponse('');
             } else {
                 $this->app->back();
@@ -312,7 +313,7 @@
         }
 
         public function addcomment() {
-            $item = $this->app->getParamInt('item');
+            $item = Request::getParamInt('item');
             if (!$item) {
                 $this->app->back();
             }
@@ -324,7 +325,7 @@
             $form->add('email', ['title' => 'E-mail', 'value' => $item['email']]);
             $form->fill();
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (Request::isPost()) {
                 //validation
                 if (!empty($form->email->value) && !$form->email->isEmail()) {
                     $form->email->error = $form->errors['email'];
@@ -344,7 +345,7 @@
                     $formValues['date'] = date('Y-m-d');
 
                     if (ModuleComment::insert($formValues)) {
-                        if (!$this->app->isAjaxRequest()) {
+                        if (!Request::isAjax()) {
                             // TODO: return to list
                             $this->app->redirect($this->app->url . '/ok');
                         }
@@ -353,7 +354,7 @@
                     }
                 }
 
-                if ($this->app->isAjaxRequest()) {
+                if (Request::isAjax()) {
                     $ajaxResponse = [];
                     if (!$form->isValid()) {
                         $ajaxResponse['errors'] = $form->getErrors();
