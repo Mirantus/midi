@@ -40,7 +40,7 @@
          * @param string $path Path to view files
          * @param array $params
          */
-        public function __construct($path, $params) {
+        public function __construct($path, $params = []) {
             $this->app = App::getInstance();
             $this->path = $path;
             $this->layout = isset($params['layout']) ? $params['layout'] : $this->layout;

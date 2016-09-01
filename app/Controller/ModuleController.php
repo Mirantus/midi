@@ -7,6 +7,7 @@
     use app\Model\ModuleItem;
     use core\Form\Form;
     use core\Request;
+    use core\Response;
     use lib\File;
     use lib\Image;
     use lib\Utils;
@@ -33,7 +34,7 @@
             $cat = ModuleCat::findByPK($cat_id);
 
             if (empty($cat)) {
-                $this->app->redirect('/404');
+                Response::getInstance()->redirect('/404');
             }
 
             $items_query_params = $this->paginate();
@@ -153,7 +154,7 @@
 
                         if (!Request::isAjax()) {
                             // TODO: return to list
-                            $this->app->redirect($this->app->url . '/ok');
+                            Response::getInstance()->redirect($this->app->url . '/ok');
                         }
                     } else {
                         $form->error = 'Ошибка сохранения данных';
@@ -165,7 +166,8 @@
                     if (!$form->isValid()) {
                         $ajaxResponse['errors'] = $form->getErrors();
                     }
-                    $this->app->ajaxResponse($ajaxResponse);
+                    Response::getInstance()->setAjax($ajaxResponse);
+                    return;
                 }
             }
 
@@ -181,12 +183,12 @@
         public function edit() {
             $id = Request::getParamInt('id');
             if (!$id) {
-                $this->app->back();
+                Response::getInstance()->back();
             }
 
             $item = ModuleItem::findByPK($id);
             if (empty($item)) {
-                $this->app->back();
+                Response::getInstance()->back();
             }
 
             $data_path = $this->app->webrootPath . '/data/' . $this->name . '/items/';
@@ -271,7 +273,7 @@
 
                         if (!Request::isAjax()) {
                             // TODO: return to list
-                            $this->app->redirect($this->app->url . '/ok');
+                            Response::getInstance()->redirect($this->app->url . '/ok');
                         }
                     } else {
                         $form->error = 'Ошибка сохранения данных';
@@ -283,7 +285,8 @@
                     if (!$form->isValid()) {
                         $ajaxResponse['errors'] = $form->getErrors();
                     }
-                    $this->app->ajaxResponse($ajaxResponse);
+                    Response::getInstance()->setAjax($ajaxResponse);
+                    return;
                 }
             }
 
@@ -300,22 +303,22 @@
         public function del() {
             $id = Request::getParamInt('id');
             if (!$id) {
-                $this->app->back();
+                Response::getInstance()->back();
             }
 
             ModuleItem::deleteByPK($id);
 
             if (Request::isAjax()) {
-                $this->app->ajaxResponse('');
+                Response::getInstance()->setAjax('');
             } else {
-                $this->app->back();
+                Response::getInstance()->back();
             }
         }
 
         public function addcomment() {
             $item = Request::getParamInt('item');
             if (!$item) {
-                $this->app->back();
+                Response::getInstance()->back();
             }
 
             $form = new Form();
@@ -347,7 +350,7 @@
                     if (ModuleComment::insert($formValues)) {
                         if (!Request::isAjax()) {
                             // TODO: return to list
-                            $this->app->redirect($this->app->url . '/ok');
+                            Response::getInstance()->redirect($this->app->url . '/ok');
                         }
                     } else {
                         $form->error = 'Ошибка сохранения данных';
@@ -361,7 +364,8 @@
                     } else {
                         $ajaxResponse['result'] = 'Спасибо, ваш комментарий принят.';
                     }
-                    $this->app->ajaxResponse($ajaxResponse);
+                    Response::getInstance()->setAjax($ajaxResponse);
+                    return;
                 }
             }
 

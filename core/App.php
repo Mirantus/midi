@@ -172,6 +172,8 @@
             }
 
             call_user_func_array([$controller, $this->page->action], $this->page->params);
+
+            Response::getInstance()->send();
         }
 
         /**
@@ -206,31 +208,6 @@
         //
         //        return mail($email, $title, $message, 'From: mailer@' . $_SERVER['SERVER_NAME'] . "\r\n" . 'Content-type: text/plain; charset=utf-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion());
         //    }
-
-        /**
-         * @param string $url
-         */
-        public function redirect($url) {
-            // TODO: move to Response
-            header('Location: ' . $url);
-            exit;
-        }
-
-        public function back() {
-            // TODO: remove
-            $url = empty($_SERVER['HTTP_REFERER']) ? $this->url : $_SERVER['HTTP_REFERER'];
-            $this->redirect($url);
-        }
-
-        /**
-         * Send ajax response
-         * @param mixed $data
-         */
-        public function ajaxResponse($data) {
-            // TODO: move to Response
-            header('Content-type: application/json');
-            exit(json_encode($data));
-        }
 
         /**
          * Create url by page alias and query

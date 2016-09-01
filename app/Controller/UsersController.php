@@ -23,7 +23,7 @@
                 if ($form->isValid()) {
                     // TODO NEW USERS change to Users
                     $_SESSION['auth'] = $this->app->auth;
-                    $this->app->redirect($return_url);
+                    Response::getInstance()->redirect($return_url);
                 }
             }
 
@@ -38,6 +38,6 @@
         public function logout() {
             $return_url = Request::getParam('return', false, '/');
             $_SESSION['auth'] = false;
-            $this->app->redirect($return_url);
+            Response::getInstance()->redirect($return_url);
         }
     }

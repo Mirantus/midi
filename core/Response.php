@@ -28,11 +28,28 @@
 
         /**
          * Add http header to response
-         * @param $name
-         * @param $value
+         * @param string $name
+         * @param string $value
          */
         public function addHeader($name, $value){
             $this->headers[$name] = $value;
+        }
+
+        /**
+         * Add content to response
+         * @param string $content
+         */
+        public function setContent($content){
+            $this->content = $content;
+        }
+
+        /**
+         * Set ajax response
+         * @param mixed $content
+         */
+        public function setAjax($content) {
+            $this->addHeader('Content-type', 'application/json');
+            $this->setContent(json_encode($content));
         }
 
         /**
@@ -50,7 +67,14 @@
          * @param string $url
          */
         public function redirect($url) {
+            // Add alias to helper
             $this->addHeader('Location', $url);
             $this->send();
+        }
+
+        public function back() {
+            // TODO: remove
+            $url = empty($_SERVER['HTTP_REFERER']) ? App::getInstance()->url : $_SERVER['HTTP_REFERER'];
+            $this->redirect($url);
         }
     }

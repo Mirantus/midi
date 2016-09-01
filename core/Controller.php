@@ -19,25 +19,10 @@ abstract class Controller {
 	 */
 	protected $app;
 
-	/**
-	 * @var string
-	 */
-	protected $layout = 'default';
-
     /**
      * @var string
      */
     protected $name;
-
-	/**
-	 * @var string
-	 */
-	protected $resourcePath;
-
-	/**
-	 * @var string
-	 */
-	protected $viewPath;
 
 	/**
 	 * ContactsController constructor.
@@ -49,21 +34,15 @@ abstract class Controller {
 	}
 
 	public function render($view_params = []) {
-	    // TODO: create class View
-        $title = $this->app->page->title;
-		
-		$view_vars = isset($view_params['vars']) ? $view_params['vars'] : [];
-		extract($view_vars);
+        $view_path = isset($view_params['view']) ? $view_params['view'] : $this->name . '/' . $this->app->page->action;
+        $view_path = dirname(__FILE__) . '/../app/View/' . $view_path;
 
-        $this->viewPath = isset($view_params['view']) ? $view_params['view'] : $this->name . '/' . $this->app->page->action;
-		$this->viewPath = dirname(__FILE__) . '/../app/View/' . $this->viewPath;
-		
-		$this->resourcePath = isset($view_params['resource']) ? $view_params['resource'] : $this->name;
-		$this->resourcePath = $this->app->webrootPath . '/data/' . $this->resourcePath;
-		
-        $this->layout = isset($view_params['layout']) ? $view_params['layout'] : $this->layout;
-		
-		require dirname(__FILE__) . '/../app/View/Layout/' . $this->layout . '.php';
+        $view_params['title'] =  isset($view_params['title']) ? $view_params['title'] : $this->app->page->title;
+
+	    $view = new View($view_path, $view_params);
+        $content = $view->render();
+
+        Response::getInstance()->setContent($content);
 	}
 
 	protected function paginate() {
