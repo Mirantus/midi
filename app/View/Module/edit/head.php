@@ -1,9 +1,9 @@
 <?php
     /**
-     * @var app\Controller\ModuleController $this
+     * @var core\View $this
      * @var string $title
      */
 ?>
-<title><?=$title?> - <?=$this->app->title?></title>
-<meta name="description" content="<?=$title?>">
+<title><?=$this->title?> - <?=$this->app->title?></title>
+<meta name="description" content="<?=$this->title?>">
 <link rel="stylesheet" href="/js/jwysiwyg/jquery.wysiwyg.css" type="text/css">

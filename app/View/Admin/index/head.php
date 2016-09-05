@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var app\Controller\AdminController $this
+     * @var core\View $this
      */
 ?>
-<title><?=$title?> - <?=$this->app->title?></title>
+<title><?=$this->title?> - <?=$this->app->title?></title>

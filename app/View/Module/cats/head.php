@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var app\Controller\ModuleController $this
+     * @var core\View $this
      */
 ?>
 <title>Рубрики модуля - <?=$this->app->title?></title>

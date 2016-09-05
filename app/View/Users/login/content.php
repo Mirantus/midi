@@ -1,11 +1,11 @@
 <?php
 /**
- * @var app\Controller\UsersController $this
+ * @var core\View $this
  * @var core\Form\Form $form
  * @var string $title
  */
 ?>
-<h1><?=$title?></h1>
+<h1><?=$this->title?></h1>
 
 <form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form">
     <input type="hidden" name="key" value="">

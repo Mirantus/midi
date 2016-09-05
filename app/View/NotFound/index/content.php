@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var app\Controller\NotFoundController $this
+     * @var core\View $this
      */
 ?>
 <h1>Страница не найдена</h1>

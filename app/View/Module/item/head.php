@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var app\Controller\ModuleController $this
+     * @var core\View $this
      */
 ?>
 <title>Модуль - <?=$this->app->title?></title>

@@ -168,7 +168,7 @@
             $controller = new $controllerClass($this);
 
             if ($this->page->auth && !$this->isMember()) {
-                $this->redirect('/login/?return=/admin/');
+                Response::getInstance()->redirect('/login/?return=/admin/');
             }
 
             call_user_func_array([$controller, $this->page->action], $this->page->params);

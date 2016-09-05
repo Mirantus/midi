@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var app\Controller\PageController $this
+     * @var core\View $this
      */
 ?>
 <title>Контакты - <?=$this->app->title?></title>

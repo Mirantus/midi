@@ -4,6 +4,7 @@
     use core\Controller;
     use core\Form\Form;
     use core\Request;
+    use core\Response;
 
     class UsersController extends Controller {
         public function login() {

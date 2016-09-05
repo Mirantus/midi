@@ -1,11 +1,11 @@
 <?php
     /**
-     * @var app\Controller\ModuleController $this
+     * @var core\View $this
      * @var array $cats
      * @var string $title
      */
  ?>
-<h3><?=$title?></h3>
+<h3><?=$this->title?></h3>
 <ul class="ns">
     <?php
         if (!empty($cats)) {

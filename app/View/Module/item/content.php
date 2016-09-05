@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var app\Controller\ModuleController $this
+     * @var core\View $this
      * @var array $item
      * @var array $comments
      */

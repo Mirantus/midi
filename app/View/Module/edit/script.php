@@ -1,6 +1,6 @@
 <?php
 /**
- * @var app\Controller\ModuleController $this
+ * @var core\View $this
  */
 ?>
 <script src="/js/jwysiwyg/jquery.wysiwyg.js"></script>

@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var app\Controller\GalleryController $this
+     * @var core\View $this
      */
 ?>
 <title>Фотогалерея - <?=$this->app->title?></title>

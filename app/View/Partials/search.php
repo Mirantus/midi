@@ -1,6 +1,6 @@
 <?php
     /**
-     * @var core\Controller $this
+     * @var core\View $this
      */
 ?>
 <div id="searchArea">

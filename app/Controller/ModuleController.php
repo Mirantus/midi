@@ -25,7 +25,8 @@
             $this->render([
                 'vars' => [
                     'cats' => ModuleCat::find($this->paginate()),
-                    'count' => ModuleCat::count()
+                    'count' => ModuleCat::count(),
+                    'page_limit' => $this->pageLimit
                 ]
             ]);
         }
@@ -46,6 +47,7 @@
                     'cat' => $cat,
                     'items' => ModuleItem::find($items_query_params, ['cat' => $cat_id]),
                     'count' => ModuleItem::count(),
+                    'page_limit' => $this->pageLimit,
                     'title' => $cat['title']
                 ]
             ]);
@@ -381,7 +383,8 @@
             $this->render([
                 'vars' => [
                     'items' => ModuleItem::find($this->paginate()),
-                    'count' => ModuleItem::count()
+                    'count' => ModuleItem::count(),
+                    'page_limit' => $this->pageLimit
                 ]
             ]);
         }

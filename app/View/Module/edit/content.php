@@ -1,13 +1,13 @@
 <?php
     /**
-     * @var app\Controller\ModuleController $this
+     * @var core\View $this
      * @var array $cats
      * @var core\Form\Form $form
      * @var string $id
      * @var string $title
      */
  ?>
-<h3><?=$title?></h3>
+<h3><?=$this->title?></h3>
 
 <form name="edit" method="post" action="<?=$this->app->pageUrl?>" enctype="multipart/form-data" class="form" data-request="ajax">
     <input type="hidden" name="key" value="">

@@ -1,7 +1,7 @@
 <?php
     /**
-     * @var app\Controller\PageController $this
+     * @var core\View $this
      * @var string $title
      */
 ?>
-<title><?=$title?> - <?=$this->app->title?></title>
+<title><?=$this->title?> - <?=$this->app->title?></title>
