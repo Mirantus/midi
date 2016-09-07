@@ -242,32 +242,6 @@
         }
 
         /**
-         * Is file posted?
-         * @param string $name File field name
-         * @return bool
-         */
-        public function isFileUploaded($name) {
-            // TODO: move to File
-            return isset($_FILES[$name]) && $_FILES[$name]['name'] != '' && $_FILES[$name]['size'] > 0;
-        }
-
-        /**
-         * Return error of uploading file
-         * @param string $name
-         * @return string|bool
-         */
-        public function getFileUploadError($name) {
-            // TODO: move to File
-            if ($_FILES[$name]['error'] > 0) {
-                return 'Ошибка загрузки файла';
-            }
-            if ($_FILES[$name]['size'] > 1048576) {
-                return 'Максимальный размер файла 1Мб';
-            }
-            return false;
-        }
-
-        /**
          * Check if curent user is not guest
          * @return bool
          */

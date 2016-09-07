@@ -129,4 +129,28 @@
                 throw new \Exception('Невозможно скопировать файл ' . $source . ' в ' . $destination);
             };
         }
+
+        /**
+         * Is file posted?
+         * @param string $name File field name
+         * @return bool
+         */
+        public static function isUploaded($name) {
+            return isset($_FILES[$name]) && $_FILES[$name]['name'] != '' && $_FILES[$name]['size'] > 0;
+        }
+
+        /**
+         * Return error of uploading file
+         * @param string $name
+         * @return string|bool
+         */
+        public static function getUploadError($name) {
+            if ($_FILES[$name]['error'] > 0) {
+                return 'Ошибка загрузки файла';
+            }
+            if ($_FILES[$name]['size'] > 1048576) {
+                return 'Максимальный размер файла 1Мб';
+            }
+            return false;
+        }
     }

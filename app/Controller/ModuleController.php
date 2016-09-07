@@ -117,13 +117,13 @@
                     $form->title->error = 'Введите пожалуйста заголовок';
                 }
 
-                if ($this->app->isFileUploaded('file')) {
+                if (File::isUploaded('file')) {
                     $form->file->value = Utils::prepareFileName($_FILES['file']['name']);
-                    $form->file->error = $this->app->getFileUploadError('file');
+                    $form->file->error = File::getUploadError('file');
                 }
-                if ($this->app->isFileUploaded('image')) {
+                if (File::isUploaded('image')) {
                     $form->image->value = Utils::prepareFileName($_FILES['image']['name']);
-                    $form->image->error = $this->app->getFileUploadError('image');
+                    $form->image->error = File::getUploadError('image');
 
                     if (!$form->file->error && !Image::GetType($_FILES['image']['tmp_name'])) {
                         $form->image->error = 'Изображение должно быть в формате jpg, png или gif';
@@ -143,10 +143,10 @@
 
                     //image
                     if ($id) {
-                        if ($this->app->isFileUploaded('file')) {
+                        if (File::isUploaded('file')) {
                             File::moveUploadedFile($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
                         }
-                        if ($this->app->isFileUploaded('image')) {
+                        if (File::isUploaded('image')) {
                             $image_path = $data_path . $id . '/';
                             File::moveUploadedFile($_FILES['image']['tmp_name'], $image_path . $form->image->value);
                             Image::CreatePreview($image_path . $form->image->value,
@@ -231,13 +231,13 @@
                     $form->title->error = 'Введите пожалуйста заголовок';
                 }
 
-                if ($this->app->isFileUploaded('file')) {
+                if (File::isUploaded('file')) {
                     $form->file->value = Utils::prepareFileName($_FILES['file']['name']);
-                    $form->file->error = $this->app->getFileUploadError('file');
+                    $form->file->error = File::getUploadError('file');
                 }
-                if ($this->app->isFileUploaded('image')) {
+                if (File::isUploaded('image')) {
                     $form->image->value = Utils::prepareFileName($_FILES['image']['name']);
-                    $form->image->error = $this->app->getFileUploadError('image');
+                    $form->image->error = File::getUploadError('image');
 
                     if (!$form->file->error && !Image::GetType($_FILES['image']['tmp_name'])) {
                         $form->image->error = 'Изображение должно быть в формате jpg, png или gif';
@@ -252,10 +252,10 @@
 
                     if (ModuleItem::updateByPK($id, $formValues)) {
                         //image
-                        if ($this->app->isFileUploaded('file')) {
+                        if (File::isUploaded('file')) {
                             File::moveUploadedFile($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
                         }
-                        if ($this->app->isFileUploaded('image')) {
+                        if (File::isUploaded('image')) {
                             $image_path = $data_path . $id . '/';
                             File::moveUploadedFile($_FILES['image']['tmp_name'], $image_path . $form->image->value);
                             Image::CreatePreview($image_path . $form->image->value,
