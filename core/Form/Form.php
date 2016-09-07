@@ -22,6 +22,7 @@ class Form {
 	 * Field error like 'Invalid address' or false if no error
 	 * @var mixed
 	 */
+	// TODO: разобраться с этим полем
 	public $error = false;
 
 	/**

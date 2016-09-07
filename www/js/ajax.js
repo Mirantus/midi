@@ -7,6 +7,8 @@ function sendAjaxForm($form) {
 		type: $form.attr('method'),
 		url: $form.attr('action'),
 		data: new FormData($form[0]),
+        processData: false,
+        contentType: false,
 		success: function (data) {
             var offset = $form.offset(),
                 result = data.result || '<p>Спасибо, ваши данные приняты.</p>';

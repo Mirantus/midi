@@ -52,4 +52,15 @@ abstract class Controller {
 
 		return ['limit' => $first . ',' . $this->pageLimit];
 	}
+
+    protected function redirect($url) {
+        $response = Response::getInstance();
+
+        if (Request::isAjax()) {
+            $response->setAjax(['redirect' => $url]);
+            $response->send();
+        } else {
+            $response->redirect($url);
+        }
+    }
 }

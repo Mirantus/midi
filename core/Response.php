@@ -12,6 +12,7 @@
         protected static $_instance;
         private $headers = [];
         private $content = '';
+        private $status = '200 OK';
 
         private function __construct() {
         }
@@ -53,12 +54,21 @@
         }
 
         /**
+         * Set response status
+         * @param string $status
+         */
+        public function setStatus($status) {
+            $this->status = $status;
+        }
+
+        /**
          * Output http response
          */
         public function send() {
             foreach ($this->headers as $name => $value) {
-                header($name . ': ' . $value, false);
+                header($name . ': ' . $value);
             }
+            header($_SERVER['SERVER_PROTOCOL'] . ' ' . $this->status);
             exit($this->content);
         }
 
@@ -67,14 +77,8 @@
          * @param string $url
          */
         public function redirect($url) {
-            // Add alias to helper
             $this->addHeader('Location', $url);
+            $this->setStatus('301 Moved Permanently');
             $this->send();
-        }
-
-        public function back() {
-            // TODO: remove
-            $url = empty($_SERVER['HTTP_REFERER']) ? App::getInstance()->url : $_SERVER['HTTP_REFERER'];
-            $this->redirect($url);
         }
     }

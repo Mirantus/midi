@@ -153,24 +153,14 @@
                                 $image_path . 'thumb_' . $form->image->value, 100);
                             ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                         }
-
-                        if (!Request::isAjax()) {
-                            // TODO: return to list
-                            Response::getInstance()->redirect($this->app->url . '/ok');
-                        }
                     } else {
                         $form->error = 'Ошибка сохранения данных';
                     }
                 }
 
-                if (Request::isAjax()) {
-                    $ajaxResponse = [];
-                    if (!$form->isValid()) {
-                        $ajaxResponse['errors'] = $form->getErrors();
-                    }
-                    Response::getInstance()->setAjax($ajaxResponse);
-                    return;
-                }
+                $ajaxResponse = $form->isValid() ? '' : ['errors' => $form->getErrors()];
+                Response::getInstance()->setAjax($ajaxResponse);
+                return;
             }
 
             $this->render([
@@ -185,12 +175,12 @@
         public function edit() {
             $id = Request::getParamInt('id');
             if (!$id) {
-                Response::getInstance()->back();
+                $this->redirect('/404/');
             }
 
             $item = ModuleItem::findByPK($id);
             if (empty($item)) {
-                Response::getInstance()->back();
+                Response::getInstance()->redirect('/404/');
             }
 
             $data_path = $this->app->webrootPath . '/data/' . $this->name . '/items/';
@@ -272,24 +262,13 @@
                                 $image_path . 'thumb_' . $form->image->value, 100);
                             ModuleItem::updateByPK($id, ['image' => $form->image->value]);
                         }
-
-                        if (!Request::isAjax()) {
-                            // TODO: return to list
-                            Response::getInstance()->redirect($this->app->url . '/ok');
-                        }
                     } else {
                         $form->error = 'Ошибка сохранения данных';
                     }
                 }
-
-                if (Request::isAjax()) {
-                    $ajaxResponse = [];
-                    if (!$form->isValid()) {
-                        $ajaxResponse['errors'] = $form->getErrors();
-                    }
-                    Response::getInstance()->setAjax($ajaxResponse);
-                    return;
-                }
+                $ajaxResponse = $form->isValid() ? '' : ['errors' => $form->getErrors()];
+                Response::getInstance()->setAjax($ajaxResponse);
+                return;
             }
 
             $this->render([
@@ -305,29 +284,25 @@
         public function del() {
             $id = Request::getParamInt('id');
             if (!$id) {
-                Response::getInstance()->back();
+                $this->redirect('/404/');
             }
 
             ModuleItem::deleteByPK($id);
 
-            if (Request::isAjax()) {
-                Response::getInstance()->setAjax('');
-            } else {
-                Response::getInstance()->back();
-            }
+            Response::getInstance()->setAjax('');
         }
 
         public function addcomment() {
             $item = Request::getParamInt('item');
             if (!$item) {
-                Response::getInstance()->back();
+                $this->redirect('/404/');
             }
 
             $form = new Form();
             $form->add('item', ['value' => $item]);
             $form->add('text', ['title' => 'Текст']);
-            $form->add('name', ['title' => 'Имя', 'value' => $item['name']]);
-            $form->add('email', ['title' => 'E-mail', 'value' => $item['email']]);
+            $form->add('name', ['title' => 'Имя']);
+            $form->add('email', ['title' => 'E-mail']);
             $form->fill();
 
             if (Request::isPost()) {
@@ -349,26 +324,18 @@
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
-                    if (ModuleComment::insert($formValues)) {
-                        if (!Request::isAjax()) {
-                            // TODO: return to list
-                            Response::getInstance()->redirect($this->app->url . '/ok');
-                        }
-                    } else {
+                    if (!ModuleComment::insert($formValues)) {
                         $form->error = 'Ошибка сохранения данных';
                     }
                 }
 
-                if (Request::isAjax()) {
-                    $ajaxResponse = [];
-                    if (!$form->isValid()) {
-                        $ajaxResponse['errors'] = $form->getErrors();
-                    } else {
-                        $ajaxResponse['result'] = 'Спасибо, ваш комментарий принят.';
-                    }
-                    Response::getInstance()->setAjax($ajaxResponse);
-                    return;
-                }
+                $ajaxResponse = $form->isValid()
+                    ? ['result' => 'Спасибо, ваш комментарий принят.']
+                    : ['errors' => $form->getErrors()];
+
+                Response::getInstance()->setAjax($ajaxResponse);
+
+                return;
             }
 
             $this->render([
