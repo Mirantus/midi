@@ -17,7 +17,7 @@
                 &nbsp;
                 <?
                     $url = '/module/item/' . $item['id'] . '/';
-                    echo $this->app->createLink($url, $item['title']);
+                    echo lib\Url::createLink($url, $item['title']);
                 ?>
             </li>
         <? } ?>

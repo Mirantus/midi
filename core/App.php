@@ -176,25 +176,6 @@
             Response::getInstance()->send();
         }
 
-        /**
-         * Add param to url
-         * @param string $url
-         * @param string $param Param name
-         * @param string $value Param value
-         * @return string New url
-         */
-        public function addUrlParam($url, $param, $value) {
-            // TODO: create class lib/Url
-            if (strpos($url, '?')) {
-                list($path, $params) = explode('?', $url);
-                parse_str($params, $params);
-                $params[$param] = $value;
-                return $path . '?' . http_build_query($params);
-            }
-
-            return $url . '?' . $param . '=' . $value;
-        }
-
         //    /**
         //     * Send simple mail
         //     * @param string $email
@@ -227,18 +208,6 @@
 
             $queryPart = empty($query) ? '' : '?' . http_build_query($query);
             return $this->url . $routePart . $queryPart;
-        }
-
-        /**
-         * Create HTML link
-         * @param string $url
-         * @param string $text
-         * @param bool $isActive Create link or text (if active)
-         * @return string
-         */
-        public function createLink($url, $text, $isActive = false) {
-            // TODO: move to Url
-            return $isActive ? $text : '<a href="' . $url . '">' . $text . '</a>';
         }
 
         /**
