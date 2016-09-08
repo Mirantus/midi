@@ -18,4 +18,4 @@
         } else echo '<li>Данных нет</li>';
     ?>
 </ul>
-<?php include($this->app->partialPath . '/pagination.php');?>
+<?php include($this->partialPath . '/pagination.php');?>

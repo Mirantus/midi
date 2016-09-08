@@ -12,7 +12,6 @@
         /**
          * @var App
          */
-        // TODO Remove
         protected $app;
 
         /**
@@ -24,6 +23,11 @@
          * @var string Path to view files
          */
         protected $path;
+
+        /**
+         * @var string Path to partial view files
+         */
+        protected $partialPath;
 
         /**
          * @var string Html title
@@ -43,6 +47,7 @@
         public function __construct($path, $params = []) {
             $this->app = App::getInstance();
             $this->path = $path;
+            $this->partialPath = $this->app->path . '/app/View/Partials';
             $this->layout = isset($params['layout']) ? $params['layout'] : $this->layout;
             $this->title = isset($params['title']) ? $params['title'] : '';
             $this->vars = isset($params['vars']) ? $params['vars'] : $this->vars;

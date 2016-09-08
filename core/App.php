@@ -42,12 +42,6 @@
         public $pageUrl;
 
         /**
-         * View partials path
-         * @var string
-         */
-        public $partialPath;
-
-        /**
          * Site root path
          * @var string
          */
@@ -145,7 +139,6 @@
             $this->pageUrl = $this->url . $_SERVER['REQUEST_URI'];
             $this->webrootPath = $_SERVER['DOCUMENT_ROOT'];
             $this->path = dirname($this->webrootPath);
-            $this->partialPath = $this->path . '/app/View/Partials';
         }
 
         public function run() {
