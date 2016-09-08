@@ -1,7 +1,7 @@
 <?php
 $config['pages'] = [
     'index' => ['route' => '/', 'title' => 'Главная'],
-    '404' => ['route' => '/404/', 'controller' => 'NotFoundController', 'title' => 'Страница не найдена'],
+    '404' => ['route' => '/404/', 'controller' => 'PageController', 'action' => 'notfound', 'title' => 'Страница не найдена'],
     'admin' => ['route' => '/admin/', 'controller' => 'AdminController', 'auth' => true, 'title' => 'Администрирование'],
     'contacts' => ['route' => '/contacts/', 'controller' => 'PageController', 'action' => 'contacts', 'title' => 'Контакты'],
     'feedback' => ['route' => '/feedback/', 'controller' => 'FeedbackController', 'title' => 'Обратная связь'],

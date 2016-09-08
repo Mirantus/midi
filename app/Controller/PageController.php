@@ -11,4 +11,8 @@
         public function ok() {
             $this->render();
         }
+
+        public function notfound() {
+            $this->render();
+        }
     }
