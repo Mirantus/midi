@@ -16,7 +16,7 @@ class Form {
 	 * Array of form fields
 	 * @var Field[]
 	 */
-	public $fields = array();
+	public $fields = [];
 
 	/**
 	 * Form error
@@ -28,14 +28,14 @@ class Form {
 	 * Array of predefined error messages
 	 * @var array
 	 */
-	public $errors = array(
+	public $errors = [
         'wrong' => 'Поле заполнено неверно',
 		'email' => 'Email введен неверно',
 		'url' => 'Адрес сайта введен неверно',
 		'icq' => 'Номер ICQ введен неверно',
 		'int' => 'Введите только цифры',
 		'cat' => 'Рубрика не найдена',
-	);
+    ];
 
 	/**
 	 * Add field to form
@@ -64,7 +64,7 @@ class Form {
 	 * @param array $options Field options
 	 * @return Form
 	 */
-	public function add($name, $options = array()) {
+	public function add($name, $options = []) {
 		$this->fields[$name] = new Field($name, $options);
 		return $this;
 	}
@@ -99,7 +99,7 @@ class Form {
 	 * @return array like array($name->$value)
 	 */
 	public function toArray() {
-		$fields = array();
+		$fields = [];
 		foreach($this->fields as $name => $field) {
 			$fields[$name] = $field->value;
 		}

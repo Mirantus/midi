@@ -11,8 +11,8 @@
             $return_url = Request::getParam('return', false, '/');
 
             $form = new Form();
-            $form->add('login', array('title' => 'Логин'));
-            $form->add('password', array('title' => 'Пароль'));
+            $form->add('login', ['title' => 'Логин']);
+            $form->add('password', ['title' => 'Пароль']);
             $form->fill();
 
             if (Request::isPost()) {

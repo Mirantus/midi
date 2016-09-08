@@ -1,1 +1,0 @@
-<?phperror_reporting(E_ALL);ini_set('display_startup_errors', 1);ini_set('display_errors', 1);ini_set('magic_quotes_gpc', 0);require('Site.php');$site = Site::getInstance();$site->registerPaths(array('lib', 'core', 'core/Form'));date_default_timezone_set($site->config['general']['timezone']);

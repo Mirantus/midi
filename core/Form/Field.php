@@ -42,7 +42,7 @@ class Field {
 	 * @param string $name Field name like 'email'
 	 * @param array $options Array of field options (title, value)
 	 */
-	public function __construct($name, $options = array()) {
+	public function __construct($name, $options = []) {
 		$this->name = $name;
 		if (isset($options['title'])) {
 			$this->title = $options['title'];

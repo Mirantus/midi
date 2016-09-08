@@ -1,4 +1,5 @@
 <?php
+//TODO: RSS
     namespace app\Controller;
 
     use core\Controller;
@@ -54,8 +55,15 @@
         }
 
         public function item($id) {
+            $item = ModuleItem::findByPK($id);
+
+            if (empty($item)) {
+                Response::getInstance()->redirect('/404');
+            }
+
             $vars = [
-                'item' => ModuleItem::findByPK($id)
+                'item' => $item,
+                'dataPath' => '/data/' . $this->name . '/items/'
             ];
 
             if ($this->comments) {
@@ -275,6 +283,7 @@
                 'vars' => [
                     'id' => $id,
                     'cats' => $cats,
+                    'dataPath' => '/data/' . $this->name . '/items/',
                     'form' => $form,
                     'title' => 'Редактирование модуля'
                 ]

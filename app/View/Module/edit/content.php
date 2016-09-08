@@ -2,6 +2,7 @@
     /**
      * @var core\View $this
      * @var array $cats
+     * @var string $dataPath
      * @var core\Form\Form $form
      * @var string $id
      * @var string $title
@@ -27,7 +28,7 @@
     <label for="image" class="label"><?=$form->image->title?>:</label>
     <input id="image" name="image" type="file"><br>
     <? if ($form->image->value != ''): ?>
-        <img src="/data/<?=$this->name?>/items/<?=$id?>/thumb_<?=$form->image->value?>" alt="">
+        <img src="<?=$dataPath . $id?>/thumb_<?=$form->image->value?>" alt="">
     <? endif; ?>
     <div class="alert"><?=$form->image->error?></div>
 

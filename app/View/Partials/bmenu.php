@@ -1,1 +1,0 @@
-<nav>	<ul class="ns">		<?php			$menu_pages = array(				'' => 'Главная',				'module' => 'Модуль',				'module2' => 'Модуль2'			);			foreach ($menu_pages as $menu_page => $menu_title)	{				echo lib\Url::createLink('/' . $menu_page, $menu_title, $menu_page == $site->page, true);			}		?>	</ul></nav>

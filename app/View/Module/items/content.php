@@ -14,7 +14,7 @@
                     <a href="/module/edit/<?=$item['id']?>/" class="comment"><i class="icon-edit"></i></a>
                     <a href="/module/del/<?=$item['id']?>/" class="comment" data-request="ajax" data-confirm="item-del"><i class="icon-remove"></i></a>
                 <? } ?>
-                &nbsp;
+
                 <?
                     $url = '/module/item/' . $item['id'] . '/';
                     echo lib\Url::createLink($url, $item['title']);

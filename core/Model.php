@@ -220,14 +220,6 @@
             return $query;
         }
 
-//        /**
-//         * Get fields list
-//         * @return array
-//         */
-//        public static function getFields() {
-//            return static::$fields;
-//        }
-
         /**
          * @return PDO
          */

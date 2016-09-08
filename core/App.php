@@ -25,7 +25,7 @@
          * Current page
          * @var \core\Page
          */
-        public $page;
+        public $apge;
 
         /**
          * Pages config
@@ -167,19 +167,19 @@
             Response::getInstance()->send();
         }
 
-        //    /**
-        //     * Send simple mail
-        //     * @param string $email
-        //     * @param string $title
-        //     * @param string $message
-        //     * @return bool Result of sending mail
-        //     */
-        //    public function mail($email, $title, $message) {
-        //        //$title = iconv("UTF-8", "koi8-r//IGNORE", $title);
-        //        //$message = iconv("UTF-8", "koi8-r//IGNORE", $message);
-        //
-        //        return mail($email, $title, $message, 'From: mailer@' . $_SERVER['SERVER_NAME'] . "\r\n" . 'Content-type: text/plain; charset=utf-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion());
-        //    }
+        /**
+         * Send simple mail
+         * @param string $email
+         * @param string $title
+         * @param string $message
+         * @return bool Result of sending mail
+         */
+        public function mail($email, $title, $message) {
+//            $title = iconv("UTF-8", "koi8-r//IGNORE", $title);
+//            $message = iconv("UTF-8", "koi8-r//IGNORE", $message);
+
+            return mail($email, $title, $message, 'From: mailer@' . $_SERVER['SERVER_NAME'] . "\r\n" . 'Content-type: text/plain; charset=utf-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion());
+        }
 
         /**
          * Create url by page alias and query

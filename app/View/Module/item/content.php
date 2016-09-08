@@ -3,12 +3,13 @@
      * @var core\View $this
      * @var array $item
      * @var array $comments
+     * @var string $dataPath
      */
  ?>
 <h3><?=h($item['title'])?></h3>
 
 <? if (!empty($item['image'])) { ?>
-    <a href="/data/<?=$this->name?>/items/<?=$item['id']?>/<?=$item['image']?>" rel="lightbox"><img src="/data/<?=$this->name?>/items/<?=$item['id']?>/thumb_<?=$item['image']?>" alt="<?=h($item['title'])?>" class="image floatright"></a>
+    <a href="<?=$dataPath . $item['id']?>/<?=$item['image']?>" rel="lightbox"><img src="<?=$dataPath . $item['id']?>/thumb_<?=$item['image']?>" alt="<?=h($item['title'])?>" class="image floatright"></a>
 <? } ?>
 
 <?
@@ -24,9 +25,9 @@
 <?
 ?>
 <? if (!empty($item['file'])) { ?>
-    <p><a href="/data/<?=$this->name?>/items/<?=$item['id']?>/<?=$item['file']?>">/<?=$item['file'];?></a></p>
+    <p><a href="<?=$dataPath . $item['id']?>/<?=$item['file']?>">/<?=$item['file'];?></a></p>
 <? } ?>
-<? if (!empty($item['date'])) echo Date::sqlToDate($item['date']); ?>
+<? if (!empty($item['date'])) echo lib\Date::sqlToDate($item['date']); ?>
 
 <? if (isset($comments)) { ?>
     <h4>Комментарии</h4>

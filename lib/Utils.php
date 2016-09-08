@@ -20,22 +20,10 @@ class Utils {
 	}
 
 	/**
-	 * Wrapper for preg_match_all
-	 * @param string $regexp
-	 * @param string $source Text to parse
-	 * @param string $mod Regexp modifier
-	 * @return array|bool Array of matches or false
-	 */
-	static function matchAll($regexp, $source, $mod = 'sU') {
-		$num = preg_match_all('/' . $regexp . '/' . $mod, $source, $matches);
-		return ($num) ? $matches[1] : false;
-	}
-
-	/**
 	 * @return string Password
 	 */
 	static function generatePassword() {
-		$password = array();
+		$password = [];
 		for ($i=1; $i<=5; $i++) $password[] = chr(rand(65, 90));
 		for ($i=1; $i<=3; $i++) $password[] = chr(rand(97, 122));
 		for ($i=1; $i<=5; $i++) $password[] = chr(rand(48, 57));
@@ -79,8 +67,8 @@ class Utils {
 	 */
 	static function preparePhones($userPhones) {
 		if ($userPhones == '' || strlen($userPhones) < 7) return $userPhones;
-		$result = array();
-		$phonesMultiline = str_replace(array(',', ';'), "\n", $userPhones);
+		$result = [];
+		$phonesMultiline = str_replace([',', ';'], "\n", $userPhones);
 		$phones_array = explode("\n", $phonesMultiline);
 		foreach ($phones_array as $user_phone) {
 			$phone = preg_replace('/\D/', '', $user_phone);
