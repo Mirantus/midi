@@ -61,7 +61,7 @@
     <? } ?>
 
     <p>
-        <input id="agree" name="agree" type="checkbox" checked required> <label for="agree">Я согласен с <a href="#">лицензионным соглашением</a>.</label>
+        <input id="agree" name="agree" type="checkbox" checked> <label for="agree">Я согласен с <a href="#">лицензионным соглашением</a>.</label>
     </p>
 
     <button id="submit" type="submit" class="submit">Отправить</button>
