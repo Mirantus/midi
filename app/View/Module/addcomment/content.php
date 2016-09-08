@@ -23,6 +23,6 @@
     <input id="email" name="email" type="text" maxlength="255" value="<?=$form->email->value;?>" class="input">
     <div class="alert"><?=$form->email->error;?></div>
 
-    <button type="submit" class="submit">Отправить</button>
+    <button id="submit" type="submit" class="submit">Отправить</button>
     <div class="alert"><?=$form->error;?></div>
 </form>

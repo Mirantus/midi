@@ -64,6 +64,6 @@
         <input id="agree" name="agree" type="checkbox" checked required> <label for="agree">Я согласен с <a href="#">лицензионным соглашением</a>.</label>
     </p>
 
-    <button type="submit" class="submit">Отправить</button>
+    <button id="submit" type="submit" class="submit">Отправить</button>
     <div class="alert"><?=$form->error;?></div>
 </form>

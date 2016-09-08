@@ -1,6 +1,4 @@
 <?php
-    // TODO: NEW add flash messages
-
     /**
      * App class
      *

@@ -19,14 +19,13 @@ class Form {
 	public $fields = array();
 
 	/**
-	 * Field error like 'Invalid address' or false if no error
+	 * Form error
 	 * @var mixed
 	 */
-	// TODO: разобраться с этим полем
-	public $error = false;
+	public $error = '';
 
 	/**
-	 * Array of predefined error mesages
+	 * Array of predefined error messages
 	 * @var array
 	 */
 	public $errors = array(
@@ -87,10 +86,12 @@ class Form {
 		if (!isset($_REQUEST['key']) || $_REQUEST['key'] != '') return false;
 
 		foreach($this->fields as $field) {
-			if ($field->error) return false;
+			if (!empty($field->error)) {
+			    return false;
+            }
 		}
 
-		return true;
+		return empty($this->error);
 	}
 
 	/**
@@ -110,10 +111,18 @@ class Form {
 	 * @return array like array('field'->'error text')
 	 */
 	public function getErrors() {
-		$errors = array();
+		$errors = [];
+
 		foreach($this->fields as $name => $field) {
-			if ($field->error) $errors[$name] = $field->error;
+			if (!empty($field->error)) {
+			    $errors[$name] = $field->error;
+            }
 		}
+
+		if (!empty($this->error)) {
+            $errors['submit'] = $this->error;
+        }
+
 		return $errors;
 	}
 }

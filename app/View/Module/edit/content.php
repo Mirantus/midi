@@ -65,6 +65,6 @@
         </select>
     <? } ?>
 
-    <button type="submit" class="submit">Сохранить</button>
+    <button id="submit" type="submit" class="submit">Сохранить</button>
     <div class="alert"><?=$form->error?></div>
 </form>

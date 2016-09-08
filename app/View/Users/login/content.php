@@ -7,7 +7,7 @@
 ?>
 <h1><?=$this->title?></h1>
 
-<form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form">
+<form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form" data-request="ajax">
     <input type="hidden" name="key" value="">
 
     <label for="login" class="label"><span class="alert">*</span> <?=$form->login->title?>:</label>
@@ -18,6 +18,6 @@
     <input id="password" name="password" type="password" maxlength="255" value="<?=h($form->password->value)?>" required class="input">
     <div class="alert"><?=$form->password->error;?></div>
 
-    <button type="submit" class="submit">Войти</button>
+    <button id="submit" type="submit" class="submit">Войти</button>
     <div class="alert"><?=$form->error;?></div>
 </form>

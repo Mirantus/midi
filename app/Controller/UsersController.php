@@ -24,8 +24,15 @@
                 if ($form->isValid()) {
                     // TODO NEW USERS change to Users
                     $_SESSION['auth'] = $this->app->auth;
-                    Response::getInstance()->redirect($return_url);
                 }
+
+                $ajaxResponse = $form->isValid()
+                    ? ['redirect' => $return_url]
+                    : ['errors' => $form->getErrors()];
+
+                Response::getInstance()->setAjax($ajaxResponse);
+
+                return;
             }
 
             $this->render([
