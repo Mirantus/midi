@@ -23,7 +23,7 @@
         /**
          * @var string
          */
-        protected static $primaryKey = 'id';
+        public static $primaryKey = 'id';
 
         /**
          * Query

@@ -1,5 +1,4 @@
 <?php
-//TODO: RSS
     namespace app\Controller;
 
     use core\Controller;
@@ -351,6 +350,19 @@
                 'vars' => [
                     'form' => $form,
                     'title' => 'Добавление комментария'
+                ]
+            ]);
+        }
+
+        public function rss() {
+            Response::getInstance()->addHeader('Content-type', 'application/rss+xml');
+            $this->render([
+                'layout' => 'empty',
+                'vars' => [
+                    'items' => ModuleItem::find([
+                        'limit' => 10,
+                        'orderBy' => ModuleItem::$primaryKey . ' DESC'
+                    ])
                 ]
             ]);
         }

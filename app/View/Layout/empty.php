@@ -1,0 +1,1 @@
+<?php/** * @var core\View $this */include($this->path . '/content.php');
