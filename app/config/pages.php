@@ -1,6 +1,5 @@
 <?php
 // TODO: subscribe
-// TODO: feedback
 $config['pages'] = [
     'index' => ['route' => '/', 'title' => 'Главная'],
     '404' => ['route' => '/404/', 'controller' => 'PageController', 'action' => 'notfound', 'title' => 'Страница не найдена'],

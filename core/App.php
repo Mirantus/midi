@@ -16,6 +16,12 @@
         public $dbConfig;
 
         /**
+         * Site owner email
+         * @var string
+         */
+        public $owner;
+
+        /**
          * Current page
          * @var \core\Page
          */
@@ -100,6 +106,7 @@
             $this->version = $config['app']['version'];
             $this->pages = $config['pages'];
             $this->dbConfig = $config['database'];
+            $this->owner = $config['app']['owner'];
         }
 
         private function setPage() {
