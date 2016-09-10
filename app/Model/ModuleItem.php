@@ -7,7 +7,7 @@
         /**
          * @var array
          */
-        // TODO NEW RATE change rate to sort and create reordering in admin
+        // TODO change rate to sort and create reordering in admin
         protected static $fields = ['id', 'cat', 'title', 'text', 'price', 'image', 'file', 'name', 'phone', 'url', 'email', 'city', 'address', 'company', 'user', 'ip', 'date', 'access', 'rate'];
 
         /**
