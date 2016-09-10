@@ -1,6 +1,7 @@
 <?php
     namespace app\Controller;
 
+    use app\Model\User;
     use core\Controller;
     use core\Form\Form;
     use core\Request;
@@ -11,19 +12,24 @@
             $return_url = Request::getParam('return', false, '/');
 
             $form = new Form();
-            $form->add('login', ['title' => 'Логин']);
+            $form->add('email', ['title' => 'E-mail']);
             $form->add('password', ['title' => 'Пароль']);
             $form->fill();
 
             if (Request::isPost()) {
                 //validation
-                if ($form->login->value != $this->app->auth['login']) $form->login->error = 'Введен неправильный логин';
-                if ($form->password->value != $this->app->auth['password']) $form->password->error = 'Введен неправильный пароль';
+                if (User::find(['where' => 'email = :email'], ['email' => $form->email->value])) {
+                    if (!$user = User::auth($form->email->value, $form->password->value)) {
+                        $form->password->error = 'Указан неправильный пароль';
+                    }
+                } else {
+                    $form->email->error = 'Указанный email не найден';
+                }
 
                 //process
                 if ($form->isValid()) {
-                    // TODO NEW USERS change to Users
-                    $_SESSION['auth'] = $this->app->auth;
+                    $_SESSION['auth'] = $user;
+                    unset($_SESSION['auth']['password']);
                 }
 
                 $ajaxResponse = $form->isValid()

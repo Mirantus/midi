@@ -23,10 +23,10 @@
         public $alias;
 
         /**
-         * Is page require authorization
+         * Page user role access
          * @var string
          */
-        public $auth = false;
+        public $auth = 'guest';
 
         /**
          * Controller name

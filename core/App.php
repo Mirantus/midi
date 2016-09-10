@@ -10,12 +10,6 @@
 
     class App {
         /**
-         * Auth credentials
-         * @var array
-         */
-        public $auth;
-
-        /**
          * Database config
          * @var array
          */
@@ -25,7 +19,7 @@
          * Current page
          * @var \core\Page
          */
-        public $apge;
+        public $page;
 
         /**
          * Pages config
@@ -101,10 +95,6 @@
         private function setConfig() {
             require '../app/config/index.php';
             /** @var array $config */
-
-            // TODO: NEW USERS replace to Users
-            $this->auth = $config['auth'];
-
             $this->title = $config['app']['title'];
             date_default_timezone_set($config['app']['timezone']);
             $this->version = $config['app']['version'];
@@ -144,23 +134,11 @@
             $this->setPaths();
             $this->setAutoload();
             $this->setPage();
-
-            if (!isset($_SESSION)) {
-                session_start();
-            }
-            if (!isset($_SESSION['auth'])) {
-                $_SESSION['auth'] = [
-                    'id' => 0,
-                    'login' => ''
-                ];
-            }
+            $this->startSession();
+            $this->checkAccess();
 
             $controllerClass = '\app\Controller\\' . $this->page->controller;
             $controller = new $controllerClass($this);
-
-            if ($this->page->auth && !$this->isMember()) {
-                Response::getInstance()->redirect('/login/?return=/admin/');
-            }
 
             call_user_func_array([$controller, $this->page->action], $this->page->params);
 
@@ -201,12 +179,27 @@
             return $this->url . $routePart . $queryPart;
         }
 
-        /**
-         * Check if curent user is not guest
-         * @return bool
-         */
-        public function isMember() {
-            // TODO: NEW USER move to user
-            return !empty($_SESSION['auth']['id']);
+        private function checkAccess() {
+            if ($this->page->auth == 'admin' && $_SESSION['auth']['role'] != 'admin') {
+                Response::getInstance()->redirect('/login/?return=/admin/');
+            }
+
+            if ($this->page->auth == 'user' && $_SESSION['auth']['role'] == 'guest') {
+                Response::getInstance()->redirect('/login/?return=' . $_SERVER['REQUEST_URI']);
+            }
+        }
+
+        private function startSession() {
+            if (!isset($_SESSION)) {
+                session_start();
+            }
+            if (!isset($_SESSION['auth'])) {
+                $_SESSION['auth'] = [
+                    'id' => 0,
+                    'email' => '',
+                    'role' => 'guest',
+                    'name' => ''
+                ];
+            }
         }
     }

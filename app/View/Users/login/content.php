@@ -10,9 +10,9 @@
 <form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form" data-request="ajax">
     <input type="hidden" name="key" value="">
 
-    <label for="login" class="label"><span class="alert">*</span> <?=$form->login->title?>:</label>
-    <input id="login" name="login" type="text" maxlength="255" value="<?=h($form->login->value)?>" required class="input">
-    <div class="alert"><?=$form->login->error;?></div>
+    <label for="email" class="label"><span class="alert">*</span> <?=$form->email->title?>:</label>
+    <input id="email" name="email" type="email" maxlength="255" value="<?=h($form->email->value)?>" required class="input">
+    <div class="alert"><?=$form->email->error;?></div>
 
     <label for="password" class="label"><span class="alert">*</span> <?=$form->password->title?>:</label>
     <input id="password" name="password" type="password" maxlength="255" value="<?=h($form->password->value)?>" required class="input">
