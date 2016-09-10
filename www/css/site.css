@@ -1,240 +1,6 @@
-html,
-body,
-.ns {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-article,
-aside,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
-}
-body {
-  line-height: 1;
-}
-dd {
-  margin-left: 40px;
-}
-dl {
-  margin: 1.12em 0;
-}
-fieldset {
-  margin: 1.12em 0;
-}
-h1 {
-  font-size: 2em;
-  margin: .67em 0;
-  font-weight: bolder;
-}
-h2 {
-  font-size: 1.5em;
-  margin: .75em 0;
-  font-weight: bolder;
-}
-h3 {
-  font-size: 1.17em;
-  margin: .83em 0;
-  font-weight: bolder;
-}
-h4 {
-  margin: 1.12em 0;
-  font-weight: bolder;
-}
-h5 {
-  font-size: .83em;
-  margin: 1.5em 0;
-  font-weight: bolder;
-}
-h6 {
-  font-size: .75em;
-  margin: 1.67em 0;
-  font-weight: bolder;
-}
-ol {
-  margin: 1.12em 0 1.12em 40px;
-  list-style-type: decimal;
-}
-ol ul,
-ol ol {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-p {
-  margin: 1.12em 0;
-}
-th {
-  font-weight: bolder;
-}
-ul {
-  margin: 1.12em 0 1.12em 40px;
-}
-ul ol,
-ul ul {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-form {
-  margin: 0;
-  padding: 0;
-}
-img {
-  border: 0;
-}
-.inline {
-  display: inline;
-}
-.block {
-  display: block;
-}
-.inline-block {
-  display: inline-block;
-}
-.hidden {
-  display: none;
-}
-.floatleft {
-  float: left;
-}
-.floatright {
-  float: right;
-}
-.clear {
-  clear: both;
-}
-.clearfix {
-  zoom: 1;
-}
-.clearfix:before,
-.clearfix:after {
-  content: "";
-  display: table;
-}
-.clearfix:after {
-  clear: both;
-}
-.small {
-  font-size: smaller;
-}
-.large {
-  font-size: larger;
-}
-.bold {
-  font-weight: bold;
-}
-.normal {
-  font-weight: normal;
-}
-.left {
-  text-align: left;
-}
-.center {
-  text-align: center;
-}
-.right {
-  text-align: right;
-}
-.underline {
-  text-decoration: underline;
-}
-.undecorate {
-  text-decoration: none;
-}
-.nowrap {
-  white-space: nowrap;
-}
-.w100 {
-  width: 100%;
-}
-.black {
-  color: #000;
-}
-.gray {
-  color: #808080;
-}
-.red {
-  color: #f00;
-}
-.white {
-  color: #fff;
-}
-.border {
-  border: 1px solid black;
-}
-.decimal li {
-  list-style-type: decimal;
-  margin-left: 20px;
-}
-ul.inline {
-  display: block;
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0;
-}
-ul.inline li {
-  display: inline-block;
-  margin-right: 10px;
-}
-.form .label {
-  display: block;
-  margin-top: 10px;
-}
-.form .input,
-.form .textarea {
-  width: 400px;
-}
-.form .submit {
-  display: block;
-  margin-top: 10px;
-}
-.alert {
-  color: #f00;
-  font-size: smaller;
-}
-.comment {
-  color: #ccc;
-  font-size: smaller;
-}
-.pagination {
-  margin: 20px 0;
-  padding: 0;
-}
-.pagination li {
-  display: inline;
-  margin-right: 5px;
-}
-.image {
-  display: block;
-  float: left;
-  margin: 0 10px 10px 0;
-}
-ul.ns {
-  list-style: none;
-}
-table.ns {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-#loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #bbb;
-  color: #fff;
-  font-weight: bold;
-  padding: 5px 10px;
-  white-space: nowrap;
-}
+@import "reset.css";
+@import "classes.css";
+
 body {
   font-size: 14px;
   font-family: Arial, sans-serif;
@@ -242,75 +8,90 @@ body {
   background-color: #fff;
   color: #000;
 }
-body a {
-  color: #00e;
-  /*transition: color 2s;*/
+
+a {
+    color: #00e;
+    /*transition: color 2s;*/
 }
-body a:hover {
-  color: #00e;
-  transition: color 0.5s;
+a:hover {
+     color: #00e;
+     transition: color 0.5s;
 }
-body .layout-container {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
-body .layout-content {
-  flex: 1;
+
+.layout-content {
+    flex: 1;
 }
-body .container {
-  margin: auto;
-  max-width: 780px;
+
+.container {
+    margin:auto;
+    max-width: 780px;
 }
-body header {
-  height: 30px;
-  padding: 20px;
-  background-color: #fff;
-  text-align: center;
+
+header {
+    height: 30px;
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
 }
-body .logo h2 {
-  margin: 0;
-  font-weight: normal;
+
+.logo h2 {
+    margin: 0;
+    font-weight: normal;
 }
-body .top-panel {
-  margin: 10px 0;
-  padding: 10px 20px;
-  background-color: #eee;
-  border: 1px solid #ccc;
+
+.top-panel {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #eee;
+    border: 1px solid #ccc;
 }
-body .searchArea {
-  float: left;
+
+.searchArea {
+    float:left;
 }
-body .loginArea {
-  float: right;
+
+.loginArea {
+    float:right;
 }
-body aside {
-  float: left;
-  width: 120px;
-  padding: 20px;
+
+aside {
+    float: left;
+    width: 120px;
+    padding: 20px;
 }
-body nav .active {
-  font-weight: bold;
+
+nav .active {
+    font-weight: bold;
 }
-body section {
-  padding: 20px;
-  margin-left: 180px;
-  background-color: #f8f8f8;
-  border: 1px solid #ccc;
-  background: #f8f8f8;
-  background: linear-gradient(#f8f8f8, #ffffff);
+
+section {
+    padding: 20px;
+    margin-left: 180px;
+    border: 1px solid #ccc;
+    background: #f8f8f8 linear-gradient(#f8f8f8, #ffffff);
 }
-body section h1:first-child {
-  margin-top: 0;
+section h1:first-child {
+    margin-top: 0;
 }
-body .bottom-panel {
-  margin: 10px 0;
-  padding: 10px 20px;
-  background-color: #eee;
-  border: 1px solid #ccc;
-  text-align: center;
+
+.bottom-panel {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    text-align: center;
 }
-body footer {
-  text-align: center;
-  padding: 5px;
+
+footer {
+    text-align: center;
+    padding: 5px;
+}
+
+.counter {
 }

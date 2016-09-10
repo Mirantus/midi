@@ -6,7 +6,6 @@
  * @package Core
  * @copyright (c) 2016. Mikhail Miropolskiy. All Rights Reserved.
  */
-//TODO: навести порядок в ресурсах
 namespace core;
 
 class View {

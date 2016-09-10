@@ -28,7 +28,7 @@ function sendAjaxForm($form) {
 
 $(function() {
 	$(document).ajaxStart(function() {
-		$('<div/>', {id: 'loading', text: 'Пожалуйста подождите...'}).appendTo('body');
+		$('<div/>', {id: 'loading', class: 'loading', text: 'Пожалуйста подождите...'}).appendTo('body');
 	});
 	$(document).ajaxComplete(function(event,request,settings) {
 		$('#loading').remove();
