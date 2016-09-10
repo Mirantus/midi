@@ -236,7 +236,9 @@ table.ns {
   white-space: nowrap;
 }
 body {
-  font: 12px Arial, sans-serif;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  line-height: normal;
   background-color: #fff;
   color: #000;
 }
@@ -248,9 +250,17 @@ body a:hover {
   color: #00e;
   transition: color 0.5s;
 }
-body #wrapper {
+body .layout-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+body .layout-content {
+  flex: 1;
+}
+body .container {
   margin: auto;
-  width: 780px;
+  max-width: 780px;
 }
 body header {
   height: 30px;
@@ -258,22 +268,20 @@ body header {
   background-color: #fff;
   text-align: center;
 }
-body #logo h2 {
+body .logo h2 {
   margin: 0;
   font-weight: normal;
 }
-body #top-panel {
+body .top-panel {
   margin: 10px 0;
-  padding: 5px 20px;
+  padding: 10px 20px;
   background-color: #eee;
-  border: 1px dotted #ccc;
-  border-radius: 10px;
-  box-shadow: 0px 2px 3px #666;
+  border: 1px solid #ccc;
 }
-body #searchArea {
+body .searchArea {
   float: left;
 }
-body #loginArea {
+body .loginArea {
   float: right;
 }
 body aside {
@@ -288,21 +296,19 @@ body section {
   padding: 20px;
   margin-left: 180px;
   background-color: #f8f8f8;
-  border: 1px dotted #ccc;
-  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
   background: linear-gradient(#f8f8f8, #ffffff);
 }
 body section h1:first-child {
   margin-top: 0;
 }
-body #bottom-panel {
+body .bottom-panel {
   margin: 10px 0;
-  padding: 5px 20px;
+  padding: 10px 20px;
   background-color: #eee;
-  border: 1px dotted #ccc;
+  border: 1px solid #ccc;
   text-align: center;
-  border-radius: 10px;
-  box-shadow: 0px 2px 3px #666;
 }
 body footer {
   text-align: center;

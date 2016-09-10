@@ -3,7 +3,7 @@
      * @var core\View $this
      */
 ?>
-<div id="searchArea">
+<div class="searchArea">
 	<form name="search-form" action="http://www.yandex.ru/yandsearch" method="get">
 		<input name="text" type="search" maxlength="255" value="" placeholder="Текст поиска" required><input type="submit" value="Найти">
 		<input type="hidden" name="stype" value="www">
