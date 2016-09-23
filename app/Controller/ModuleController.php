@@ -31,6 +31,9 @@
             ]);
         }
 
+        /**
+         * @param integer $cat_id
+         */
         public function cat($cat_id) {
             $cat = ModuleCat::findByPK($cat_id);
 
@@ -53,6 +56,9 @@
             ]);
         }
 
+        /**
+         * @param integer $id
+         */
         public function item($id) {
             $item = ModuleItem::findByPK($id);
 
@@ -179,12 +185,10 @@
             ]);
         }
 
-        public function edit() {
-            $id = Request::getParamInt('id');
-            if (!$id) {
-                $this->redirect('/404/');
-            }
-
+        /**
+         * @param integer $id
+         */
+        public function edit($id) {
             $item = ModuleItem::findByPK($id);
             if (empty($item)) {
                 Response::getInstance()->redirect('/404/');
@@ -289,25 +293,20 @@
             ]);
         }
 
-        public function del() {
-            $id = Request::getParamInt('id');
-            if (!$id) {
-                $this->redirect('/404/');
-            }
-
+        /**
+         * @param integer $id
+         */
+        public function del($id) {
             ModuleItem::deleteByPK($id);
-
             Response::getInstance()->setAjax('');
         }
 
-        public function addcomment() {
-            $item = Request::getParamInt('item');
-            if (!$item) {
-                $this->redirect('/404/');
-            }
-
+        /**
+         * @param integer $item_id
+         */
+        public function addcomment($item_id) {
             $form = new Form();
-            $form->add('item', ['value' => $item]);
+            $form->add('item', ['value' => $item_id]);
             $form->add('text', ['title' => 'Текст']);
             $form->add('name', ['title' => 'Имя']);
             $form->add('email', ['title' => 'E-mail']);
