@@ -63,7 +63,8 @@
             $item = ModuleItem::findByPK($id);
 
             if (empty($item)) {
-                Response::getInstance()->redirect('/404');
+                $this->notFound();
+                return;
             }
 
             $vars = [

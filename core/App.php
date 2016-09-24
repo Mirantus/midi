@@ -111,6 +111,8 @@
 
         private function setPage() {
             $pageConfig = $this->pages['404'];
+            $pageConfig['alias'] = '404';
+
             foreach ($this->pages as $alias => $page) {
                 $regexp = '/^' . str_replace('/', '\/', $page['route']) . '$/i';
                 if (preg_match($regexp, Request::getPath(), $matches)) {
@@ -124,6 +126,10 @@
                     $pageConfig['alias'] = $alias;
                     break;
                 }
+            }
+
+            if ($pageConfig['alias'] == '404') {
+                Response::getInstance()->setStatus('404 Not Found');
             }
 
             $this->page = new Page($pageConfig);

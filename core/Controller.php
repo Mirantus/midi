@@ -63,4 +63,12 @@ abstract class Controller {
             $response->redirect($url);
         }
     }
+
+	protected function notFound() {
+		Response::getInstance()->setStatus('404 Not Found');
+		
+		$this->render([
+			'view' => 'Page/notfound'
+		]);
+	}
 }
