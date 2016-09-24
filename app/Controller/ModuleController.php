@@ -171,7 +171,11 @@
                     }
                 }
 
-                $ajaxResponse = $form->isValid() ? '' : ['errors' => $form->getErrors()];
+                $return_url = $this->level == 'cats'
+                    ? '/module/cat/' . $form->cat->value . '/#item' . $id
+                    : '/module/#item' . $id;
+
+                $ajaxResponse = $form->isValid() ? ['redirect' => $return_url] : ['errors' => $form->getErrors()];
                 Response::getInstance()->setAjax($ajaxResponse);
                 return;
             }
@@ -277,7 +281,12 @@
                         $form->error = 'Ошибка сохранения данных';
                     }
                 }
-                $ajaxResponse = $form->isValid() ? '' : ['errors' => $form->getErrors()];
+
+                $return_url = $this->level == 'cats'
+                    ? '/module/cat/' . $form->cat->value . '/#item' . $id
+                    : '/module/#item' . $id;
+
+                $ajaxResponse = $form->isValid() ? ['redirect' => $return_url] : ['errors' => $form->getErrors()];
                 Response::getInstance()->setAjax($ajaxResponse);
                 return;
             }
@@ -331,13 +340,15 @@
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
-                    if (!ModuleComment::insert($formValues)) {
+                    $id = ModuleComment::insert($formValues);
+
+                    if (!$id) {
                         $form->error = 'Ошибка сохранения данных';
                     }
                 }
 
                 $ajaxResponse = $form->isValid()
-                    ? ['result' => 'Спасибо, ваш комментарий принят.']
+                    ? ['redirect' => '/module/item/' . $item_id . '/#comment' . $id]
                     : ['errors' => $form->getErrors()];
 
                 Response::getInstance()->setAjax($ajaxResponse);
