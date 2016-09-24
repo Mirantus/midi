@@ -173,13 +173,13 @@
                     }
                 }
 
-                $return_url = $this->level == 'cats'
-                    ? '/module/cat/' . $form->cat->value . '/#item' . $id
-                    : '/module/#item' . $id;
+                if ($form->isValid()) {
+                    $return_url = $this->level == 'cats'
+                        ? '/module/cat/' . $form->cat->value . '/#item' . $id
+                        : '/module/#item' . $id;
 
-                $ajaxResponse = $form->isValid() ? ['redirect' => $return_url] : ['errors' => $form->getErrors()];
-                Response::getInstance()->setAjax($ajaxResponse);
-                return;
+                    $this->redirect($return_url);
+                }
             }
 
             $this->render([
@@ -285,13 +285,13 @@
                     }
                 }
 
-                $return_url = $this->level == 'cats'
-                    ? '/module/cat/' . $form->cat->value . '/#item' . $id
-                    : '/module/#item' . $id;
+                if ($form->isValid()) {
+                    $return_url = $this->level == 'cats'
+                        ? '/module/cat/' . $form->cat->value . '/#item' . $id
+                        : '/module/#item' . $id;
 
-                $ajaxResponse = $form->isValid() ? ['redirect' => $return_url] : ['errors' => $form->getErrors()];
-                Response::getInstance()->setAjax($ajaxResponse);
-                return;
+                    $this->redirect($return_url);
+                }
             }
 
             $this->render([
@@ -350,13 +350,9 @@
                     }
                 }
 
-                $ajaxResponse = $form->isValid()
-                    ? ['redirect' => '/module/item/' . $item_id . '/#comment' . $id]
-                    : ['errors' => $form->getErrors()];
-
-                Response::getInstance()->setAjax($ajaxResponse);
-
-                return;
+                if ($form->isValid()) {
+                    $this->redirect('/module/item/' . $item_id . '/#comment' . $id);
+                }
             }
 
             $this->render([

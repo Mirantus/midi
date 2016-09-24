@@ -9,7 +9,7 @@
  ?>
 <h3><?=$this->title?></h3>
 
-<form name="edit" method="post" action="<?=$this->app->pageUrl?>" enctype="multipart/form-data" class="form" data-request="ajax">
+<form name="edit" method="post" action="<?=$this->app->pageUrl?>" enctype="multipart/form-data" class="form">
     <input type="hidden" name="key" value="">
 
     <label for="title" class="label"><span class="alert">*</span> <?=$form->title->title?>:</label>

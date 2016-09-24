@@ -18,6 +18,4 @@ $config['pages'] = [
     'module_item' => ['route' => '/module/item/(\d+)/', 'controller' => 'ModuleController', 'action' => 'item', 'params' => ['id'], 'title' => 'Подробная информация'],
     'module_items' => ['route' => '/module/items/', 'controller' => 'ModuleController', 'action' => 'items', 'title' => 'Модуль'],
     'module_rss' => ['route' => '/module/rss/', 'controller' => 'ModuleController', 'action' => 'rss', 'title' => 'RSS'],
-
-    'subscribe' => ['route' => '/module/subscribe/', 'controller' => 'SubscribeController', 'title' => ''],
 ];

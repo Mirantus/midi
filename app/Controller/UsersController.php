@@ -30,15 +30,8 @@
                 if ($form->isValid()) {
                     $_SESSION['auth'] = $user;
                     unset($_SESSION['auth']['password']);
+                    $this->redirect($return_url);
                 }
-
-                $ajaxResponse = $form->isValid()
-                    ? ['redirect' => $return_url]
-                    : ['errors' => $form->getErrors()];
-
-                Response::getInstance()->setAjax($ajaxResponse);
-
-                return;
             }
 
             $this->render([

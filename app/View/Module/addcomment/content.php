@@ -7,7 +7,7 @@
  ?>
 <h3><?=$this->title?></h3>
 
-<form name="add" method="post" action="<?=$this->app->pageUrl;?>" enctype="multipart/form-data" class="form" data-request="ajax">
+<form name="add" method="post" action="<?=$this->app->pageUrl;?>" enctype="multipart/form-data" class="form">
     <input type="hidden" name="key" value="">
 
     <label for="text" class="label"><span class="alert">*</span> <?=$form->text->title;?>:</label>

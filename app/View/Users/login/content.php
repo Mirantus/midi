@@ -6,7 +6,7 @@
 ?>
 <h1><?=$this->title?></h1>
 
-<form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form" data-request="ajax">
+<form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form">
     <input type="hidden" name="key" value="">
 
     <label for="email" class="label"><span class="alert">*</span> <?=$form->email->title?>:</label>
