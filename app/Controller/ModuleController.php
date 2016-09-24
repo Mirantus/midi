@@ -38,7 +38,8 @@
             $cat = ModuleCat::findByPK($cat_id);
 
             if (empty($cat)) {
-                Response::getInstance()->redirect('/404');
+                $this->notFound();
+                return;
             }
 
             $items_query_params = $this->paginate();
@@ -196,7 +197,8 @@
         public function edit($id) {
             $item = ModuleItem::findByPK($id);
             if (empty($item)) {
-                Response::getInstance()->redirect('/404/');
+                $this->notFound();
+                return;
             }
 
             $data_path = $this->app->webrootPath . '/data/' . $this->name . '/items/';
