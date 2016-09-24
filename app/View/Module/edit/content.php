@@ -5,7 +5,6 @@
      * @var string $dataPath
      * @var core\Form\Form $form
      * @var string $id
-     * @var string $title
      */
  ?>
 <h3><?=$this->title?></h3>

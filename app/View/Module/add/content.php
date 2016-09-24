@@ -3,7 +3,6 @@
      * @var core\View $this
      * @var array $cats
      * @var core\Form\Form $form
-     * @var string $title
      */
  ?>
 <h3><?=$this->title?></h3>
@@ -64,6 +63,6 @@
         <input id="agree" name="agree" type="checkbox" checked> <label for="agree">Я согласен с <a href="#">лицензионным соглашением</a>.</label>
     </p>
 
-    <button id="submit" type="submit" class="submit">Отправить</button>
+    <button id="submit" type="submit" class="submit">Добавить</button>
     <div class="alert"><?=$form->error;?></div>
 </form>

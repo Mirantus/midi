@@ -3,7 +3,6 @@
      * @var core\View $this
      * @var array $cats
      * @var core\Form\Form $form
-     * @var string $title
      */
  ?>
 <h3><?=$this->title?></h3>

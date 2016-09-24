@@ -2,7 +2,6 @@
     /**
      * @var core\View $this
      * @var array $cats
-     * @var string $title
      */
  ?>
 <h3><?=$this->title?></h3>
