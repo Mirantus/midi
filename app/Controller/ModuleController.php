@@ -5,6 +5,7 @@
     use app\Model\ModuleCat;
     use app\Model\ModuleComment;
     use app\Model\ModuleItem;
+    use core\Auth;
     use core\Form\Form;
     use core\Request;
     use core\Response;
@@ -150,7 +151,7 @@
                     $formValues = $form->toArray();
                     $formValues['file'] = $form->file->value;
                     $formValues['image'] = $form->image->value;
-                    $formValues['user'] = $_SESSION['auth']['id'];
+                    $formValues['user'] = Auth::getInstance()->get('id');
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 
@@ -339,7 +340,7 @@
                 //process
                 if ($form->isValid()) {
                     $formValues = $form->toArray();
-                    $formValues['user'] = $_SESSION['auth']['id'];
+                    $formValues['user'] = Auth::getInstance()->get('id');
                     $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
                     $formValues['date'] = date('Y-m-d');
 

@@ -8,11 +8,23 @@
  */
 namespace core;
 
+use core\Auth;
+
 class View {
     /**
      * @var App
      */
     protected $app;
+
+    /**
+     * @var Auth
+     */
+    protected $auth;
+
+    /**
+     * @var boolean
+     */
+    protected $isOwner = false;
 
     /**
      * @var string
@@ -46,6 +58,12 @@ class View {
      */
     public function __construct($path, $params = []) {
         $this->app = App::getInstance();
+        $this->auth = Auth::getInstance();
+        if ($this->auth->isAdmin()) {
+            $this->isOwner = true;
+        } elseif (isset($params['isOwner'])) {
+            $this->isOwner = $params['isOwner'];
+        }
         $this->path = $path;
         $this->partialPath = $this->app->path . '/app/View/Partials';
         $this->layout = isset($params['layout']) ? $params['layout'] : $this->layout;

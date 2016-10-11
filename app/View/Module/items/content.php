@@ -9,7 +9,7 @@
     <? if (!empty($items)) { ?>
         <? foreach ($items as $item) { ?>
             <li id="item<?=$item['id']?>">
-                <? if ($_SESSION['auth']) { ?>
+                <? if ($this->isOwner) { ?>
                     <a href="/module/edit/<?=$item['id']?>/" class="comment"><i class="icon-pencil"></i></a>
                     <a href="/module/del/<?=$item['id']?>/" class="comment" data-request="ajax" data-confirm="item-del"><i class="icon-remove"></i></a>
                 <? } ?>
@@ -26,6 +26,6 @@
 </ul>
 <?php include($this->partialPath . '/pagination.php');?>
 
-<? if ($_SESSION['auth']) { ?>
+<? if ($this->isOwner) { ?>
     <p><a href="/module/add/">Добавить</a></p>
 <? } ?>

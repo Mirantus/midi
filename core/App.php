@@ -8,6 +8,8 @@
      */
     namespace core;
 
+    use core\Auth;
+
     class App {
         /**
          * Database config
@@ -147,7 +149,6 @@
             $this->setPaths();
             $this->setAutoload();
             $this->setPage();
-            $this->startSession();
             $this->checkAccess();
 
             $controllerClass = '\app\Controller\\' . $this->page->controller;
@@ -193,26 +194,15 @@
         }
 
         private function checkAccess() {
-            if ($this->page->auth == 'admin' && $_SESSION['auth']['role'] != 'admin') {
-                Response::getInstance()->redirect('/login/?return=/admin/');
+            $auth = Auth::getInstance();
+            $response = Response::getInstance();
+
+            if ($this->page->auth == 'admin' && !$auth->isAdmin()) {
+                $response->redirect('/login/?return=/admin/');
             }
 
-            if ($this->page->auth == 'user' && $_SESSION['auth']['role'] == 'guest') {
-                Response::getInstance()->redirect('/login/?return=' . $_SERVER['REQUEST_URI']);
-            }
-        }
-
-        private function startSession() {
-            if (!isset($_SESSION)) {
-                session_start();
-            }
-            if (!isset($_SESSION['auth'])) {
-                $_SESSION['auth'] = [
-                    'id' => 0,
-                    'email' => '',
-                    'role' => 'guest',
-                    'name' => ''
-                ];
+            if ($this->page->auth == 'user' && !$auth->isUser()) {
+                $response->redirect('/login/?return=' . $_SERVER['REQUEST_URI']);
             }
         }
     }

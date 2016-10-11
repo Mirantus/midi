@@ -2,6 +2,7 @@
     namespace app\Controller;
 
     use app\Model\User;
+    use core\Auth;
     use core\Controller;
     use core\Form\Form;
     use core\Request;
@@ -28,8 +29,7 @@
 
                 //process
                 if ($form->isValid()) {
-                    $_SESSION['auth'] = $user;
-                    unset($_SESSION['auth']['password']);
+                    Auth::getInstance()->set($user);
                     $this->redirect($return_url);
                 }
             }
@@ -44,7 +44,7 @@
 
         public function logout() {
             $return_url = Request::getParam('return', false, '/');
-            $_SESSION['auth'] = false;
+            Auth::getInstance()->reset();
             Response::getInstance()->redirect($return_url);
         }
     }

@@ -36,8 +36,7 @@ abstract class Controller {
 	public function render($view_params = []) {
         $view_path = isset($view_params['view']) ? $view_params['view'] : $this->name . '/' . $this->app->page->action;
         $view_path = dirname(__FILE__) . '/../app/View/' . $view_path;
-
-        $view_params['title'] =  isset($view_params['title']) ? $view_params['title'] : $this->app->page->title;
+        $view_params['title'] = isset($view_params['title']) ? $view_params['title'] : $this->app->page->title;
 
 	    $view = new View($view_path, $view_params);
         $content = $view->render();
