@@ -12,6 +12,7 @@
     use lib\File;
     use lib\Image;
     use lib\Utils;
+    use lib\Url;
 
     class ModuleController extends Controller {
         private $level = 'cats';
@@ -26,8 +27,7 @@
             $this->render([
                 'vars' => [
                     'cats' => ModuleCat::find($this->paginate()),
-                    'count' => ModuleCat::count(),
-                    'page_limit' => $this->pageLimit
+                    'count_pages' => $this->countPages(ModuleCat::count())
                 ]
             ]);
         }
@@ -51,8 +51,7 @@
                 'vars' => [
                     'cat' => $cat,
                     'items' => ModuleItem::find($items_query_params, ['cat' => $cat_id]),
-                    'count' => ModuleItem::count(),
-                    'page_limit' => $this->pageLimit,
+                    'count_pages' => $this->countPages(ModuleItem::count(['where' => 'cat = :cat'], ['cat' => $cat_id])),
                     'title' => $cat['title']
                 ]
             ]);
@@ -175,9 +174,15 @@
                 }
 
                 if ($form->isValid()) {
-                    $return_url = $this->level == 'cats'
-                        ? '/module/cat/' . $form->cat->value . '/#item' . $id
-                        : '/module/#item' . $id;
+                    if ($this->level == 'cats') {
+                        $return_url = '/module/cat/' . $form->cat->value;
+                        $items_count = ModuleItem::count(['where' => 'cat = :cat'], ['cat' => $form->cat->value]);
+                    } else {
+                        $return_url = '/module/';
+                        $items_count = ModuleItem::count();
+                    }
+                    $return_url = Url::addUrlParam($return_url, 'page', $this->countPages($items_count));
+                    $return_url .= '#item' . $id;
 
                     $this->redirect($return_url);
                 }
@@ -287,10 +292,7 @@
                 }
 
                 if ($form->isValid()) {
-                    $return_url = $this->level == 'cats'
-                        ? '/module/cat/' . $form->cat->value . '/#item' . $id
-                        : '/module/#item' . $id;
-
+                    $return_url = Request::getParam('return', false, '/');
                     $this->redirect($return_url);
                 }
             }
@@ -381,8 +383,7 @@
             $this->render([
                 'vars' => [
                     'items' => ModuleItem::find($this->paginate()),
-                    'count' => ModuleItem::count(),
-                    'page_limit' => $this->pageLimit
+                    'count_pages' => $this->countPages(ModuleItem::count())
                 ]
             ]);
         }

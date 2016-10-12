@@ -52,6 +52,15 @@ abstract class Controller {
 		return ['limit' => $first . ',' . $this->pageLimit];
 	}
 
+    /**
+     * Count pages by items count and page limit
+     * @param integer $items_count
+     * @return integer
+     */
+    protected function countPages($items_count) {
+	    return ceil($items_count / $this->pageLimit);
+	}
+
     protected function redirect($url) {
         $response = Response::getInstance();
 
