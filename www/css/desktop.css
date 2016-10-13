@@ -1,0 +1,15 @@
+@media (min-width: 1024px) {
+    .layout-table {
+        display: table;
+        width: 100%;
+    }
+
+    .layout-table__row {
+        display: table-row;
+    }
+
+    .layout-table__cell {
+        display: table-cell;
+        vertical-align: top;
+    }
+}

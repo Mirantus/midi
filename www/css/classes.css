@@ -1,3 +1,4 @@
+/* === Display === */
 .inline {
     display: inline;
 }
@@ -14,6 +15,7 @@
     display: none;
 }
 
+/* === Float === */
 .floatleft {
     float: left;
 }
@@ -40,6 +42,32 @@
     clear: both;
 }
 
+.w100 {
+    width: 100%;
+}
+
+.relative {
+    position: relative;
+}
+
+/* === Align === */
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+/* === Font === */
 .small {
     font-size: smaller;
 }
@@ -56,18 +84,6 @@
     font-weight: normal;
 }
 
-.left {
-    text-align: left;
-}
-
-.center {
-    text-align: center;
-}
-
-.right {
-    text-align: right;
-}
-
 .underline {
     text-decoration: underline;
 }
@@ -76,14 +92,7 @@
     text-decoration: none;
 }
 
-.nowrap {
-    white-space: nowrap;
-}
-
-.w100 {
-    width: 100%;
-}
-
+/* === Color === */
 .black {
     color: #000;
 }
@@ -100,10 +109,11 @@
     color: #fff;
 }
 
-.border {
-    border: 1px solid black;
+.orange {
+    color: #f60;
 }
 
+/* === List === */
 .decimal li {
     list-style-type: decimal;
     margin-left: 20px;
@@ -121,6 +131,17 @@ ul.inline li {
     margin-right: 10px;
 }
 
+ul.ns {
+    list-style: none;
+}
+
+/* === Table === */
+table.ns {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* === Form === */
 .form .label {
     display: block;
     margin-top: 10px;
@@ -128,7 +149,8 @@ ul.inline li {
 
 .form .input,
 .form .textarea {
-    width: 400px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .submit {
@@ -146,31 +168,7 @@ ul.inline li {
     font-size: smaller;
 }
 
-.pagination {
-    margin: 20px 0;
-    padding: 0;
-}
-
-.pagination li {
-    display: inline;
-    margin-right: 5px;
-}
-
-.image {
-    display: block;
-    float: left;
-    margin: 0 10px 10px 0;
-}
-
-ul.ns {
-    list-style: none;
-}
-
-table.ns {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
+/* === Modules === */
 .loading {
     position: fixed;
     top: 0;
@@ -180,4 +178,25 @@ table.ns {
     font-weight: bold;
     padding: 5px 10px;
     white-space: nowrap;
+}
+
+.image {
+    display: block;
+    float: left;
+    margin: 0 10px 10px 0;
+}
+
+.border {
+    border: 1px solid black;
+}
+
+/* === Pagination === */
+.pagination {
+    margin: 20px 0;
+    padding: 0;
+}
+
+.pagination li {
+    display: inline;
+    margin-right: 5px;
 }
