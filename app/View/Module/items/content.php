@@ -2,9 +2,15 @@
     /**
      * @var core\View $this
      * @var array $cats
+     * @var string $flash
      */
  ?>
 <h3><?=$this->title?></h3>
+
+<? if ($flash) { ?>
+<div class="flash"><?=$flash?></div>
+<? } ?>
+
 <ul class="ns">
     <? if (!empty($items)) { ?>
         <? foreach ($items as $item) { ?>

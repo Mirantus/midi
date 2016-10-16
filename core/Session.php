@@ -40,6 +40,19 @@
         }
 
         /**
+         * Return session value and clear it
+         * @param string $key
+         * @return mixed
+         */
+        public function flash($key) {
+            $value = $this->get($key);
+            if (isset($_SESSION[$key])) {
+                unset($_SESSION[$key]);
+            }
+            return $value;
+        }
+
+        /**
          * Set session value
          * @param string $key
          * @param $value

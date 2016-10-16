@@ -9,6 +9,7 @@
     use core\Form\Form;
     use core\Request;
     use core\Response;
+    use core\Session;
     use lib\File;
     use lib\Image;
     use lib\Utils;
@@ -50,6 +51,7 @@
                 'view' => 'Module/items',
                 'vars' => [
                     'cat' => $cat,
+                    'flash' => Session::getInstance()->flash('flash'),
                     'items' => ModuleItem::find($items_query_params, ['cat' => $cat_id]),
                     'count_pages' => $this->countPages(ModuleItem::count(['where' => 'cat = :cat'], ['cat' => $cat_id])),
                     'title' => $cat['title']
@@ -184,6 +186,7 @@
                     $return_url = Url::addUrlParam($return_url, 'page', $this->countPages($items_count));
                     $return_url .= '#item' . $id;
 
+                    Session::getInstance()->set('flash', 'Запись успешно добавлена');
                     $this->redirect($return_url);
                 }
             }
@@ -292,6 +295,7 @@
                 }
 
                 if ($form->isValid()) {
+                    Session::getInstance()->set('flash', 'Запись успешно изменена');
                     $return_url = Request::getParam('return', false, '/');
                     $this->redirect($return_url);
                 }
@@ -383,7 +387,8 @@
             $this->render([
                 'vars' => [
                     'items' => ModuleItem::find($this->paginate()),
-                    'count_pages' => $this->countPages(ModuleItem::count())
+                    'count_pages' => $this->countPages(ModuleItem::count()),
+                    'flash' => Session::getInstance()->flash('flash')
                 ]
             ]);
         }
