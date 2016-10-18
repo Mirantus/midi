@@ -109,10 +109,6 @@
     color: #fff;
 }
 
-.orange {
-    color: #f60;
-}
-
 /* === List === */
 .decimal li {
     list-style-type: decimal;
@@ -156,6 +152,10 @@ table.ns {
 .submit {
     display: block;
     margin-top: 10px;
+}
+
+.button {
+
 }
 
 .alert {
