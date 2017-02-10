@@ -32,9 +32,12 @@ class Url {
      * @param string $url
      * @param string $text
      * @param bool $isActive Create link or text (if active)
+     * @param string $class Css class name
      * @return string
      */
-    public static function createLink($url, $text, $isActive = false) {
-        return $isActive ? $text : '<a href="' . $url . '">' . $text . '</a>';
+    public static function createLink($url, $text, $isActive = false, $class = '') {
+        return $isActive
+            ? '<span class="' . $class . '">' . $text . '</span>'
+            : '<a href="' . $url . '" class="' . $class . '">' . $text . '</a>';
     }
 }
