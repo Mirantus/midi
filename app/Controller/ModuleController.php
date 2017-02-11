@@ -25,9 +25,12 @@
         }
 
         protected function cats() {
+            $cats_query_params = $this->paginate();
+            $cats_query_params['orderBy'] = 'sort';
+
             $this->render([
                 'vars' => [
-                    'cats' => ModuleCat::find($this->paginate()),
+                    'cats' => ModuleCat::find($cats_query_params),
                     'count_pages' => $this->countPages(ModuleCat::count())
                 ]
             ]);
@@ -46,6 +49,7 @@
 
             $items_query_params = $this->paginate();
             $items_query_params['where'] = 'cat = :cat';
+            $items_query_params['orderBy'] = 'sort';
 
             $this->render([
                 'view' => 'Module/items',
@@ -386,9 +390,12 @@
         }
 
         protected function items() {
+            $items_query_params = $this->paginate();
+            $items_query_params['orderBy'] = 'sort';
+
             $this->render([
                 'vars' => [
-                    'items' => ModuleItem::find($this->paginate()),
+                    'items' => ModuleItem::find($items_query_params),
                     'count_pages' => $this->countPages(ModuleItem::count()),
                     'flash' => Session::getInstance()->flash('flash')
                 ]
