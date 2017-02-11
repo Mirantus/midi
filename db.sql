@@ -13,12 +13,12 @@ CREATE TABLE `module_cat` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `access` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `rate` int(10) unsigned NOT NULL DEFAULT '350',
+  `sort` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `module_cats` (`id`, `title`, `access`, `rate`) VALUES
-(1,	'Рубрика',	1,	350);
+INSERT INTO `module_cats` (`id`, `title`, `access`, `sort`) VALUES
+(1,	'Рубрика',	1,	1);
 
 DROP TABLE IF EXISTS `module_comment`;
 CREATE TABLE `module_comment` (
@@ -31,7 +31,6 @@ CREATE TABLE `module_comment` (
   `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `access` tinyint(1) NOT NULL DEFAULT '1',
-  `rate` int(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -55,7 +54,7 @@ CREATE TABLE `module_item` (
   `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `date` date NOT NULL DEFAULT '0000-00-00',
   `access` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `rate` int(10) unsigned NOT NULL DEFAULT '350',
+  `sort` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
