@@ -8,10 +8,10 @@ body.dragging, body.dragging * {
   z-index: 2000;
 }
 
-.sorted tr {
+.sorted li {
   cursor: pointer;
   }
-.sorted tr.placeholder {
+.sorted li.placeholder {
   display: block;
   background: red;
   position: relative;
@@ -20,7 +20,7 @@ body.dragging, body.dragging * {
   border: none;
   }
   
-  .sorted tr.placeholder:before {
+  .sorted li.placeholder:before {
     content: "";
     position: absolute;
     width: 0;

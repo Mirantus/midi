@@ -12,28 +12,24 @@
 <? } ?>
 
 <? if (!empty($items)) { ?>
-    <table class="table sorted" data-module="module">
-        <tbody>
-        <? foreach ($items as $item) { ?>
-            <tr id="item<?=$item['id']?>" data-id="<?=$item['id']?>">
-                <td>
+    <div class="sorted items" data-module="module">
+        <ul class="ns">
+            <? foreach ($items as $item) { ?>
+                <li id="item<?=$item['id']?>" data-id="<?=$item['id']?>" class="item">
                     <? if ($this->isOwner) { ?>
                         <a href="/module/edit/<?=$item['id']?>/?return=<?=$_SERVER['REQUEST_URI']?>" class="comment"><i
                                     class="icon-pencil"></i></a>
                         <a href="/module/del/<?=$item['id']?>/" class="comment" data-request="ajax"
                            data-confirm="item-del"><i class="icon-remove"></i></a>
                     <? } ?>
-                </td>
-                <td>
                     <?
                         $url = '/module/item/' . $item['id'] . '/';
                         echo lib\Url::createLink($url, $item['title']);
                     ?>
-                </td>
-            </tr>
-        <? } ?>
-        </tbody>
-    </table>
+                </li>
+            <? } ?>
+        </ul>
+    </div>
 <? } else { ?>
     <p>Данных нет</p>
 <? } ?>

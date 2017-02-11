@@ -3,16 +3,16 @@ $(function() {
     var $sorted = $('.sorted');
 
     $sorted.sortable({
-        containerSelector: 'table',
-        itemPath: '> tbody',
-        itemSelector: 'tr',
-        placeholder: '<tr class="placeholder"/>',
+        containerSelector: '.sorted',
+        itemPath: '> ul',
+        itemSelector: 'li',
+        placeholder: '<li class="placeholder"/>',
         onDrop: function (item, container, _super) {
             var data = [];
             var level = $sorted.data('level') ? '_' + $sorted.data('level') : '';
             var url = '/' + $sorted.data('module') + '/reorder' + level + '/';
 
-            $sorted.find('tr').each(function () {
+            $sorted.find('li').each(function () {
                 data.push($(this).data('id'));
             });
 
