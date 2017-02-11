@@ -377,7 +377,32 @@
         }
 
         public function reorder() {
-            exit('ok');
+            if (!Request::isPost()) {
+                return;
+            }
+
+            $data = Request::getParam('data', false, '[]');
+            $ids = json_decode($data);
+
+            if (!count($ids)) {
+                return;
+            }
+
+            $query_params = [
+                'where' => 'id IN (' . implode(',', $ids) . ')',
+                'orderBy' => 'sort'
+            ];
+
+            $items = ModuleItem::find($query_params);
+
+            if (!$items) {
+                return;
+            }
+
+            for ($i = 0; $i < count($ids); $i++) {
+                // set asc sorted statuses to ids sorted by user
+                ModuleItem::updateByPK($ids[$i], ['sort' => $items[$i]['sort']]);
+            }
         }
 
         public function rss() {
