@@ -376,6 +376,10 @@
             ]);
         }
 
+        public function reorder() {
+            exit('ok');
+        }
+
         public function rss() {
             Response::getInstance()->addHeader('Content-type', 'application/rss+xml');
             $this->render([

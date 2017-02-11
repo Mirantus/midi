@@ -17,5 +17,6 @@ $config['pages'] = [
     'module_edit' => ['route' => '/module/edit/(\d+)/', 'controller' => 'ModuleController', 'action' => 'edit', 'params' => ['id'], 'auth' => 'admin', 'title' => 'Редактирование'],
     'module_item' => ['route' => '/module/item/(\d+)/', 'controller' => 'ModuleController', 'action' => 'item', 'params' => ['id'], 'title' => 'Подробная информация'],
     'module_items' => ['route' => '/module/items/', 'controller' => 'ModuleController', 'action' => 'items', 'title' => 'Модуль'],
+    'module_reorder' => ['route' => '/module/reorder/', 'controller' => 'ModuleController', 'action' => 'reorder', 'auth' => 'admin', 'title' => 'Сортировка'],
     'module_rss' => ['route' => '/module/rss/', 'controller' => 'ModuleController', 'action' => 'rss', 'title' => 'RSS'],
 ];

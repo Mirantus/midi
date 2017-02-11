@@ -11,25 +11,33 @@
 <div class="flash"><?=$flash?></div>
 <? } ?>
 
-<ul class="ns">
-    <? if (!empty($items)) { ?>
+<? if (!empty($items)) { ?>
+    <table class="table sorted" data-module="module">
+        <tbody>
         <? foreach ($items as $item) { ?>
-            <li id="item<?=$item['id']?>">
-                <? if ($this->isOwner) { ?>
-                    <a href="/module/edit/<?=$item['id']?>/?return=<?=$_SERVER['REQUEST_URI']?>" class="comment"><i class="icon-pencil"></i></a>
-                    <a href="/module/del/<?=$item['id']?>/" class="comment" data-request="ajax" data-confirm="item-del"><i class="icon-remove"></i></a>
-                <? } ?>
-
-                <?
-                    $url = '/module/item/' . $item['id'] . '/';
-                    echo lib\Url::createLink($url, $item['title']);
-                ?>
-            </li>
+            <tr id="item<?=$item['id']?>" data-id="<?=$item['id']?>">
+                <td>
+                    <? if ($this->isOwner) { ?>
+                        <a href="/module/edit/<?=$item['id']?>/?return=<?=$_SERVER['REQUEST_URI']?>" class="comment"><i
+                                    class="icon-pencil"></i></a>
+                        <a href="/module/del/<?=$item['id']?>/" class="comment" data-request="ajax"
+                           data-confirm="item-del"><i class="icon-remove"></i></a>
+                    <? } ?>
+                </td>
+                <td>
+                    <?
+                        $url = '/module/item/' . $item['id'] . '/';
+                        echo lib\Url::createLink($url, $item['title']);
+                    ?>
+                </td>
+            </tr>
         <? } ?>
-    <? } else { ?>
-        <li>Данных нет</li>
-    <? } ?>
-</ul>
+        </tbody>
+    </table>
+<? } else { ?>
+    <p>Данных нет</p>
+<? } ?>
+
 <?php include($this->partialPath . '/pagination.php');?>
 
 <? if ($this->isOwner) { ?>
