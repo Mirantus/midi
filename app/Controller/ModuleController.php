@@ -158,8 +158,10 @@
 
                     $id = ModuleItem::insert($formValues);
 
-                    //image
                     if ($id) {
+                        ModuleItem::updateByPK($id, ['sort' => $id]);
+
+                        //image
                         if (File::isUploaded('file')) {
                             File::moveUploadedFile($_FILES['file']['tmp_name'], $data_path . $id . '/' . $form->file->value);
                         }
