@@ -29,4 +29,11 @@
 
             return false;
         }
+
+        public static function getRoles() {
+            return [
+                'user' => 'Пользователь',
+                'admin' => 'Администратор'
+            ];
+        }
     }

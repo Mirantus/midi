@@ -6,8 +6,13 @@ $config['pages'] = [
     'contacts' => ['route' => '/contacts/', 'controller' => 'PageController', 'action' => 'contacts', 'title' => 'Контакты'],
     'feedback' => ['route' => '/feedback/', 'controller' => 'FeedbackController', 'title' => 'Обратная связь'],
     'gallery' => ['route' => '/gallery/', 'controller' => 'GalleryController', 'title' => 'Фотогалерея'],
+
     'login' => ['route' => '/login/', 'controller' => 'UsersController', 'action' => 'login', 'title' => 'Авторизация'],
     'logout' => ['route' => '/logout/', 'controller' => 'UsersController', 'action' => 'logout', 'title' => 'Выход'],
+    'users' => ['route' => '/users/', 'controller' => 'UsersController', 'action' => 'index', 'auth' => 'admin', 'title' => 'Пользователи'],
+    'users_add' => ['route' => '/users/add/', 'controller' => 'UsersController', 'action' => 'add', 'auth' => 'admin', 'title' => 'Добавление пользователя'],
+    'users_del' => ['route' => '/users/del/(\d+)/', 'controller' => 'UsersController', 'action' => 'del', 'params' => ['id'], 'auth' => 'admin', 'title' => 'Удаление'],
+    'users_edit' => ['route' => '/users/edit/(\d+)/', 'controller' => 'UsersController', 'action' => 'edit', 'params' => ['id'], 'auth' => 'admin', 'title' => 'Редактирование'],
 
     'module' => ['route' => '/module/', 'controller' => 'ModuleController', 'title' => 'Модуль'],
     'module_add' => ['route' => '/module/add/', 'controller' => 'ModuleController', 'action' => 'add', 'auth' => 'admin', 'title' => 'Добавление'],

@@ -201,7 +201,7 @@
                 $response->redirect('/login/?return=/admin/');
             }
 
-            if ($this->page->auth == 'user' && !$auth->isUser()) {
+            if ($this->page->auth == 'user' && !$auth->isAuth()) {
                 $response->redirect('/login/?return=' . $_SERVER['REQUEST_URI']);
             }
         }

@@ -88,6 +88,14 @@
         }
 
         /**
+         * Check if current user is authorized
+         * @return bool
+         */
+        public function isAuth() {
+            return $this->isAdmin() || $this->isUser();
+        }
+
+        /**
          * Check if user logged
          * @return bool
          */
