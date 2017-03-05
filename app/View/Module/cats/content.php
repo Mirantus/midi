@@ -10,7 +10,7 @@
         if (!empty($cats)) {
             foreach ($cats as $cat) {
                 echo '<li id="item' . $cat['id'] . '">';
-                    $url = '/module/cat/' . $cat['id'] . '/';
+                    $url = '/' . $this->moduleAlias . '/cat/' . $cat['id'] . '/';
                     echo lib\Url::createLink($url, h($cat['title']));
                 echo '</li>';
             }

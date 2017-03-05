@@ -52,7 +52,7 @@
             $items_query_params['orderBy'] = 'sort';
 
             $this->render([
-                'view' => 'Module/items',
+                'view' => $this->name . '/items',
                 'vars' => [
                     'cat' => $cat,
                     'flash' => Session::getInstance()->flash('flash'),
@@ -183,10 +183,10 @@
 
                 if ($form->isValid()) {
                     if ($this->level == 'cats') {
-                        $return_url = '/module/cat/' . $form->cat->value;
+                        $return_url = '/' . $this->alias . '/cat/' . $form->cat->value;
                         $items_count = ModuleItem::count(['where' => 'cat = :cat'], ['cat' => $form->cat->value]);
                     } else {
-                        $return_url = '/module/';
+                        $return_url = '/' . $this->alias . '/';
                         $items_count = ModuleItem::count();
                     }
                     $return_url = Url::addUrlParam($return_url, 'page', $this->countPages($items_count));
@@ -364,7 +364,7 @@
                 }
 
                 if ($form->isValid()) {
-                    $this->redirect('/module/item/' . $item_id . '/#comment' . $id);
+                    $this->redirect('/' . $this->alias . '/item/' . $item_id . '/#comment' . $id);
                 }
             }
 

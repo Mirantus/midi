@@ -31,7 +31,7 @@
 
 <? if (isset($comments)) { ?>
     <h4>Комментарии</h4>
-    <p><a href="/module/addcomment/<?=$item['id'];?>">Добавить комментарий</a></p>
+    <p><a href="/<?=$this->moduleAlias?>/addcomment/<?=$item['id'];?>">Добавить комментарий</a></p>
     <? if (count($comments) > 0) { ?>
         <? foreach ($comments as $comment_params) { ?>
             <p id="comment<?=$comment_params['id'];?>">

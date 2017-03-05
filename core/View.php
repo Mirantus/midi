@@ -32,6 +32,11 @@ class View {
     protected $layout = 'default';
 
     /**
+     * @var string
+     */
+    protected $moduleAlias;
+
+    /**
      * @var string Path to view files
      */
     protected $path;
@@ -67,6 +72,7 @@ class View {
         $this->path = $path;
         $this->partialPath = $this->app->path . '/app/View/Partials';
         $this->layout = isset($params['layout']) ? $params['layout'] : $this->layout;
+        $this->moduleAlias = $params['moduleAlias'];
         $this->title = isset($params['title']) ? $params['title'] : '';
         $this->vars = isset($params['vars']) ? $params['vars'] : $this->vars;
     }

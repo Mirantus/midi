@@ -18,7 +18,8 @@ $rss = '<?xml version="1.0" encoding="utf-8"?>
             $rss .= '<title><![CDATA[';
             if (isset($item_params['title'])) $rss .= h($item_params['title']);
             $rss .= ']]></title>';
-            $rss .= '<link>' . $this->app->url . '/module/item/' . $item_params['id'] . '</link>';
+            $rss .= ']]></title>';
+            $rss .= '<link>' . $this->app->url . '/' . $this->moduleAlias . '/item/' . $item_params['id'] . '</link>';
             $rss .= '<description><![CDATA[';
             $rss .= $item_params['text'];
             $rss .= ']]></description>';
