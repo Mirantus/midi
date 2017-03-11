@@ -16,177 +16,13 @@
     use lib\Url;
 
     class ModuleController extends Controller {
-        private $level = 'cats';
-        private $comments = true;
+        use ModuleCatTrait;
+        use ModuleCommentTrait;
 
         public function index() {
-            $this->app->page->action = $this->level;
-            $this->{$this->level}();
-        }
-
-        protected function cats() {
-            $cats_query_params = $this->paginate();
-            $cats_query_params['orderBy'] = 'sort';
-
-            $this->render([
-                'vars' => [
-                    'flash' => Session::getInstance()->flash('flash'),
-                    'items' => ModuleCat::find($cats_query_params),
-                    'count_pages' => $this->countPages(ModuleCat::count())
-                ]
-            ]);
-        }
-
-        /**
-         * @param integer $cat_id
-         */
-        public function cat($cat_id) {
-            $cat = ModuleCat::findByPK($cat_id);
-
-            if (empty($cat)) {
-                $this->notFound();
-                return;
-            }
-
-            $items_query_params = $this->paginate();
-            $items_query_params['where'] = 'cat = :cat';
-            $items_query_params['orderBy'] = 'sort';
-
-            $this->render([
-                'view' => $this->name . '/items',
-                'vars' => [
-                    'cat' => $cat,
-                    'flash' => Session::getInstance()->flash('flash'),
-                    'items' => ModuleItem::find($items_query_params, ['cat' => $cat_id]),
-                    'count_pages' => $this->countPages(ModuleItem::count(['where' => 'cat = :cat'], ['cat' => $cat_id])),
-                    'title' => $cat['title']
-                ]
-            ]);
-        }
-
-        public function addcat() {
-            $form = new Form();
-            $form->add('title', ['title' => 'Название рубрики']);
-            $form->fill();
-
-            if (Request::isPost()) {
-                //validation
-                if (empty($form->title->value)) {
-                    $form->title->error = 'Введите пожалуйста название рубрики';
-                }
-
-                //process
-                if ($form->isValid()) {
-                    $formValues = $form->toArray();
-
-                    $id = ModuleCat::insert($formValues);
-
-                    if ($id) {
-                        ModuleCat::updateByPK($id, ['sort' => $id]);
-                    } else {
-                        $form->error = 'Ошибка сохранения данных';
-                    }
-                }
-
-                if ($form->isValid()) {
-                    $return_url = '/' . $this->alias . '/';
-                    $items_count = ModuleCat::count();
-                    $return_url = Url::addUrlParam($return_url, 'page', $this->countPages($items_count));
-                    $return_url .= '#item' . $id;
-
-                    Session::getInstance()->set('flash', 'Рубрика успешно добавлена');
-                    $this->redirect($return_url);
-                }
-            }
-
-            $this->render([
-                'vars' => [
-                    'form' => $form,
-                    'title' => 'Добавление рубрики'
-                ]
-            ]);
-        }
-
-        /**
-         * @param integer $id
-         */
-        public function editcat($id) {
-            $item = ModuleCat::findByPK($id);
-            if (empty($item)) {
-                $this->notFound();
-                return;
-            }
-
-            $form = new Form();
-            $form->add('title', ['title' => 'Название рубрики', 'value' => $item['title']]);
-            $form->fill();
-
-            if (Request::isPost()) {
-                //validation
-                if (empty($form->title->value)) {
-                    $form->title->error = 'Введите пожалуйста название рубрики';
-                }
-
-                //process
-                if ($form->isValid()) {
-                    $formValues = $form->toArray();
-
-                    if (!ModuleCat::updateByPK($id, $formValues)) {
-                        $form->error = 'Ошибка сохранения данных';
-                    }
-                }
-
-                if ($form->isValid()) {
-                    Session::getInstance()->set('flash', 'Рубрика успешно изменена');
-                    $return_url = Request::getParam('return', false, '/');
-                    $this->redirect($return_url);
-                }
-            }
-
-            $this->render([
-                'vars' => [
-                    'id' => $id,
-                    'form' => $form,
-                    'title' => 'Редактирование рубрики'
-                ]
-            ]);
-        }
-
-        /**
-         * @param integer $id
-         */
-        public function delcat($id) {
-            ModuleCat::deleteByPK($id);
-            Response::getInstance()->setAjax('');
-        }
-
-        public function reordercat() {
-            if (!Request::isPost()) {
-                return;
-            }
-
-            $data = Request::getParam('data', false, '[]');
-            $ids = json_decode($data);
-
-            if (!count($ids)) {
-                return;
-            }
-
-            $query_params = [
-                'where' => 'id IN (' . implode(',', $ids) . ')',
-                'orderBy' => 'sort'
-            ];
-
-            $items = ModuleCat::find($query_params);
-
-            if (!$items) {
-                return;
-            }
-
-            for ($i = 0; $i < count($ids); $i++) {
-                // set asc sorted statuses to ids sorted by user
-                ModuleCat::updateByPK($ids[$i], ['sort' => $items[$i]['sort']]);
-            }
+            $level = $this->getLevel();
+            $this->app->page->action = $level;
+            $this->{$level}();
         }
 
         /**
@@ -205,7 +41,7 @@
                 'dataPath' => '/data/' . $this->name . '/items/'
             ];
 
-            if ($this->comments) {
+            if (isset($this->comments)) {
                 $vars['comments'] = ModuleComment::find(['where' => 'item = :item'], ['item' => $id]);
             }
 
@@ -220,7 +56,7 @@
             $data_path = $this->app->webrootPath . '/data/' . $this->name . '/items/';
 
             $form = new Form();
-            if ($this->level == 'cats') {
+            if ($this->getLevel() == 'cats') {
                 $cats = ModuleCat::find();
                 $form->add('cat', ['title' => 'Рубрика']);
             }
@@ -257,7 +93,7 @@
                 if (!empty($form->price->value) && !$form->price->isInt()) {
                     $form->price->error = $form->errors['int'];
                 }
-                if ($this->level == 'cats' && !$form->cat->isInt()) {
+                if ($this->getLevel() == 'cats' && !$form->cat->isInt()) {
                     $form->cat->error = $form->errors['cat'];
                 }
                 if (empty($form->title->value)) {
@@ -308,7 +144,7 @@
                 }
 
                 if ($form->isValid()) {
-                    if ($this->level == 'cats') {
+                    if ($this->getLevel() == 'cats') {
                         $return_url = '/' . $this->alias . '/cat/' . $form->cat->value;
                         $items_count = ModuleItem::count(['where' => 'cat = :cat'], ['cat' => $form->cat->value]);
                     } else {
@@ -346,7 +182,7 @@
             $cats = [];
 
             $form = new Form();
-            if ($this->level == 'cats') {
+            if ($this->getLevel() == 'cats') {
                 $cats = ModuleCat::find();
                 $form->add('cat', ['title' => 'Рубрика', 'value' => $item['cat']]);
             }
@@ -383,7 +219,7 @@
                 if (!empty($form->price->value) && !$form->price->isInt()) {
                     $form->price->error = $form->errors['int'];
                 }
-                if ($this->level == 'cats' && !$form->cat->isInt()) {
+                if ($this->getLevel() == 'cats' && !$form->cat->isInt()) {
                     $form->cat->error = $form->errors['cat'];
                 }
                 if (empty($form->title->value)) {
@@ -450,56 +286,6 @@
         public function del($id) {
             ModuleItem::deleteByPK($id);
             Response::getInstance()->setAjax('');
-        }
-
-        /**
-         * @param integer $item_id
-         */
-        public function addcomment($item_id) {
-            $form = new Form();
-            $form->add('item', ['value' => $item_id]);
-            $form->add('text', ['title' => 'Текст']);
-            $form->add('name', ['title' => 'Имя']);
-            $form->add('email', ['title' => 'E-mail']);
-            $form->fill();
-
-            if (Request::isPost()) {
-                //validation
-                if (!empty($form->email->value) && !$form->email->isEmail()) {
-                    $form->email->error = $form->errors['email'];
-                }
-                if (empty($form->name->value)) {
-                    $form->name->error = 'Введите пожалуйста ваше имя';
-                }
-                if (empty($form->text->value)) {
-                    $form->text->error = 'Введите пожалуйста комментарий';
-                }
-
-                //process
-                if ($form->isValid()) {
-                    $formValues = $form->toArray();
-                    $formValues['user'] = Auth::getInstance()->get('id');
-                    $formValues['ip'] = $_SERVER['REMOTE_ADDR'];
-                    $formValues['date'] = date('Y-m-d');
-
-                    $id = ModuleComment::insert($formValues);
-
-                    if (!$id) {
-                        $form->error = 'Ошибка сохранения данных';
-                    }
-                }
-
-                if ($form->isValid()) {
-                    $this->redirect('/' . $this->alias . '/item/' . $item_id . '/#comment' . $id);
-                }
-            }
-
-            $this->render([
-                'vars' => [
-                    'form' => $form,
-                    'title' => 'Добавление комментария'
-                ]
-            ]);
         }
 
         public function reorder() {

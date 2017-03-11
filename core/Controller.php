@@ -86,4 +86,8 @@ abstract class Controller {
 			'view' => 'Page/notfound'
 		]);
 	}
+
+	protected function getLevel() {
+        return isset($this->level) ? $this->level : 'items';
+	}
 }
