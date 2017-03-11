@@ -7,7 +7,7 @@
         /**
          * @var array
          */
-        protected static $fields = ['id', 'email', 'password', 'role', 'name', 'ip', 'date'];
+        protected static $fields = ['id', 'email', 'password', 'role', 'name', 'restore_code', 'ip', 'date'];
 
         /**
          * @var string

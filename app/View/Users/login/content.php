@@ -26,6 +26,6 @@
     <div class="alert"><?=$form->error;?></div>
 
     <p>
-        <a href="/register/">Регистрация</a>
+        <a href="/register/">Регистрация</a> | <a href="/restore/">Забыли пароль?</a>
     </p>
 </form>

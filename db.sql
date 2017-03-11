@@ -65,6 +65,7 @@ CREATE TABLE `user` (
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `role` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user',
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `restore_code` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`id`),

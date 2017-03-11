@@ -164,13 +164,15 @@
          * @param string $email
          * @param string $title
          * @param string $message
+         * @param bool $is_html
          * @return bool Result of sending mail
          */
-        public function mail($email, $title, $message) {
-//            $title = iconv("UTF-8", "koi8-r//IGNORE", $title);
-//            $message = iconv("UTF-8", "koi8-r//IGNORE", $message);
+        public function mail($email, $title, $message, $is_html = false) {
+//          $title = iconv("UTF-8", "koi8-r//IGNORE", $title);
+//          $message = iconv("UTF-8", "koi8-r//IGNORE", $message);
+            $contentType = $is_html ? 'text/html' : 'text/plain';
 
-            return mail($email, $title, $message, 'From: mailer@' . $_SERVER['SERVER_NAME'] . "\r\n" . 'Content-type: text/plain; charset=utf-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion());
+            return mail($email, $title, $message, 'From: mailer@' . $_SERVER['SERVER_NAME'] . "\r\n" . 'Content-type: ' . $contentType . '; charset=utf-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion());
         }
 
         /**

@@ -241,4 +241,87 @@
                 ]
             ]);
         }
+
+        public function restore() {
+            $success = false;
+            $form = new Form();
+            $form->add('email', ['title' => 'E-mail']);
+            $form->fill();
+
+            if (Request::isPost()) {
+                //validation
+                if (!$form->email->isEmail()) {
+                    $form->email->error = $form->errors['email'];
+                }
+
+                //process
+                if ($form->isValid()) {
+                    $restore_code = md5($form->email->value . time() . $_SERVER['HTTP_HOST']);
+
+                    $result = User::update(['restore_code' => $restore_code, 'email' => $form->email->value], ['where' => 'email=:email']);
+
+                    if ($result) {
+                        $restore_url = $this->app->url . '/verify/' . $restore_code . '/';
+                        $message = 'Здравствуйте. Для того, чтобы изменить пароль на сайте ' . $this->app->url . ' перейдите по ссылке <a href="' . $restore_url . '">' . $restore_url . '</a>';
+                        $this->app->mail($form->email->value, $_SERVER['HTTP_HOST'] . ' - Восстановление пароля', $message, true);
+                        $success = true;
+                    } else {
+                        $form->error = 'Ошибка восстановления пароля';
+                    }
+                }
+            }
+
+            $this->render([
+                'vars' => [
+                    'form' => $form,
+                    'success' => $success,
+                    'title' => 'Восстановление пароля'
+                ]
+            ]);
+        }
+
+        public function verify($restore_code) {
+            $users = User::find(['where' => 'restore_code=:restore_code'], ['restore_code' => $restore_code]);
+
+            if (empty($users)) {
+                $this->notFound();
+                return;
+            }
+
+            $user = $users[0];
+
+            $form = new Form();
+            $form->add('password', ['title' => 'Пароль']);
+            $form->fill();
+
+            if (Request::isPost()) {
+                //validation
+                if (empty($form->password->value)) {
+                    $form->password->error = 'Введите пожалуйста пароль';
+                }
+
+                //process
+                if ($form->isValid()) {
+                    $password = password_hash($form->password->value, PASSWORD_DEFAULT);
+
+                    $result = User::updateByPK($user['id'], ['password' => $password, 'restore_code' => '']);
+
+                    if (!$result) {
+                        $form->error = 'Ошибка сохранения данных';
+                    }
+                }
+
+                if ($form->isValid()) {
+                    Session::getInstance()->set('flash', 'Восстановление пароля успешно завершено. Теперь вы можете войти.');
+                    $this->redirect('/login/');
+                }
+            }
+
+            $this->render([
+                'vars' => [
+                    'form' => $form,
+                    'title' => 'Восстановление пароля'
+                ]
+            ]);
+        }
     }
