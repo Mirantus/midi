@@ -1,10 +1,15 @@
 <?php
 /**
  * @var core\View $this
+ * @var string $flash
  * @var core\Form\Form $form
  */
 ?>
 <h1><?=$this->title?></h1>
+
+<? if ($flash) { ?>
+    <div class="flash"><?=$flash?></div>
+<? } ?>
 
 <form name="login" method="post" action="<?=$this->app->pageUrl?>" class="form">
     <input type="hidden" name="key" value="">
@@ -19,4 +24,8 @@
 
     <button id="submit" type="submit" class="submit">Войти</button>
     <div class="alert"><?=$form->error;?></div>
+
+    <p>
+        <a href="/register/">Регистрация</a>
+    </p>
 </form>

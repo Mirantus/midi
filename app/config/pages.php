@@ -9,6 +9,7 @@ $config['pages'] = [
 
     'login' => ['route' => '/login/', 'controller' => 'UsersController', 'action' => 'login', 'title' => 'Авторизация'],
     'logout' => ['route' => '/logout/', 'controller' => 'UsersController', 'action' => 'logout', 'title' => 'Выход'],
+    'register' => ['route' => '/register/', 'controller' => 'UsersController', 'action' => 'register', 'title' => 'Регистрация'],
     'users' => ['route' => '/users/', 'controller' => 'UsersController', 'action' => 'index', 'auth' => 'admin', 'title' => 'Пользователи'],
     'users_add' => ['route' => '/users/add/', 'controller' => 'UsersController', 'action' => 'add', 'auth' => 'admin', 'title' => 'Добавление пользователя'],
     'users_del' => ['route' => '/users/del/(\d+)/', 'controller' => 'UsersController', 'action' => 'del', 'params' => ['id'], 'auth' => 'admin', 'title' => 'Удаление'],

@@ -38,7 +38,7 @@
                 //validation
                 if (!$form->email->isEmail()) {
                     $form->email->error = $form->errors['email'];
-                } elseif (User::find(['where' => 'email=:email'], ['email' => $form->errors['email']])) {
+                } elseif (User::find(['where' => 'email=:email'], ['email' => $form->email->value])) {
                     $form->email->error = 'Пользователь с таким email уже существует';
                 }
                 if (empty($form->password->value)) {
@@ -106,7 +106,7 @@
                 //validation
                 if (!$form->email->isEmail()) {
                     $form->email->error = $form->errors['email'];
-                } elseif (User::find(['where' => 'email=:email and id != :id'], ['email' => $form->errors['email'], 'id' => $id])) {
+                } elseif (User::find(['where' => 'email=:email and id != :id'], ['email' => $form->email->value, 'id' => $id])) {
                     $form->email->error = 'Пользователь с таким email уже существует';
                 }
                 if (empty($form->password->value)) {
@@ -177,6 +177,7 @@
 
             $this->render([
                 'vars' => [
+                    'flash' => Session::getInstance()->flash('flash'),
                     'form' => $form,
                     'title' => 'Авторизация'
                 ]
@@ -187,5 +188,57 @@
             $return_url = Request::getParam('return', false, '/');
             Auth::getInstance()->reset();
             Response::getInstance()->redirect($return_url);
+        }
+
+        public function register() {
+            $form = new Form();
+            $form->add('email', ['title' => 'E-mail']);
+            $form->add('password', ['title' => 'Пароль']);
+            $form->add('name', ['title' => 'Имя']);
+            $form->fill();
+
+            if (Request::isPost()) {
+                //initialization
+                if ($form->password->value != '') {
+                    $form->password->value = password_hash($form->password->value, PASSWORD_DEFAULT);
+                }
+
+                //validation
+                if (!$form->email->isEmail()) {
+                    $form->email->error = $form->errors['email'];
+                } elseif (User::find(['where' => 'email=:email'], ['email' => $form->email->value])) {
+                    $form->email->error = 'Пользователь с таким email уже существует';
+                }
+                if (empty($form->password->value)) {
+                    $form->password->error = 'Введите пожалуйста пароль';
+                }
+                if (empty($form->name->value)) {
+                    $form->name->error = 'Введите пожалуйста имя пользователя';
+                }
+
+                //process
+                if ($form->isValid()) {
+                    $formValues = $form->toArray();
+                    $formValues['date'] = date('Y-m-d');
+
+                    $id = User::insert($formValues);
+
+                    if (!$id) {
+                        $form->error = 'Ошибка сохранения данных';
+                    }
+                }
+
+                if ($form->isValid()) {
+                    Session::getInstance()->set('flash', 'Регистрация успешно завершена. Теперь вы можете войти.');
+                    $this->redirect('/login/');
+                }
+            }
+
+            $this->render([
+                'vars' => [
+                    'form' => $form,
+                    'title' => 'Регистрация'
+                ]
+            ]);
         }
     }

@@ -8,7 +8,7 @@
 <h3><?=$this->title?></h3>
 
 <? if ($flash) { ?>
-<div class="flash"><?=$flash?></div>
+    <div class="flash"><?=$flash?></div>
 <? } ?>
 
 <? if (!empty($items)) { ?>
