@@ -9,7 +9,7 @@ $(function() {
         placeholder: '<li class="placeholder"/>',
         onDrop: function (item, container, _super) {
             var data = [];
-            var level = $sorted.data('level') ? '_' + $sorted.data('level') : '';
+            var level = $sorted.data('level') ? $sorted.data('level') : '';
             var url = '/' + $sorted.data('module') + '/reorder' + level + '/';
 
             $sorted.find('li').each(function () {

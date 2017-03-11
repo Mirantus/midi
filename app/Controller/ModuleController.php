@@ -30,7 +30,8 @@
 
             $this->render([
                 'vars' => [
-                    'cats' => ModuleCat::find($cats_query_params),
+                    'flash' => Session::getInstance()->flash('flash'),
+                    'items' => ModuleCat::find($cats_query_params),
                     'count_pages' => $this->countPages(ModuleCat::count())
                 ]
             ]);
@@ -61,6 +62,131 @@
                     'title' => $cat['title']
                 ]
             ]);
+        }
+
+        public function addcat() {
+            $form = new Form();
+            $form->add('title', ['title' => 'Название рубрики']);
+            $form->fill();
+
+            if (Request::isPost()) {
+                //validation
+                if (empty($form->title->value)) {
+                    $form->title->error = 'Введите пожалуйста название рубрики';
+                }
+
+                //process
+                if ($form->isValid()) {
+                    $formValues = $form->toArray();
+
+                    $id = ModuleCat::insert($formValues);
+
+                    if ($id) {
+                        ModuleCat::updateByPK($id, ['sort' => $id]);
+                    } else {
+                        $form->error = 'Ошибка сохранения данных';
+                    }
+                }
+
+                if ($form->isValid()) {
+                    $return_url = '/' . $this->alias . '/';
+                    $items_count = ModuleCat::count();
+                    $return_url = Url::addUrlParam($return_url, 'page', $this->countPages($items_count));
+                    $return_url .= '#item' . $id;
+
+                    Session::getInstance()->set('flash', 'Рубрика успешно добавлена');
+                    $this->redirect($return_url);
+                }
+            }
+
+            $this->render([
+                'vars' => [
+                    'form' => $form,
+                    'title' => 'Добавление рубрики'
+                ]
+            ]);
+        }
+
+        /**
+         * @param integer $id
+         */
+        public function editcat($id) {
+            $item = ModuleCat::findByPK($id);
+            if (empty($item)) {
+                $this->notFound();
+                return;
+            }
+
+            $form = new Form();
+            $form->add('title', ['title' => 'Название рубрики', 'value' => $item['title']]);
+            $form->fill();
+
+            if (Request::isPost()) {
+                //validation
+                if (empty($form->title->value)) {
+                    $form->title->error = 'Введите пожалуйста название рубрики';
+                }
+
+                //process
+                if ($form->isValid()) {
+                    $formValues = $form->toArray();
+
+                    if (!ModuleCat::updateByPK($id, $formValues)) {
+                        $form->error = 'Ошибка сохранения данных';
+                    }
+                }
+
+                if ($form->isValid()) {
+                    Session::getInstance()->set('flash', 'Рубрика успешно изменена');
+                    $return_url = Request::getParam('return', false, '/');
+                    $this->redirect($return_url);
+                }
+            }
+
+            $this->render([
+                'vars' => [
+                    'id' => $id,
+                    'form' => $form,
+                    'title' => 'Редактирование рубрики'
+                ]
+            ]);
+        }
+
+        /**
+         * @param integer $id
+         */
+        public function delcat($id) {
+            ModuleCat::deleteByPK($id);
+            Response::getInstance()->setAjax('');
+        }
+
+        public function reordercat() {
+            if (!Request::isPost()) {
+                return;
+            }
+
+            $data = Request::getParam('data', false, '[]');
+            $ids = json_decode($data);
+
+            if (!count($ids)) {
+                return;
+            }
+
+            $query_params = [
+                'where' => 'id IN (' . implode(',', $ids) . ')',
+                'orderBy' => 'sort'
+            ];
+
+            $items = ModuleCat::find($query_params);
+
+            if (!$items) {
+                return;
+            }
+
+            for ($i = 0; $i < count($ids); $i++) {
+                // set asc sorted statuses to ids sorted by user
+                ModuleCat::updateByPK($ids[$i], ['sort' => $items[$i]['sort']]);
+            }
         }
 
         /**
