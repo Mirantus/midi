@@ -21,6 +21,23 @@
             ]);
         }
 
+        /**
+         * @param integer $id
+         */
+        public function item($id) {
+            $item = User::findByPK($id);
+
+            if (empty($item)) {
+                $this->notFound();
+                return;
+            }
+
+            $this->render([
+                'title' => 'Страница пользователя ' . $item['name'],
+                'vars' => ['item' => $item]
+            ]);
+        }
+
         public function add() {
             $form = new Form();
             $form->add('email', ['title' => 'E-mail']);
