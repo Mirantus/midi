@@ -5,6 +5,8 @@
     use core\Auth;
     use core\Form\Form;
     use core\Request;
+    use core\Response;
+    use core\Session;
 
     trait ModuleCommentTrait {
         protected $comments = true;
@@ -59,5 +61,68 @@
                     'title' => 'Добавление комментария'
                 ]
             ]);
+        }
+
+        /**
+         * @param integer $id
+         */
+        public function editcomment($id) {
+            $item = ModuleComment::findByPK($id);
+            $auth = Auth::getInstance();
+
+            if (empty($item) || (!$auth->isAdmin() && $auth->get('id') != $item['user'])) {
+                $this->notFound();
+                return;
+            }
+
+            $form = new Form();
+            $form->add('text', ['title' => 'Текст', 'value' => $item['text']]);
+            if ($auth->isAdmin()) {
+                $form->add('name', ['title' => 'Имя', 'value' => $item['name']]);
+                $form->add('email', ['title' => 'E-mail', 'value' => $item['email']]);
+            }
+            $form->fill();
+
+            if (Request::isPost()) {
+                if (empty($form->text->value)) {
+                    $form->text->error = 'Введите пожалуйста комментарий';
+                }
+
+                //process
+                if ($form->isValid()) {
+                    $formValues = $form->toArray();
+
+                    if (!ModuleComment::updateByPK($id, $formValues)) {
+                        $form->error = 'Ошибка сохранения данных';
+                    }
+                }
+
+                if ($form->isValid()) {
+                    Session::getInstance()->set('flash', 'Комментарий успешно изменен');
+                    $return_url = Request::getParam('return', false, '/');
+                    $this->redirect($return_url);
+                }
+            }
+
+            $this->render([
+                'vars' => [
+                    'form' => $form,
+                    'title' => 'Добавление комментария'
+                ]
+            ]);
+        }
+
+        /**
+         * @param integer $id
+         */
+        public function delcomment($id) {
+            $item = ModuleComment::findByPK($id);
+            $auth = Auth::getInstance();
+
+            if (!empty($item) && ($auth->isAdmin() || $auth->get('id') == $item['user'])) {
+                ModuleComment::deleteByPK($id);
+            }
+
+            Response::getInstance()->setAjax('');
         }
     }

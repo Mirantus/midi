@@ -37,6 +37,7 @@
             }
 
             $vars = [
+                'flash' => Session::getInstance()->flash('flash'),
                 'item' => $item,
                 'dataPath' => '/data/' . $this->name . '/items/'
             ];

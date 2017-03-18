@@ -1,0 +1,1 @@
+<script src="/js/confirm.js?<?=$this->app->version;?>"></script>

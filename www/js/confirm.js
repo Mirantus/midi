@@ -8,7 +8,7 @@ $(function() {
 				url: $(this).attr('href'),
 				data: {},
 				success: function (data) {
-					link.parent('li').hide();
+					link.parents('li').hide();
 				}
 			});
 			return false;

@@ -30,6 +30,8 @@ $config['pages'] = [
     'module_edit' => ['route' => '/module/edit/(\d+)/', 'controller' => 'ModuleController', 'action' => 'edit', 'params' => ['id'], 'auth' => 'admin', 'title' => 'Редактирование'],
     'module_del' => ['route' => '/module/del/(\d+)/', 'controller' => 'ModuleController', 'action' => 'del', 'params' => ['id'], 'auth' => 'admin', 'title' => 'Удаление'],
     'module_addcomment' => ['route' => '/module/addcomment/(\d+)/', 'controller' => 'ModuleController', 'action' => 'addcomment', 'params' => ['item'], 'title' => 'Добавление комментария'],
+    'module_editcomment' => ['route' => '/module/editcomment/(\d+)/', 'controller' => 'ModuleController', 'action' => 'editcomment', 'params' => ['id'], 'title' => 'Редактирование комментария'],
+    'module_delcomment' => ['route' => '/module/delcomment/(\d+)/', 'controller' => 'ModuleController', 'action' => 'delcomment', 'params' => ['id'], 'title' => 'Удаление комментария'],
     'module_reorder' => ['route' => '/module/reorder/', 'controller' => 'ModuleController', 'action' => 'reorder', 'auth' => 'admin', 'title' => 'Сортировка'],
     'module_rss' => ['route' => '/module/rss/', 'controller' => 'ModuleController', 'action' => 'rss', 'title' => 'RSS'],
 ];
