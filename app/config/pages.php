@@ -13,6 +13,7 @@ $config['pages'] = [
     'restore' => ['route' => '/restore/', 'controller' => 'UsersController', 'action' => 'restore', 'title' => 'Восстановление пароля'],
     'verify' => ['route' => '/verify/(.+)/', 'controller' => 'UsersController', 'action' => 'verify', 'params' => ['restore_code'], 'title' => 'Восстановление пароля'],
     'users' => ['route' => '/users/', 'controller' => 'UsersController', 'action' => 'index', 'auth' => 'admin', 'title' => 'Пользователи'],
+    'users_item' => ['route' => '/users/(\d+)/', 'controller' => 'UsersController', 'action' => 'item', 'params' => ['id'], 'title' => 'Страница пользователя'],
     'users_add' => ['route' => '/users/add/', 'controller' => 'UsersController', 'action' => 'add', 'auth' => 'admin', 'title' => 'Добавление пользователя'],
     'users_del' => ['route' => '/users/del/(\d+)/', 'controller' => 'UsersController', 'action' => 'del', 'params' => ['id'], 'auth' => 'admin', 'title' => 'Удаление'],
     'users_edit' => ['route' => '/users/edit/(\d+)/', 'controller' => 'UsersController', 'action' => 'edit', 'params' => ['id'], 'auth' => 'admin', 'title' => 'Редактирование'],
