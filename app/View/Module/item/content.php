@@ -36,7 +36,9 @@
         <? foreach ($comments as $comment_params) { ?>
             <p id="comment<?=$comment_params['id'];?>">
                 <strong>
-                    <? if (!empty($comment_params['email'])) { ?>
+                    <? if (!empty($comment_params['user'])) { ?>
+                        <a href="/users/<?=$comment_params['user']?>"><?=h($comment_params['user_name']);?></a>
+                    <? } elseif (!empty($comment_params['email'])) { ?>
                         <a href="mailto:<?=$comment_params['email'];?>"><?=h($comment_params['name']);?></a>
                     <? } else { ?>
                         <?=h($comment_params['name']);?>

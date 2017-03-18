@@ -42,7 +42,13 @@
             ];
 
             if (isset($this->comments)) {
-                $vars['comments'] = ModuleComment::find(['where' => 'item = :item'], ['item' => $id]);
+                $vars['comments'] = ModuleComment::find(
+                    [
+                        'query' => 'select module_comment.*, user.name as user_name from module_comment left join user on module_comment.user = user.id',
+                        'where' => 'module_comment.item = :id'
+                    ],
+                    ['id' => $id]
+                );
             }
 
             $this->render([

@@ -14,13 +14,16 @@
     <textarea id="text" name="text" rows="10" cols="17" class="textarea" required><?=$form->text->value;?></textarea>
     <div class="alert"><?=$form->text->error;?></div>
 
-    <label for="name" class="label"><span class="alert">*</span> <?=$form->name->title;?>:</label>
-    <input id="name" name="name" type="text" maxlength="255" value="<?=$form->name->value;?>" required class="input">
-    <div class="alert"><?=$form->name->error;?></div>
 
-    <label for="email" class="label"><?=$form->email->title;?>:</label>
-    <input id="email" name="email" type="text" maxlength="255" value="<?=$form->email->value;?>" class="input">
-    <div class="alert"><?=$form->email->error;?></div>
+    <? if (!$this->auth->isAuth()) { ?>
+        <label for="name" class="label"><span class="alert">*</span> <?=$form->name->title;?>:</label>
+        <input id="name" name="name" type="text" maxlength="255" value="<?=$form->name->value;?>" required class="input">
+        <div class="alert"><?=$form->name->error;?></div>
+
+        <label for="email" class="label"><?=$form->email->title;?>:</label>
+        <input id="email" name="email" type="text" maxlength="255" value="<?=$form->email->value;?>" class="input">
+        <div class="alert"><?=$form->email->error;?></div>
+    <? } ?>
 
     <button id="submit" type="submit" class="submit">Отправить</button>
     <div class="alert"><?=$form->error;?></div>

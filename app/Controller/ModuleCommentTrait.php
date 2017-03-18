@@ -22,11 +22,13 @@
 
             if (Request::isPost()) {
                 //validation
-                if (!empty($form->email->value) && !$form->email->isEmail()) {
-                    $form->email->error = $form->errors['email'];
-                }
-                if (empty($form->name->value)) {
-                    $form->name->error = 'Введите пожалуйста ваше имя';
+                if (!Auth::getInstance()->isAuth()) {
+                    if (!empty($form->email->value) && !$form->email->isEmail()) {
+                        $form->email->error = $form->errors['email'];
+                    }
+                    if (empty($form->name->value)) {
+                        $form->name->error = 'Введите пожалуйста ваше имя';
+                    }
                 }
                 if (empty($form->text->value)) {
                     $form->text->error = 'Введите пожалуйста комментарий';
